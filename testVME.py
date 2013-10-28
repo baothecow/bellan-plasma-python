@@ -19,7 +19,7 @@ filename = root + foldername + 'HV_'+ shotnum + '.dat'
 
 data = readVME(filename)
 
-vme_plot_current(data, title=title)
+vme_plot_current(data, title=title,xtitle="hello there")
 
 
 
