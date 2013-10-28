@@ -14,12 +14,15 @@ shotnum = '562'
 
 title = 'This is my plot'
 
+constructor = 'vi_t2ch13_' + shotnum + '.dat'
+rows=3
 
-filename = root + foldername + 'HV_'+ shotnum + '.dat'
 
-data = readVME(filename)
+filename = root + foldername + constructor
 
-vme_plot_current(data, title=title,xtitle="hello there")
+data = readVME(filename, rows=rows)
+
+vme_plot_current(data, title=title)
 
 
 
