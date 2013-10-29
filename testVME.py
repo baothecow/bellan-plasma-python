@@ -10,7 +10,7 @@ root = 'G:\\data\\singleloop\\singleloop_VME\\data\\'
 
 foldername = '2013.03.14\\'
 
-shotnum = '562'
+shotnum = '566'
 
 title = 'This is my plot'
 
@@ -22,7 +22,7 @@ filename = root + foldername + constructor
 
 data = readVME(filename, rows=rows)
 
-vme_plot_current(data, title=title)
+vme_plot_current(data)
 
 
 
