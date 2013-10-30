@@ -10,43 +10,14 @@ from cookb_signalsmooth import smooth
 from pylab import subplots_adjust
 
 
-
-## Plots VME data.
-def vme_plot_current(
-        data,
-        style_counter = 0,                # used to determine specific colors.
-        title = 'Plot of VME current',
-        xtitle = 'Time (' + '$\mu$' + 's)',
-        ytitle = "Current (kA)",
-        xlim = [10, 30],
-        ylim = [-40, 40],
-        smoothing_window = 50):
-
-    time = data[0, :]
-    current = data[2, :]
-
-    plot_style = color_array[style_counter] + style_array[style_counter]
-
-    ## Plot the raw version using a thin line. 
-    plt.plot(time, current, plot_style, linewidth=0.5)
-    ## Plot the smoothed version using a thicker line.
-    plt.plot(time, smooth(current, window_len=smoothing_window), plot_style,
-             linewidth=2)
-    plt.title(title)
-    plt.ylabel(ytitle)
-    plt.xlabel(xtitle)
-    plt.xlim(xlim)
-    plt.ylim(ylim)
-
-
-
+## Basic 2D plot of signal vs time.
 def vme_basic_2d_plot(
         time,
         signal, 
         style_counter = 0,                # used to determine specific colors.
-        title = '2D Plot vs Time',
+        title = '2D Signal vs Time',
         xtitle = 'Time (' + '$\mu$' + 's)',
-        ytitle = 'Unlabeled',
+        ytitle = 'Signal',
         xlim = [10, 30],
         ylim = [-40, 40],
         smoothing_window = 50):
@@ -66,7 +37,7 @@ def vme_basic_2d_plot(
     plt.ylim(ylim)
 
 
-## Plots VME data.
+## Plot of two signals with common time axis.
 def vme_2params_2d_plot(
         time,
         signal_1,
@@ -83,7 +54,7 @@ def vme_2params_2d_plot(
         xlim2 = [10, 30],
         ylim2 = [-40, 40],
         smoothing_window_2 = 50):
-    """ 2D Plot of two signals.  One of top of the other """
+    """ 2D Plot of two signals with common time axis. """
 
     plot_style = color_array[style_counter] + style_array[style_counter]
 
