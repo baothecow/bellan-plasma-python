@@ -11,32 +11,30 @@ import matplotlib.pyplot as plt
 ##
 ##vme_plot_current(shotnum)
 
-vme_plot_current(['571'])
 
 
-##
-##root = 'D:\\data\\singleloop_VME\\data\\'
-##root = 'G:\\data\\singleloop\\singleloop_VME\\data\\'
-##
-##foldername = '2013.03.14\\'
-##
-##shotnum = ['570', '571', '572']
-##
-##title =  'This is my plot'
-##ytitle = 'Current (kA)'
-##rows=3
+root = 'D:\\data\\singleloop_VME\\data\\'
+root = 'G:\\data\\singleloop\\singleloop_VME\\data\\'
+
+foldername = '2013.03.14\\'
+
+shotnum = ['570', '571', '572']
+
+title =  'This is my plot'
+ytitle = 'Current (kA)'
+rows=3
 
 
-##plt.figure(1)
-##for counter in range(0, len(shotnum)):
-##    constructor = 'vi_t2ch13_' + shotnum[counter] + '.dat'
-##    filename = root + foldername + constructor
-##    data = readVME(filename, rows=rows)
-##    vme_basic_2d_plot_from_dict(data[0, :], data[2, :], color_counter=counter)
-##
-##
-##plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shotnum), fontsize=10,ha='center')
-##plt.show()
+plt.figure(1)
+for counter in range(0, len(shotnum)):
+    constructor = 'vi_t2ch13_' + shotnum[counter] + '.dat'
+    filename = root + foldername + constructor
+    data = readVME(filename, rows=rows)
+    vme_basic_2d_plot_from_dict(data[0, :], data[2, :])
+
+
+plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shotnum), fontsize=10,ha='center')
+plt.show()
 ##
 ##ylim1=(-5e3, 5e3)
 ##

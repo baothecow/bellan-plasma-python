@@ -42,11 +42,10 @@ def vme_basic_2d_plot(
 def vme_basic_2d_plot_from_dict(
         time,
         signal, 
-        color_counter=6,            
-        style_counter=0):
+        ):
     """ Basic 2D plotting of a single quantity vs time """
 
-    plot_style = color_array[color_counter] + style_array[style_counter]
+    plot_style = plotting_vars['color'] + plotting_vars['style']
 
     ## Plot the raw version using a thin line. 
     plt.plot(time, signal, plot_style, linewidth=0.5)
@@ -130,7 +129,9 @@ plotting_vars = {
     'xtitle': 'Time ('+'$\mu$'+'s)',
     'ytitle': 'Signal',
     'shotnum': '-99',
-    'smoothing_window': 50
+    'smoothing_window': 50,
+    'color': 'r',
+    'style': '-'
     }
     
     
