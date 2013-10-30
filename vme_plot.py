@@ -26,7 +26,9 @@ def vme_plot_current(
 
     plot_style = color_array[style_counter] + style_array[style_counter]
 
+    ## Plot the raw version using a thin line. 
     plt.plot(time, current, plot_style, linewidth=0.5)
+    ## Plot the smoothed version using a thicker line.
     plt.plot(time, smooth(current, window_len=smoothing_window), plot_style,
              linewidth=2)
     plt.title(title)
@@ -34,11 +36,10 @@ def vme_plot_current(
     plt.xlabel(xtitle)
     plt.xlim(xlim)
     plt.ylim(ylim)
-    plt.show()
 
 
 
-### Some colors
+### Some colors and styles.
 
 color_array = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
 style_array = ['-', '-', '-', '-', '-', '-', '-']
