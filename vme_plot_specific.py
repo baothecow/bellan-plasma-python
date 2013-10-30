@@ -11,8 +11,6 @@ def vme_plot_current(
         title='Current vs time',
         ytitle='Current (kA)',
         xtitle='Time (' + '$\mu$' + 's)',
-        color_counter=0,
-        style_counter=0,
         xlim=[10,30],
         ylim=[-40, 40],
         smoothing_window=50):
@@ -42,5 +40,5 @@ def vme_plot_current(
 
 
     # Label the shot numbers.
-    plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10,ha='center')
+    plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    

@@ -16,12 +16,12 @@ def vme_basic_2d_plot(
         signal, 
         color_counter=0,
         style_counter=0,
-        title = '2D Signal vs Time',
-        xtitle = 'Time (' + '$\mu$' + 's)',
-        ytitle = 'Signal',
-        xlim = [10, 30],
-        ylim = [-40, 40],
-        smoothing_window = 50):
+        title='2D Signal vs Time',
+        xtitle='Time (' + '$\mu$' + 's)',
+        ytitle='Signal',
+        xlim=[10, 30],
+        ylim=[-40, 40],
+        smoothing_window=50):
     """ Basic 2D plotting of a single quantity vs time """
 
     plot_style = color_array[color_counter] + style_array[style_counter]
