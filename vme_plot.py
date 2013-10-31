@@ -8,7 +8,6 @@
 import matplotlib.pyplot as plt
 from cookb_signalsmooth import smooth
 from pylab import subplots_adjust
-import idl_support as idlsup
 
 
 ## Basic 2D plot of signal vs time.
@@ -24,14 +23,15 @@ def vme_basic_2d_plot(
         ylim=[-40, 40],
         smoothing_window=50):
     """ Basic 2D plotting of a single quantity vs time """
+    
 
     plot_style = color_array[color_counter] + style_array[style_counter]
 
     ## Plot the raw version using a thin line. 
-    plt.plot(time, signal, plot_style, linewidth=0.5)
+    plt.plot(time, signal, plot_style, linewidth=plotting_vars['thin_ln_width'])
     ## Plot the smoothed version using a thicker line.
     plt.plot(time, smooth(signal, window_len=smoothing_window), plot_style,
-             linewidth=2)
+             linewidth=plotting_vars['thick_ln_width'])
     plt.title(title)
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)
@@ -79,8 +79,6 @@ def vme_2params_2d_plot(
         ylim2=[-40, 40],
         smoothing_window_2=50):
     """ 2D Plot of two signals with common time axis. """
-
-    plot_style = color_array[color_counter] + style_array[style_counter]
 
     ## Generate the two subplot by calling the basic plot function for
     ## each subplot.
@@ -132,7 +130,9 @@ plotting_vars = {
     'shotnum': '-99',
     'smoothing_window': 50,
     'color': 'r',
-    'style': '-'
+    'style': '-',
+    'thin_ln_width': .5,
+    'thick_ln_width': 2
     }
     
     

@@ -5,11 +5,22 @@ from vme_plot import *
 from vme_plot_specific import vme_plot_current
 import numpy as np
 import matplotlib.pyplot as plt
+from vme_analyze import *
+from cookb_signalsmooth import smooth
 
 
-shotnum = ['570', '600', '780']
+shotnums = ['570', '571', '572']
 
-vme_plot_current(shotnum)
+
+vme_plot_current(shotnums)
+
+data = vme_avg_sig(shotnums, diag='current', )
+
+plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
+
+
+
+
 
 
 
