@@ -59,57 +59,7 @@ def vme_basic_2d_plot_from_dict(
     plt.xlabel(plotting_vars['xtitle'])
     plt.xlim(plotting_vars['xlim'])
     plt.ylim(plotting_vars['ylim'])
-
-## Plot of two signals with common time axis.
-def vme_2params_2d_plot(
-        time,
-        signal_1,
-        signal_2,
-        color_counter=0,            
-        style_counter=0,
-        title='2D Plot vs Time',
-        xtitle1='Time (' + '$\mu$' + 's)',
-        ytitle1='',
-        xlim1=[10, 30],
-        ylim1=[-40, 40],
-        smooth_win_1=50,
-        xtitle2='Time (' + '$\mu$' + 's)',
-        ytitle2='',
-        xlim2=[10, 30],
-        ylim2=[-40, 40],
-        smooth_win_2=50):
-    """ 2D Plot of two signals with common time axis. """
-
-    ## Generate the two subplot by calling the basic plot function for
-    ## each subplot.
-    plt.subplot(211)
-    vme_basic_2d_plot(
-        time,
-        signal_1,
-        color_counter=color_counter,
-        style_counter=style_counter,
-        xtitle=xtitle1,
-        ytitle=ytitle1,
-        xlim=xlim1,
-        ylim=ylim1,
-        smooth_win=smooth_win_1)
-    plt.subplot(212)
-    vme_basic_2d_plot(
-        time,
-        signal_2,
-        title='',           # Clears out title of lower plot.
-        color_counter=color_counter,
-        style_counter=style_counter,
-        xtitle=xtitle2,
-        ytitle=ytitle2,
-        xlim=xlim2,
-        ylim=ylim2,
-        smooth_win=smooth_win_2)
-
-    ## Remove the spacing between the subplots
-    subplots_adjust(hspace=0.001)
-        
-
+  
 
 def vme_plot_diagnostic(
         time, 
@@ -156,16 +106,18 @@ plotting_vars = {
     
  
 plot_diag_params = {
+    'current.name': 'Rogowski',
     'current.title': 'Current vs time',
     'current.ytitle': 'Current (kA)',
     'current.xtitle': 'Time (' + '$\mu$' + 's)',
     'current.xlim': [10, 30],
     'current.ylim': [-40, 40],
     'current.smooth_win': 50,
+    'tek_hv.name': 'Tektronic HV',
     'tek_hv.title': 'Voltage vs time',
     'tek_hv.ytitle': 'Voltage (V)',
     'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
     'tek_hv.xlim': [10, 30],
-    'tek_hv.ylim': [-4000, 4000],
+    'tek_hv.ylim': [-4000, 1000],
     'tek_hv.smooth_win': 50
 }     

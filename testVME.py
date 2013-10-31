@@ -2,7 +2,7 @@
 
 from file_io_lib import readVME
 from vme_plot import *
-from vme_plot_specific import vme_plot_current
+from vme_plot_specific import * 
 import numpy as np
 import matplotlib.pyplot as plt
 from vme_analyze import *
@@ -15,10 +15,13 @@ shotnums = ['843', '844', '845', '846']
 # vme_plot_current(shotnums)
 
 data = vme_avg_sig(shotnums, diag='tek_hv')
+data2 = vme_avg_sig(shotnums, diag='current')
 
 # plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
 
-vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
+# vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
+
+vme_2diag_2d_plot(data[0], smooth(data[1], 50), smooth(data2[1], 50))
 
 
 

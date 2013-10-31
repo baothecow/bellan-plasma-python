@@ -47,6 +47,33 @@ def vme_plot_current(
     plt.show()    
 
 
+## Plot of two signals with common time axis.
+def vme_2diag_2d_plot(
+        time,
+        signal_1,
+        signal_2,
+        diag1='tek_hv',
+        diag2='current'
+        ):
+    """ 2D Plot of two signals with common time axis. """
+
+    # Set title of the first plot is now the title of the whole plot.
+    newtitle = plot_diag_params[diag1 + '.name'] + ' & ' + \
+        plot_diag_params[diag2 + '.name'] + ' vs Time'
+    plot_diag_params[diag1 + '.title'] = newtitle
+
+    ## Generate the two subplot by calling the basic plot function for
+    ## each subplot.    
+    
+    plt.subplot(211)
+    vme_plot_diagnostic(time, signal_1, diag=diag1)
+    
+    plt.subplot(212)
+    plot_diag_params[diag2 + '.title'] = ""    ## Removes the second title.
+    vme_plot_diagnostic(time, signal_2, diag=diag2)
+
+    ## Remove the spacing between the subplots
+    subplots_adjust(hspace=0.001)
 
   
     
