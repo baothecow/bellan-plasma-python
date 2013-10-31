@@ -2,7 +2,7 @@
 
 from file_io_lib import readVME
 import matplotlib.pyplot as plt
-from vme_plot import vme_basic_2d_plot
+from vme_plot import *
 import idl_support as idlsup
 
 
@@ -14,7 +14,7 @@ def vme_plot_current(
         xtitle='Time (' + '$\mu$' + 's)',
         xlim=[10,30],
         ylim=[-40, 40],
-        smoothing_window=50):
+        smooth_win=50):
     """ Plots the current vs time of the shots """
 
     rows = 3                    # IV data has 3 rows.
@@ -27,19 +27,26 @@ def vme_plot_current(
         data = readVME(filename, rows=rows)
         time = data[0, :]
         signal = data[2, :]
+        
+        vme_plot_diagnostic(time, signal, diag='current')
 
-        vme_basic_2d_plot(
-            time,
-            signal, 
-            color_counter=counter,
-            title=title,
-            xtitle=xtitle,
-            ytitle=ytitle,
-            xlim=xlim,
-            ylim=ylim,
-            smoothing_window=smoothing_window)
+#        vme_basic_2d_plot(
+#            time,
+#            signal, 
+#            color_counter=counter,
+#            title=title,
+#            xtitle=xtitle,
+#            ytitle=ytitle,
+#            xlim=xlim,
+#            ylim=ylim,
+#            smooth_win=smooth_win)
 
 
     # Label the shot numbers.
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    
+
+
+
+  
+    

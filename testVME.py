@@ -9,14 +9,16 @@ from vme_analyze import *
 from cookb_signalsmooth import smooth
 
 
-shotnums = ['570', '571', '572']
+shotnums = ['843', '844', '845', '846']
 
 
-vme_plot_current(shotnums)
+# vme_plot_current(shotnums)
 
-data = vme_avg_sig(shotnums, diag='current', )
+data = vme_avg_sig(shotnums, diag='tek_hv')
 
-plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
+# plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
+
+vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
 
 
 

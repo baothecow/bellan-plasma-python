@@ -8,9 +8,6 @@
 import idl_support as idlsup
 import numpy as np
 from file_io_lib import readVME
-from cookb_signalsmooth import smooth
-
-
 
 
 def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):

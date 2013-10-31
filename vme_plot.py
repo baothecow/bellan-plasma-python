@@ -21,7 +21,7 @@ def vme_basic_2d_plot(
         ytitle='Signal',
         xlim=[10, 30],
         ylim=[-40, 40],
-        smoothing_window=50):
+        smooth_win=50):
     """ Basic 2D plotting of a single quantity vs time """
     
 
@@ -30,7 +30,7 @@ def vme_basic_2d_plot(
     ## Plot the raw version using a thin line. 
     plt.plot(time, signal, plot_style, linewidth=plotting_vars['thin_ln_width'])
     ## Plot the smoothed version using a thicker line.
-    plt.plot(time, smooth(signal, window_len=smoothing_window), plot_style,
+    plt.plot(time, smooth(signal, window_len=smooth_win), plot_style,
              linewidth=plotting_vars['thick_ln_width'])
     plt.title(title)
     plt.ylabel(ytitle)
@@ -52,7 +52,7 @@ def vme_basic_2d_plot_from_dict(
     plt.plot(time, signal, plot_style, linewidth=0.5)
     ## Plot the smoothed version using a thicker line.
     plt.plot(time, smooth(signal,
-             window_len=plotting_vars['smoothing_window']), plot_style,
+             window_len=plotting_vars['smooth_win']), plot_style,
              linewidth=2)
     plt.title(plotting_vars['title'])
     plt.ylabel(plotting_vars['ytitle'])
@@ -72,12 +72,12 @@ def vme_2params_2d_plot(
         ytitle1='',
         xlim1=[10, 30],
         ylim1=[-40, 40],
-        smoothing_window_1=50,
+        smooth_win_1=50,
         xtitle2='Time (' + '$\mu$' + 's)',
         ytitle2='',
         xlim2=[10, 30],
         ylim2=[-40, 40],
-        smoothing_window_2=50):
+        smooth_win_2=50):
     """ 2D Plot of two signals with common time axis. """
 
     ## Generate the two subplot by calling the basic plot function for
@@ -92,7 +92,7 @@ def vme_2params_2d_plot(
         ytitle=ytitle1,
         xlim=xlim1,
         ylim=ylim1,
-        smoothing_window=smoothing_window_1)
+        smooth_win=smooth_win_1)
     plt.subplot(212)
     vme_basic_2d_plot(
         time,
@@ -104,11 +104,30 @@ def vme_2params_2d_plot(
         ytitle=ytitle2,
         xlim=xlim2,
         ylim=ylim2,
-        smoothing_window=smoothing_window_2)
+        smooth_win=smooth_win_2)
 
     ## Remove the spacing between the subplots
     subplots_adjust(hspace=0.001)
         
+
+
+def vme_plot_diagnostic(
+        time, 
+        signal,
+        diag='current'):
+    """ Plots diagnostics of an array of shotnumbers """
+    
+    vme_basic_2d_plot(
+        time, 
+        signal,
+        title=plot_diag_params[diag + '.title'],
+        xtitle=plot_diag_params[diag + '.xtitle'],
+        ytitle=plot_diag_params[diag + '.ytitle'],
+        xlim=plot_diag_params[diag + '.xlim'],
+        ylim=plot_diag_params[diag + '.ylim'],
+        smooth_win=plot_diag_params[diag + '.smooth_win']        
+        )
+    
 
 ### Some colors and styles.
 
@@ -128,11 +147,25 @@ plotting_vars = {
     'xtitle': 'Time ('+'$\mu$'+'s)',
     'ytitle': 'Signal',
     'shotnum': '-99',
-    'smoothing_window': 50,
+    'smooth_win': 50,
     'color': 'r',
     'style': '-',
     'thin_ln_width': .5,
     'thick_ln_width': 2
-    }
+}
     
-    
+ 
+plot_diag_params = {
+    'current.title': 'Current vs time',
+    'current.ytitle': 'Current (kA)',
+    'current.xtitle': 'Time (' + '$\mu$' + 's)',
+    'current.xlim': [10, 30],
+    'current.ylim': [-40, 40],
+    'current.smooth_win': 50,
+    'tek_hv.title': 'Voltage vs time',
+    'tek_hv.ytitle': 'Voltage (V)',
+    'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
+    'tek_hv.xlim': [10, 30],
+    'tek_hv.ylim': [-4000, 4000],
+    'tek_hv.smooth_win': 50
+}     
