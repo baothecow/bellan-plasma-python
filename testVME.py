@@ -21,9 +21,9 @@ data2 = vme_avg_sig(shotnums, diag='current')
 
 # vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
 
-vme_2diag_2d_plot(data[0], smooth(data[1], 50), smooth(data2[1], 50))
+# vme_2diag_2d_plot(data[0], smooth(data[1], 50), smooth(data2[1], 50))
 
-
+myplot = plt.plot(data[0], smooth(data[1], 50))
 
 
 

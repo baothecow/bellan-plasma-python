@@ -4,6 +4,7 @@ from file_io_lib import readVME
 import matplotlib.pyplot as plt
 from vme_plot import *
 import idl_support as idlsup
+from pylab import subplots_adjust
 
 
 

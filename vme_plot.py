@@ -7,7 +7,9 @@
 ## VME plotting routines
 import matplotlib.pyplot as plt
 from cookb_signalsmooth import smooth
-from pylab import subplots_adjust
+
+## User defined parameters.
+from parameters import plot_diag_params
 
 
 ## Basic 2D plot of signal vs time.
@@ -16,11 +18,12 @@ def vme_basic_2d_plot(
         signal, 
         color_counter=0,
         style_counter=0,
-        title='2D Signal vs Time',
-        xtitle='Time (' + '$\mu$' + 's)',
-        ytitle='Signal',
-        xlim=[10, 30],
-        ylim=[-40, 40],
+        title=plot_diag_params['gen.title'],
+        xtitle=plot_diag_params['gen.xtitle'],
+        ytitle=plot_diag_params['gen.ytitle'],
+        xlim=plot_diag_params['gen.xlim'],
+        ylim=plot_diag_params['gen.ylim'],
+        linewidth=1,
         smooth_win=50):
     """ Basic 2D plotting of a single quantity vs time """
     
@@ -39,26 +42,7 @@ def vme_basic_2d_plot(
     plt.ylim(ylim)
 
 
-## Basic 2D plot of signal vs time.
-def vme_basic_2d_plot_from_dict(
-        time,
-        signal, 
-        ):
-    """ Basic 2D plotting of a single quantity vs time """
 
-    plot_style = plotting_vars['color'] + plotting_vars['style']
-
-    ## Plot the raw version using a thin line. 
-    plt.plot(time, signal, plot_style, linewidth=0.5)
-    ## Plot the smoothed version using a thicker line.
-    plt.plot(time, smooth(signal,
-             window_len=plotting_vars['smooth_win']), plot_style,
-             linewidth=2)
-    plt.title(plotting_vars['title'])
-    plt.ylabel(plotting_vars['ytitle'])
-    plt.xlabel(plotting_vars['xtitle'])
-    plt.xlim(plotting_vars['xlim'])
-    plt.ylim(plotting_vars['ylim'])
   
 
 def vme_plot_diagnostic(
@@ -67,7 +51,7 @@ def vme_plot_diagnostic(
         diag='current'):
     """ Plots diagnostics of an array of shotnumbers """
     
-    vme_basic_2d_plot(
+    return vme_basic_2d_plot(
         time, 
         signal,
         title=plot_diag_params[diag + '.title'],
@@ -105,19 +89,28 @@ plotting_vars = {
 }
     
  
-plot_diag_params = {
-    'current.name': 'Rogowski',
-    'current.title': 'Current vs time',
-    'current.ytitle': 'Current (kA)',
-    'current.xtitle': 'Time (' + '$\mu$' + 's)',
-    'current.xlim': [10, 30],
-    'current.ylim': [-40, 40],
-    'current.smooth_win': 50,
-    'tek_hv.name': 'Tektronic HV',
-    'tek_hv.title': 'Voltage vs time',
-    'tek_hv.ytitle': 'Voltage (V)',
-    'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
-    'tek_hv.xlim': [10, 30],
-    'tek_hv.ylim': [-4000, 1000],
-    'tek_hv.smooth_win': 50
-}     
+
+
+
+
+## Obsolete
+### Basic 2D plot of signal vs time.
+#def vme_basic_2d_plot_from_dict(
+#        time,
+#        signal, 
+#        ):
+#    """ Basic 2D plotting of a single quantity vs time """
+#
+#    plot_style = plotting_vars['color'] + plotting_vars['style']
+#
+#    ## Plot the raw version using a thin line. 
+#    plt.plot(time, signal, plot_style, linewidth=0.5)
+#    ## Plot the smoothed version using a thicker line.
+#    plt.plot(time, smooth(signal,
+#             window_len=plotting_vars['smooth_win']), plot_style,
+#             linewidth=2)
+#    plt.title(plotting_vars['title'])
+#    plt.ylabel(plotting_vars['ytitle'])
+#    plt.xlabel(plotting_vars['xtitle'])
+#    plt.xlim(plotting_vars['xlim'])
+#    plt.ylim(plotting_vars['ylim'])
