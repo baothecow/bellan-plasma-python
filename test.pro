@@ -1,4 +1,5 @@
-print, 5 + 5
-a = 5
-b = 6
-print, a + b
+.compile G:\programs\idl\singleloop_lib\foldername.pro
+
+folder = ""
+
+foldername, 755, folder, verbal=1
