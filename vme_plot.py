@@ -8,6 +8,7 @@
 import matplotlib.pyplot as plt
 from cookb_signalsmooth import smooth
 from pylab import subplots_adjust
+import idl_support as idlsup
 
 
 ## Basic 2D plot of signal vs time.

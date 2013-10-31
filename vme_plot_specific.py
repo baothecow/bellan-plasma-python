@@ -3,6 +3,7 @@
 from file_io_lib import readVME
 import matplotlib.pyplot as plt
 from vme_plot import vme_basic_2d_plot
+import idl_support as idlsup
 
 
 
@@ -16,13 +17,13 @@ def vme_plot_current(
         smoothing_window=50):
     """ Plots the current vs time of the shots """
 
-    rows = 3
-    root = 'G:\\data\\singleloop\\singleloop_VME\\data\\'
-    foldername = '2013.03.14\\'
+    rows = 3                    # IV data has 3 rows.
+    
+    root = idlsup.get_idl_vme_path()
 
     for counter in range(0, len(shots)):
-        constructor = 'vi_t2ch13_' + str(shots[counter]) + '.dat'
-        filename = root + foldername + constructor
+        constructor = '\\vi_t2ch13_' + str(shots[counter]) + '.dat'
+        filename = root + idlsup.get_shot_date(shots[counter]) + constructor
         data = readVME(filename, rows=rows)
         time = data[0, :]
         signal = data[2, :]
