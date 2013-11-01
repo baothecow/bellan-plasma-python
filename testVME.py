@@ -8,12 +8,30 @@ from vme_analyze import *
 from cookb_signalsmooth import smooth
 
 
-shotnums = ['843', ['844', '845'], '846']
+#shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
+#            ['851', '852', '853', '854', '855'], \
+#            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
+#            ['864', '865', '866', '867', '868']]
 
+
+shotnums = [['879', '880', '881'], ['882', '883', '884'], \
+            ['885', '886', '887'], ['888', '889', '890']]
+            
+descript = ['0V', '30V', '60V', '90V']
+
+
+#shotnums = ['843', '844', '845', '846']
+#shotnums = ['847', '848', '849']
+#shotnums = ['851', '852', '853', '854', '855']
+#shotnums = ['856', '857', '858']
+#shotnums = ['859', '860', '861', '862', '863']
+#shotnums = ['864', '865', '866', '867', '868']
+
+#shotnums = ['850', '851', '852', '853', '854', '855', ['850', '851', '852', '853', '854', '855']]
 
 #vme_plot_current(shotnums)
 
-vme_plot_diag_for_shots(shotnums, diag='current')
+vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
 #
 #
 #
@@ -36,3 +54,6 @@ vme_plot_diag_for_shots(shotnums, diag='current')
 #bar = 'hi'
 #
 #if isinstance(foo, basestring): print 'hi'
+#if isinstance(foo, list): print 'bye'
+#if isinstance(bar, basestring): print 'hi2'
+#if isinstance(bar, list): print 'bye2'

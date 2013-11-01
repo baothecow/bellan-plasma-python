@@ -31,7 +31,7 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     # Storage array of all the signal.
     signal_sum = np.zeros(diag_params[diag+'.cols'])
     
-    # If shotnums is a single string, turn it into a list
+    # If shotnums is a single string, turn it into a list eg '847' -> ['847']
     if isinstance(shotnums, basestring):
         shotnums = [shotnums]
     

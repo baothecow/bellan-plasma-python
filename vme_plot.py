@@ -54,7 +54,6 @@ def vme_smooth_2d_plot(
         smooth_win=plot_diag_params['gen.smooth_win']):
     """ Basic 2D plotting of a single quantity vs time """
     
-
     ## Plot the raw version using a thin line. 
     raw = plt.plot(time, signal)
     plt.setp(raw, color=color, ls=ls)
@@ -65,7 +64,8 @@ def vme_smooth_2d_plot(
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
     plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
-    
+
+ 
     plt.title(title)
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)

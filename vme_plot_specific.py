@@ -31,7 +31,7 @@ def vme_plot_current(shots):
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    
     
-def vme_plot_diag_for_shots(shots_array, diag='current'):
+def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -47,6 +47,9 @@ def vme_plot_diag_for_shots(shots_array, diag='current'):
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
                     * 'sol_hv' is Xiang's high voltage probe
+                    
+        descript - an array of strings containing additional description of
+                each elment in shots_array.
     
     """
 
@@ -59,10 +62,12 @@ def vme_plot_diag_for_shots(shots_array, diag='current'):
         plt.plot(time,signal)
         plt.show()
         plot_diag_params['gen.shotnum'] = shots_array[i]
-        vme_plot_diagnostic(time, signal, diag='current', 
+        vme_plot_diagnostic(time, signal, diag=diag, 
                             color=plot_diag_params['gen.color'+str(i)])
     # Generate legend
-    plt.legend()
+    legend1 = plt.legend(prop={'size':10})
+
+        
     plt.show()    
 
 ## Plot of two signals with common time axis.
