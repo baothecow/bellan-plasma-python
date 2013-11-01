@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from vme_plot import *
 import idl_support as idlsup
 from pylab import subplots_adjust
+from vme_analyze import get_diag_constructor, vme_avg_sig
 
 
 
@@ -30,7 +31,39 @@ def vme_plot_current(shots):
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    
     
+def vme_plot_diag_for_shots(shots_array, diag='current'):
+    """ Plots the diagnostic vs time over multiple shots
 
+        Input:        
+        shots = A array with strings of shot num or lists of strings of shotnums
+            
+            Examples: 
+            ['847'] : plot diagnostic for shot 847. (single line)
+            ['847', '848', '849'] : plot diagnostic for shots 847, 848 and 849.
+            [['847', '848'], '849'] : plot the average and 847 and 848 also plot 849.
+            
+                
+        diag:   string denoting the wanted diagnostics.
+                    * 'current' is rogowski coil current.
+                    * 'tek_hv' is Tektronic high voltage'
+                    * 'sol_hv' is Xiang's high voltage probe
+    
+    """
+
+    # Iterate through the shot numbers.
+    for i in range(0, len(shots_array)):
+        print shots_array[i]
+        data = vme_avg_sig(shots_array[i], diag=diag)
+        time = data[0]
+        signal = data[1]
+        plt.plot(time,signal)
+        plt.show()
+        plot_diag_params['gen.shotnum'] = shots_array[i]
+        vme_plot_diagnostic(time, signal, diag='current', 
+                            color=plot_diag_params['gen.color'+str(i)])
+    # Generate legend
+    plt.legend()
+    plt.show()    
 
 ## Plot of two signals with common time axis.
 def vme_2diag_2d_plot(

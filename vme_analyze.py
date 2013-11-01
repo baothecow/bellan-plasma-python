@@ -18,7 +18,7 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     """ Averages the VME data associated with several shots 
     
         shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
-        diag:   integer denoting the wanted diagnostics.
+        diag:   string denoting the wanted diagnostics.
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
                     * 'sol_hv' is Xiang's high voltage probe
@@ -30,6 +30,10 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     
     # Storage array of all the signal.
     signal_sum = np.zeros(diag_params[diag+'.cols'])
+    
+    # If shotnums is a single string, turn it into a list
+    if isinstance(shotnums, basestring):
+        shotnums = [shotnums]
     
     ## Loop through and sum the data up.
     for shotnum in shotnums:
