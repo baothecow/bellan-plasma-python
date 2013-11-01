@@ -8,14 +8,7 @@ from pylab import subplots_adjust
 
 
 
-def vme_plot_current(
-        shots,
-        title='Current vs time',
-        ytitle='Current (kA)',
-        xtitle='Time (' + '$\mu$' + 's)',
-        xlim=[10,30],
-        ylim=[-40, 40],
-        smooth_win=50):
+def vme_plot_current(shots):
     """ Plots the current vs time of the shots """
 
     rows = 3                    # IV data has 3 rows.
@@ -28,21 +21,8 @@ def vme_plot_current(
         data = readVME(filename, rows=rows)
         time = data[0, :]
         signal = data[2, :]
-        
-        vme_plot_diagnostic(time, signal, diag='current')
-
-#        vme_basic_2d_plot(
-#            time,
-#            signal, 
-#            color_counter=counter,
-#            title=title,
-#            xtitle=xtitle,
-#            ytitle=ytitle,
-#            xlim=xlim,
-#            ylim=ylim,
-#            smooth_win=smooth_win)
-
-
+        vme_plot_diagnostic(time, signal, diag='current', 
+                            color=plot_diag_params['gen.color'+str(counter)])
     # Label the shot numbers.
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    
@@ -54,7 +34,9 @@ def vme_2diag_2d_plot(
         signal_1,
         signal_2,
         diag1='tek_hv',
-        diag2='current'
+        diag2='current',
+        color=plot_diag_params['gen.color'],
+        ls=plot_diag_params['gen.ls']
         ):
     """ 2D Plot of two signals with common time axis. """
 
@@ -67,11 +49,11 @@ def vme_2diag_2d_plot(
     ## each subplot.    
     
     plt.subplot(211)
-    vme_plot_diagnostic(time, signal_1, diag=diag1)
+    vme_plot_diagnostic(time, signal_1, diag=diag1, color=color, ls=ls)
     
     plt.subplot(212)
     plot_diag_params[diag2 + '.title'] = ""    ## Removes the second title.
-    vme_plot_diagnostic(time, signal_2, diag=diag2)
+    vme_plot_diagnostic(time, signal_2, diag=diag2, color=color, ls=ls)
 
     ## Remove the spacing between the subplots
     subplots_adjust(hspace=0.001)

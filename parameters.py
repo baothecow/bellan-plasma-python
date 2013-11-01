@@ -23,6 +23,7 @@ plot_diag_params = {
 
     ## Default parameters.
     'gen.color': 'k',
+    'gen.ls': '-',
     'gen.title': 'Generic plot title',
     'gen.xtitle': 'Generic x title',
     'gen.ytitle': 'Generic y title',
@@ -30,5 +31,15 @@ plot_diag_params = {
     'gen.ylim': (-40, 40),
     'gen.thin_ln_width': .5,
     'gen.med_ln_width': 1,
-    'gen.thick_ln_width': .5
+    'gen.thick_ln_width': 2,
+    'gen.smooth_win': 50,
+
+    ## Default colors
+    'gen.color0': 'r',
+    'gen.color1': 'b',
+    'gen.color2': 'g',
+    'gen.color3': 'c',
+    'gen.color4': 'm',
+    'gen.color5': 'y',
+    'gen.color6': 'k'
 }     
