@@ -29,6 +29,7 @@ def vme_plot_current(shots):
     # Label the shot numbers.
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    
+    
 
 
 ## Plot of two signals with common time axis.

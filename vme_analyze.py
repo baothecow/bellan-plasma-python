@@ -1,6 +1,9 @@
 """ A collection of data analysis functions
 
-    vme_avg_sig     Averages VME data given a list of shots.
+    vme_avg_sig:    Averages VME data given a list of shots.
+    get_diag_constructor:   Constructs the proper file name for a given data
+        type.
+    
 
 """
 
