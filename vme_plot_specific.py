@@ -21,8 +21,11 @@ def vme_plot_current(shots):
         data = readVME(filename, rows=rows)
         time = data[0, :]
         signal = data[2, :]
+        plot_diag_params['gen.shotnum'] = shots[counter]
         vme_plot_diagnostic(time, signal, diag='current', 
                             color=plot_diag_params['gen.color'+str(counter)])
+    # Generate legend
+    plt.legend()
     # Label the shot numbers.
     plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
     plt.show()    

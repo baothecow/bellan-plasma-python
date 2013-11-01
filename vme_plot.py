@@ -29,12 +29,15 @@ def vme_basic_2d_plot(
     ## Plot the raw version using a thin line. 
     raw = plt.plot(time, signal)
     plt.setp(raw, color=color, ls=ls)
+    plt.setp(raw, label=plot_diag_params['gen.shotnum'])
     
     plt.title(title)
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)
     plt.xlim(xlim)
     plt.ylim(ylim)
+    
+    return raw
 
 
 ## Basic 2D plot of signal vs time.
@@ -61,12 +64,15 @@ def vme_smooth_2d_plot(
     smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
+    plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
     
     plt.title(title)
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)
     plt.xlim(xlim)
     plt.ylim(ylim)
+    
+    return smoothed
   
 
 def vme_plot_diagnostic(

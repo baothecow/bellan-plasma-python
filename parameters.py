@@ -33,6 +33,7 @@ plot_diag_params = {
     'gen.med_ln_width': 1,
     'gen.thick_ln_width': 2,
     'gen.smooth_win': 50,
+    'gen.shotnum': '-999',
 
     ## Default colors
     'gen.color0': 'r',

@@ -16,9 +16,9 @@ vme_plot_current(shotnums)
 
 
 
-
 #
 data = vme_avg_sig(shotnums, diag='current')
+
 plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
 #
 ##vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
