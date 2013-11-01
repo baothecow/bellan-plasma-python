@@ -21,6 +21,15 @@ plot_diag_params = {
     'tek_hv.ylim': [-4000, 1000],
     'tek_hv.smooth_win': 50,
 
+    ## Xiang Zhai's Isolated HV probe parameters
+    'iso_hv.name': 'Isolated HV Probe',
+    'iso_hv.title': 'Voltage vs time',
+    'iso_hv.ytitle': 'Voltage (V)',
+    'iso_hv.xtitle': 'Time (' + '$\mu$' + 's)',
+    'iso_hv.xlim': [10, 30],
+    'iso_hv.ylim': [-4000, 1000],
+    'iso_hv.smooth_win': 50,
+
     ## Default parameters.
     'gen.color': 'k',
     'gen.ls': '-',
@@ -61,5 +70,9 @@ diag_params = {
     'tek_hv.rows': 3,
     'tek_hv.cols': 8192,
     'tek_hv.ind' : 1,
-    'tek_hv.vme' : 'iv'
+    'tek_hv.vme' : 'iv',
+    'iso_hv.rows': 2,
+    'iso_hv.cols': 8192,
+    'iso_hv.ind' : 1,
+    'iso_hv.vme' : 'HV'
 }

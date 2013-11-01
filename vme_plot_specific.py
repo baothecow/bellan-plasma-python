@@ -46,7 +46,7 @@ def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
         diag:   string denoting the wanted diagnostics.
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
-                    * 'sol_hv' is Xiang's high voltage probe
+                    * 'iso_hv' is Xiang's Isolated high voltage probe
                     
         descript - an array of strings containing additional description of
                 each elment in shots_array.

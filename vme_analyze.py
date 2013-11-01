@@ -21,7 +21,7 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
         diag:   string denoting the wanted diagnostics.
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
-                    * 'sol_hv' is Xiang's high voltage probe
+                    * 'iso_hv' is Xiang's high voltage probe
         smoothing_constant: Smoothing to be used.
         
         returns an 1d array with the signal average.
@@ -54,6 +54,8 @@ def get_diag_constructor(shotnum, vme_extension):
     
     if vme_extension == 'iv':
         return '\\vi_t2ch13_' + shotnum + '.dat'
+    if vme_extension == 'HV':
+        return '\\HV_' + shotnum + '.dat'
 
 
 
