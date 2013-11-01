@@ -7,6 +7,7 @@
 
 import idl_support as idlsup
 import numpy as np
+from parameters import diag_params
 from file_io_lib import readVME
 
 
@@ -50,22 +51,6 @@ def get_diag_constructor(shotnum, vme_extension):
 
 
 
-## Dict containing the parameteres associated with diagnostics.
-#       row: number of rows in VME file.
-#       cols: standard # of elements saved.
-#       ind: index within the VME file. In 'iv' files, ind=2 for current.
-#       vme: name saved under vme.
-     
-diag_params = {
-    'current.rows': 3,
-    'current.cols': 8192,
-    'current.ind' : 2,
-    'current.vme' : 'iv',
-    'tek_hv.rows': 3,
-    'tek_hv.cols': 8192,
-    'tek_hv.ind' : 1,
-    'tek_hv.vme' : 'iv'
-}
 
 
 
