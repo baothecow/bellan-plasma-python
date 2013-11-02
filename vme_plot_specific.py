@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from vme_plot import *
 import idl_support as idlsup
 from pylab import subplots_adjust
-from vme_analyze import get_diag_constructor, vme_avg_sig
+from vme_analyze import vme_avg_sig
 
 
 

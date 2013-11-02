@@ -36,8 +36,12 @@ plot_diag_params = {
     'sol_mpa.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.xlim': [10, 30],
-    'sol_mpa.ylim': [-1000, 1000],
+    'sol_mpa.ylim': [-5, 5],
     'sol_mpa.smooth_win': 50,
+    'sol_mpa.subplot.styles': [311, 312, 313],
+    'sol_mpa.subplot.titles': ['Magnetic Field vs time', ' ', ' '],
+    'sol_mpa.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
+    'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
 
     ## Default parameters.
     'gen.color': 'k',
@@ -52,6 +56,7 @@ plot_diag_params = {
     'gen.thick_ln_width': 2,
     'gen.smooth_win': 50,
     'gen.shotnum': '-999',
+    'gen.vector.label': ['X', 'Y', 'Z'],   # Used in labeling vectors plots.
 
     ## Default colors
     'gen.color0': 'r',
@@ -83,13 +88,13 @@ diag_params = {
     'tek_hv.ind': 1,
     'tek_hv.vme': 'iv',
     'tek_hv.numprobes': 1,
-    'current.datatype' : 'scalar',
+    'tek_hv.datatype' : 'scalar',
     'iso_hv.rows': 2,
     'iso_hv.cols': 8192,
     'iso_hv.ind': 1,
     'iso_hv.vme': 'HV',
     'iso_hv.numprobes': 1,
-    'current.datatype': 'scalar',
+    'iso_hv.datatype': 'scalar',
     'sol_mpa.rows': 5,
     'sol_mpa.cols': 16384,
     'sol_mpa.ind': 1,
@@ -97,8 +102,4 @@ diag_params = {
     'sol_mpa.vme': 'sol_mpa_bx',     # Default value is bx
     'sol_mpa.numprobes': 4,
     'sol_mpa.datatype': 'vector'
-    
-##    'sol_mpa.vme.x' : 'sol_mpa_bx',
-##    'sol_mpa.vme.y' : 'sol_mpa_by',
-##    'sol_mpa.vme.z' : 'sol_mpa_bz'
 }

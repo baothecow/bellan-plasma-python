@@ -38,6 +38,8 @@ def vme_avg_scalar_sig(shotnums, diag='current', smoothing_constant=50):
                        rows=diag_params[diag+'.rows'])
         time = data[0, :]
         signal = data[diag_params[diag+'.ind'], :] 
+        ## Subtract off any dc offset from the first 100 points of the signal.
+        signal = signal - np.mean(signal[0:100])
         signal_sum = np.add(signal, signal_sum)
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
@@ -85,14 +87,11 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     """ 
 
     if diag_params[diag+'.datatype'] == 'scalar':
-        print 'hi there'
-        ret = vme_avg_scalar_sig(shotnums, diag=diag)
+        return vme_avg_scalar_sig(shotnums, diag=diag)
     
     if diag_params[diag+'.datatype'] == 'vector':
-        print 'hello there'
-        ret = vme_avg_vector_sig(shotnums, diag=diag)
+        return vme_avg_vector_sig(shotnums, diag=diag)
 
-    return ret
         
 def get_diag_constructor(shotnum, vme_extension):
     """ Construct the filename for a specific diagnostics """
