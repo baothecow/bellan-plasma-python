@@ -59,8 +59,6 @@ def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
         data = vme_avg_sig(shots_array[i], diag=diag)
         time = data[0]
         signal = data[1]
-        plt.plot(time,signal)
-        plt.show()
         plot_diag_params['gen.shotnum'] = shots_array[i]
         vme_plot_diagnostic(time, signal, diag=diag, 
                             color=plot_diag_params['gen.color'+str(i)])

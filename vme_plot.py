@@ -64,7 +64,8 @@ def vme_2d_plot_scalar(
         plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
     
     ## Plot the smoothed version using a thicker line.
-    smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
+    smoothed_signal = smooth(signal, window_len=smooth_win)
+    smoothed = plt.plot(time, smoothed_signal)
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
     plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
