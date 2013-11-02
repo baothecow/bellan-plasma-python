@@ -42,7 +42,7 @@ plot_diag_params = {
     'sol_mpa.ylim': [-10, 10],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': [311, 312, 313],
-    'sol_mpa.subplot.titles': [' ', ' ', ' '],
+    'sol_mpa.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
 

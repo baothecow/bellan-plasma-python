@@ -24,7 +24,7 @@ descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
 
 
 #shotnums = ['847', '848']
-vme_plot_diag_for_shots(shotnums, diag='sol_mpa', descript=descript)
+vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
 
 
 #shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \

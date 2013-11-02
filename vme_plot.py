@@ -90,8 +90,7 @@ def vme_2d_plot_vector_signal(
             )
         
         # Label the plot.
-        plt.setp(smooth, label=plot_diag_params['gen.shotnum'] + ': ' + \
-                 plot_diag_params['gen.multiprobe.label'])
+        plt.setp(smooth, label=plot_diag_params['gen.shotnum'])
                
     ## Set overall title.    
     plt.suptitle(title)
