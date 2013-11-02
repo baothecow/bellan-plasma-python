@@ -1,8 +1,10 @@
 """ Contains functions which allow python-idl interactivity 
 
 
-    Example: get_shot_date(shotnum) returns a string with date.
-
+    get_shot_date(shotnum): returns a string with date associated with shotnum.
+    gen_read_foldername_pro(shotnum): gemerate tmp file to interact with IDL.
+    get_idl_lib_path()
+    get_idl_vme_path()
 
 
 """

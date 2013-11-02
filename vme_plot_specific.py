@@ -1,36 +1,13 @@
 ## File contains specific plotting routines.
 
-from file_io_lib import readVME
+
 import matplotlib.pyplot as plt
 from vme_plot import *
-import idl_support as idlsup
 from pylab import subplots_adjust
 from vme_analyze import vme_avg_sig, vme_get_time_from_data, vme_get_signal_from_data
 
 
 
-def vme_plot_current(shots):
-    """ Plots the current vs time of the shots """
-
-    rows = 3                    # IV data has 3 rows.
-    
-    root = idlsup.get_idl_vme_path()
-
-    for counter in range(0, len(shots)):
-        constructor = '\\vi_t2ch13_' + str(shots[counter]) + '.dat'
-        filename = root + idlsup.get_shot_date(shots[counter]) + constructor
-        data = readVME(filename, rows=rows)
-        time = data[0, :]
-        signal = data[2, :]
-        plot_diag_params['gen.shotnum'] = shots[counter]
-        vme_plot_diagnostic(time, signal, diag='current', 
-                            color=plot_diag_params['gen.color'+str(counter)])
-    # Generate legend
-    plt.legend()
-    # Label the shot numbers.
-    plt.figtext(.5,.85,'Shot(s): ' + ", ".join(shots), fontsize=10, ha='center')
-    plt.show()    
-    
 def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
     """ Plots the diagnostic vs time over multiple shots
 

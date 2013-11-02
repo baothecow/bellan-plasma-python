@@ -12,33 +12,6 @@ from cookb_signalsmooth import smooth
 from parameters import plot_diag_params, diag_params
 
 
-### Basic 2D plot of signal vs time.
-#def vme_basic_2d_plot(
-#        time,
-#        signal, 
-#        color=plot_diag_params['gen.color'],
-#        ls=plot_diag_params['gen.ls'],
-#        title=plot_diag_params['gen.title'],
-#        xtitle=plot_diag_params['gen.xtitle'],
-#        ytitle=plot_diag_params['gen.ytitle'],
-#        xlim=plot_diag_params['gen.xlim'],
-#        ylim=plot_diag_params['gen.ylim'],
-#        ):
-#    """ Basic 2D plotting of a single quantity vs time """
-#
-#    ## Plot the raw version using a thin line. 
-#    raw = plt.plot(time, signal)
-#    plt.setp(raw, color=color, ls=ls)
-#    plt.setp(raw, label=plot_diag_params['gen.shotnum'])
-#    
-#    plt.title(title)
-#    plt.ylabel(ytitle)
-#    plt.xlabel(xtitle)
-#    plt.xlim(xlim)
-#    plt.ylim(ylim)
-#    
-#    return raw
-
 
 ## Basic 2D plot of signal vs time.
 def vme_2d_plot_scalar_signal(

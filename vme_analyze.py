@@ -80,12 +80,9 @@ def vme_get_signal_from_data(data, diag):
     if diag_params[diag+'.datatype'] == 'scalar':
         return data[1]
     if diag_params[diag+'.datatype'] == 'vector':
-        signal = list()
-        
+        signal = list()        
         for component in diag_params[diag + '.components']:
-            signal.append(data[component])
-        
-        print signal
+            signal.append(data[component])       
         return signal
         
     
