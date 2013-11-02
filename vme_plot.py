@@ -52,7 +52,8 @@ def vme_2d_plot_scalar(
         ytitle=plot_diag_params['gen.ytitle'],
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
-        smooth_win=plot_diag_params['gen.smooth_win']):
+        smooth_win=plot_diag_params['gen.smooth_win'],
+        label=True):
     """ Basic 2D plotting of a single quantity vs time """    
     
     ## Check to see if raw is wanted.
@@ -66,7 +67,9 @@ def vme_2d_plot_scalar(
     smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
-    plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
+    
+    # Label the plot.
+    if label: plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
 
  
     plt.title(title)
@@ -101,17 +104,27 @@ def vme_2d_plot_vector(
     ## Loop through the components of the vector
     for i in range(0, len(vector)):
         plt.subplot(subplot[i])
-        raw = plt.plot(time, vector[i])
-        plt.setp(raw, color=color, ls=ls)
-        plt.setp(raw, label=plot_diag_params['gen.shotnum'] + ': ' + \
+        
+        smooth = vme_2d_plot_scalar(
+            time, 
+            vector[i],
+            color=color,
+            ls=ls,
+            subplot=subplot,
+            title=subplot_title[i],
+            xtitle=subplot_xtitle[i],
+            ytitle=subplot_ytitle[i],
+            xlim=xlim,
+            ylim=ylim,
+            label=False
+            )
+        
+        # Label the plot.
+        plt.setp(smooth, label=plot_diag_params['gen.shotnum'] + ': ' + \
                  plot_diag_params['gen.vector.label'][i])
-        plt.title(subplot_title[i])
-        plt.xlabel(subplot_xtitle[i])
-        plt.ylabel(subplot_ytitle[i])
-        plt.suptitle(title)
-        plt.xlim(xlim)
-        plt.ylim(ylim)
-    
+               
+    ## Set overall title.    
+    plt.suptitle(title)
   
 
 def vme_plot_diagnostic(

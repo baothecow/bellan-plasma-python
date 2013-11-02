@@ -60,6 +60,7 @@ plot_diag_params = {
     'gen.subplot.scalar': [111],            # No generic sub plot.
     'gen.subplot.vector': [311, 312, 313],
     'gen.include.raw': True,                # Default is to include raw.
+    'gen.label.current.plot': True,         # Sets whether to label a plot or not.
     'gen.subplot.ytitles': [' ', ' ', ' '],
     'gen.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'gen.subplot.titles': ['x', 'y', 'z'],
