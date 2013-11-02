@@ -15,21 +15,21 @@ from cookb_signalsmooth import smooth
 #
 #descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
 
-#mpa_data = vme_avg_sig(['847', '859'], diag='sol_mpa')
+mpa_data = vme_avg_sig(['847', '859'], diag='sol_mpa')
+
+time = mpa_data['time']
+vector = (mpa_data['bx'], mpa_data['bz'], mpa_data['bz'])
+
+vme_plot_diagnostic(time, vector, diag='sol_mpa')
+
+
+#shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \
+#            ['250', '252', '253'], ['254', '255', '256'], \
+#            ['257', '258', '259', '260']]
 #
-#time = mpa_data['time']
-#vector = (mpa_data['bx'], mpa_data['bz'], mpa_data['bz'])
+#descript = ['0V', '50V', '100V', '150V', '200V']
 #
-#vme_plot_diagnostic(time, vector, diag='sol_mpa')
-
-
-shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \
-            ['250', '252', '253'], ['254', '255', '256'], \
-            ['257', '258', '259', '260']]
-
-descript = ['0V', '50V', '100V', '150V', '200V']
-
-vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
+#vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
 
 
 

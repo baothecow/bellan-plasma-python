@@ -32,14 +32,14 @@ plot_diag_params = {
 
     ## MPA plot properties.
     'sol_mpa.name': 'Solar MPA',
-    'sol_mpa.title': 'Magnetic Field vs time',
+    'sol_mpa.title': 'Bdot vs time',
     'sol_mpa.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.xlim': [10, 30],
     'sol_mpa.ylim': [-5, 5],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': [311, 312, 313],
-    'sol_mpa.subplot.titles': ['Magnetic Field vs time', ' ', ' '],
+    'sol_mpa.subplot.titles': [' ', ' ', ' '],
     'sol_mpa.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
 
@@ -60,6 +60,9 @@ plot_diag_params = {
     'gen.subplot.scalar': [111],            # No generic sub plot.
     'gen.subplot.vector': [311, 312, 313],
     'gen.include.raw': True,                # Default is to include raw.
+    'gen.subplot.ytitles': [' ', ' ', ' '],
+    'gen.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
+    'gen.subplot.titles': ['x', 'y', 'z'],
 
     ## Default colors
     'gen.color0': 'r',

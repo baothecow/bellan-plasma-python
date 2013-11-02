@@ -86,14 +86,17 @@ def vme_2d_plot_vector(
         ls=plot_diag_params['gen.ls'],
         subplot=plot_diag_params['gen.subplot.vector'],
         title=plot_diag_params['gen.title'],
-        xtitle=plot_diag_params['gen.xtitle'],
-        ytitle=plot_diag_params['gen.ytitle'],
+        subplot_title=plot_diag_params['gen.subplot.titles'],
+        subplot_xtitle=plot_diag_params['gen.subplot.xtitles'],
+        subplot_ytitle=plot_diag_params['gen.subplot.ytitles'],
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win']):
     """ Plot each vector components as individual plots aligned appropriately """
 
-
+    ## Error checking
+    if subplot == plot_diag_params['gen.subplot.vector']:
+        subplot = plot_diag_params['gen.subplot.vector']
     
     ## Loop through the components of the vector
     for i in range(0, len(vector)):
@@ -102,14 +105,13 @@ def vme_2d_plot_vector(
         plt.setp(raw, color=color, ls=ls)
         plt.setp(raw, label=plot_diag_params['gen.shotnum'] + ': ' + \
                  plot_diag_params['gen.vector.label'][i])
-        plt.title(plot_diag_params[diag+'.subplot.titles'][i])
-        plt.xlabel(plot_diag_params[diag+'.subplot.xtitles'][i])
-        plt.ylabel(plot_diag_params[diag+'.subplot.ytitles'][i])
+        plt.title(subplot_title[i])
+        plt.xlabel(subplot_xtitle[i])
+        plt.ylabel(subplot_ytitle[i])
+        plt.suptitle(title)
         plt.xlim(xlim)
         plt.ylim(ylim)
- 
-     
-
+    
   
 
 def vme_plot_diagnostic(
@@ -117,7 +119,7 @@ def vme_plot_diagnostic(
         signal,
         diag='current',
         color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls']
+        ls=plot_diag_params['gen.ls'],
         ):
     """ Plots diagnostics of an array of shotnumbers """
     
@@ -128,6 +130,7 @@ def vme_plot_diagnostic(
             signal,
             color=color,
             ls=ls,
+            subplot=plot_diag_params['gen.subplot.scalar'],
             title=plot_diag_params[diag + '.title'],
             xtitle=plot_diag_params[diag + '.xtitle'],
             ytitle=plot_diag_params[diag + '.ytitle'],
@@ -135,6 +138,7 @@ def vme_plot_diagnostic(
             ylim=plot_diag_params[diag + '.ylim']
             )
     
+    ## If the user sent in a vector diagnostic w/o specifying the subplot
     if diag_params[diag+'.datatype'] == 'vector':
         return vme_2d_plot_vector(
             time, 
@@ -142,9 +146,11 @@ def vme_plot_diagnostic(
             diag=diag,
             color=color,
             ls=ls,
+            subplot=plot_diag_params[diag + '.subplot.styles'],
             title=plot_diag_params[diag + '.title'],
-            xtitle=plot_diag_params[diag + '.xtitle'],
-            ytitle=plot_diag_params[diag + '.ytitle'],
+            subplot_title=plot_diag_params[diag + '.subplot.titles'],
+            subplot_xtitle=plot_diag_params[diag + '.subplot.xtitles'],
+            subplot_ytitle=plot_diag_params[diag + '.subplot.ytitles'],
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim']
             )
