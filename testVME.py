@@ -8,13 +8,13 @@ from vme_analyze import *
 from cookb_signalsmooth import smooth
 
 
-#shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
-#            ['851', '852', '853', '854', '855'], \
-#            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
-#            ['864', '865', '866', '867', '868']]
-#
-#descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
-#
+shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
+            ['851', '852', '853', '854', '855'], \
+            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
+            ['864', '865', '866', '867', '868']]
+
+descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
+
 #mpa_data = vme_avg_sig(['847', '859'], diag='sol_mpa')
 #
 #time = mpa_data['time']
@@ -60,8 +60,8 @@ vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
 #data = vme_avg_sig(shotnums, diag='current')
 #
 #plt.plot(data[0], smooth(data[1], 50), '-k', linewidth=2)
-#
-##vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
+
+#vme_plot_diagnostic(data[0], smooth(data[1], 50), diag='tek_hv')
 
 #shotnums=['843', '844', '845', '846']
 #data = vme_avg_sig(shotnums, diag='tek_hv')

@@ -12,36 +12,36 @@ from cookb_signalsmooth import smooth
 from parameters import plot_diag_params, diag_params
 
 
+### Basic 2D plot of signal vs time.
+#def vme_basic_2d_plot(
+#        time,
+#        signal, 
+#        color=plot_diag_params['gen.color'],
+#        ls=plot_diag_params['gen.ls'],
+#        title=plot_diag_params['gen.title'],
+#        xtitle=plot_diag_params['gen.xtitle'],
+#        ytitle=plot_diag_params['gen.ytitle'],
+#        xlim=plot_diag_params['gen.xlim'],
+#        ylim=plot_diag_params['gen.ylim'],
+#        ):
+#    """ Basic 2D plotting of a single quantity vs time """
+#
+#    ## Plot the raw version using a thin line. 
+#    raw = plt.plot(time, signal)
+#    plt.setp(raw, color=color, ls=ls)
+#    plt.setp(raw, label=plot_diag_params['gen.shotnum'])
+#    
+#    plt.title(title)
+#    plt.ylabel(ytitle)
+#    plt.xlabel(xtitle)
+#    plt.xlim(xlim)
+#    plt.ylim(ylim)
+#    
+#    return raw
+
+
 ## Basic 2D plot of signal vs time.
-def vme_basic_2d_plot(
-        time,
-        signal, 
-        color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls'],
-        title=plot_diag_params['gen.title'],
-        xtitle=plot_diag_params['gen.xtitle'],
-        ytitle=plot_diag_params['gen.ytitle'],
-        xlim=plot_diag_params['gen.xlim'],
-        ylim=plot_diag_params['gen.ylim'],
-        ):
-    """ Basic 2D plotting of a single quantity vs time """
-
-    ## Plot the raw version using a thin line. 
-    raw = plt.plot(time, signal)
-    plt.setp(raw, color=color, ls=ls)
-    plt.setp(raw, label=plot_diag_params['gen.shotnum'])
-    
-    plt.title(title)
-    plt.ylabel(ytitle)
-    plt.xlabel(xtitle)
-    plt.xlim(xlim)
-    plt.ylim(ylim)
-    
-    return raw
-
-
-## Basic 2D plot of signal vs time.
-def vme_smooth_2d_plot(
+def vme_2d_plot_scalar(
         time,
         signal, 
         color=plot_diag_params['gen.color'],
@@ -54,10 +54,14 @@ def vme_smooth_2d_plot(
         smooth_win=plot_diag_params['gen.smooth_win']):
     """ Basic 2D plotting of a single quantity vs time """
     
-    ## Plot the raw version using a thin line. 
-    raw = plt.plot(time, signal)
-    plt.setp(raw, color=color, ls=ls)
-    plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
+        
+    
+    ## Check to see if raw is wanted.
+    if plot_diag_params['gen.include.raw']:
+        ## Plot the raw version using a thin line
+        raw = plt.plot(time, signal)
+        plt.setp(raw, color=color, ls=ls)
+        plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
     
     ## Plot the smoothed version using a thicker line.
     smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
@@ -119,7 +123,7 @@ def vme_plot_diagnostic(
     
     
     if diag_params[diag+'.datatype'] == 'scalar':
-        return vme_smooth_2d_plot(
+        return vme_2d_plot_scalar(
             time, 
             signal,
             color=color,

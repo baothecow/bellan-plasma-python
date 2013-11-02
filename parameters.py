@@ -56,7 +56,9 @@ plot_diag_params = {
     'gen.thick_ln_width': 2,
     'gen.smooth_win': 50,
     'gen.shotnum': '-999',
-    'gen.vector.label': ['X', 'Y', 'Z'],   # Used in labeling vectors plots.
+    'gen.vector.label': ['X', 'Y', 'Z'],    # Used in labeling vectors plots.
+    'gen.subplot.style': [111],             # No generic sub plot.
+    'gen.include.raw': True,                # Default is to include raw.
 
     ## Default colors
     'gen.color0': 'r',
