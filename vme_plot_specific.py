@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from vme_plot import *
 import idl_support as idlsup
 from pylab import subplots_adjust
-from vme_analyze import vme_avg_sig
+from vme_analyze import vme_avg_sig, vme_get_time_from_data, vme_get_signal_from_data
 
 
 
@@ -56,11 +56,11 @@ def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
-        data = vme_avg_sig(shots_array[i], diag=diag)
-        time = data[0]
-        signal = data[1]
+        data = vme_avg_sig(shots_array[i], diag)
+        time = vme_get_time_from_data(data, diag)
+        signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
-        vme_plot_diagnostic(time, signal, diag=diag, 
+        vme_plot_diagnostic(time, signal, diag, 
                             color=plot_diag_params['gen.color'+str(i)])
     # Generate legend
     legend1 = plt.legend(prop={'size':10})

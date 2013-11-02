@@ -41,7 +41,7 @@ from parameters import plot_diag_params, diag_params
 
 
 ## Basic 2D plot of signal vs time.
-def vme_2d_plot_scalar(
+def vme_2d_plot_scalar_signal(
         time,
         signal, 
         color=plot_diag_params['gen.color'],
@@ -81,9 +81,9 @@ def vme_2d_plot_scalar(
     return smoothed
     
 ## Plot of all three vector components.
-def vme_2d_plot_vector(
+def vme_2d_plot_vector_signal(
         time,
-        vector, 
+        signals, 
         color=plot_diag_params['gen.color'],
         ls=plot_diag_params['gen.ls'],
         subplot=plot_diag_params['gen.subplot.vector'],
@@ -101,12 +101,12 @@ def vme_2d_plot_vector(
         subplot = plot_diag_params['gen.subplot.vector']
     
     ## Loop through the components of the vector
-    for i in range(0, len(vector)):
+    for i in range(0, len(signals)):
         plt.subplot(subplot[i])
         
-        smooth = vme_2d_plot_scalar(
+        smooth = vme_2d_plot_scalar_signal(
             time, 
-            vector[i],
+            signals[i],
             color=color,
             ls=ls,
             subplot=subplot,
@@ -126,20 +126,7 @@ def vme_2d_plot_vector(
     plt.suptitle(title)
   
 
-def vme_plot_diagnostic(
-        time, 
-        signal,
-        diag,
-        color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls'],
-        ):
-    """ Plots diagnostics of an array using generic parameters """
-    
-    
-    vme_cust_plot_diagnostic(time, signal, diag,        
-        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls)
-
-            
+           
 def vme_cust_plot_diagnostic(
         time, 
         signal,
@@ -159,7 +146,7 @@ def vme_cust_plot_diagnostic(
     
     
     if diag_params[diag+'.datatype'] == 'scalar':
-        return vme_2d_plot_scalar(
+        return vme_2d_plot_scalar_signal(
             time, 
             signal,
             color=color,
@@ -174,7 +161,7 @@ def vme_cust_plot_diagnostic(
     
     ## If the user sent in a vector diagnostic w/o specifying the subplot
     if diag_params[diag+'.datatype'] == 'vector':
-        return vme_2d_plot_vector(
+        return vme_2d_plot_vector_signal(
             time, 
             signal,
             color=color,
@@ -187,3 +174,17 @@ def vme_cust_plot_diagnostic(
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim']
             )
+            
+            
+def vme_plot_diagnostic(
+        time, 
+        signal,
+        diag,
+        color=plot_diag_params['gen.color'],
+        ls=plot_diag_params['gen.ls'],
+        ):
+    """ Plots diagnostics of an array using generic parameters """
+    
+    
+    vme_cust_plot_diagnostic(time, signal, diag,        
+        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls)

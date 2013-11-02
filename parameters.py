@@ -81,11 +81,16 @@ plot_diag_params = {
 
 
 
-## Dict containing the parameters associated with diagnostics VME files.
+## Dict containing the parameters associated with a diagnostic's VME parameters.
 #       row: number of rows in VME file.
 #       cols: standard # of elements saved.
 #       ind: index within the VME file. In 'iv' files, ind=2 for current.
+#            for vector diagnostics, this is a placeholder variable.
 #       vme: name saved under vme.
+#       datatype: vector vs scalar diagnostics.
+#       numprobes: number of probes associated with the diagnostics.
+#       components: denotes the components of the diagnostics and how they
+#           are saved within the VME.
 diag_params = {
     'current.rows': 3,
     'current.cols': 8192,

@@ -14,7 +14,7 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 
-def vme_avg_scalar_sig(shotnums, diag='current', smoothing_constant=50):
+def vme_avg_scalar_sig(shotnums, diag='current'):
     """ Averages the VME data associated with several shots 
     
         See vme_avg_sig for input description.
@@ -45,7 +45,7 @@ def vme_avg_scalar_sig(shotnums, diag='current', smoothing_constant=50):
     
     return (time, avg_signal)
     
-def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1, smoothing_constant=50):
+def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
     """ Averages the VME magnetic probe data associated with user inputted shots
     
         See vme_avg_sig for input description.
@@ -68,8 +68,29 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1, smoothing_constant=
         
     return probe_data
     
+def vme_get_time_from_data(data, diag):
+    """ extracts time from data from vme_avg_sig """
+    if diag_params[diag+'.datatype'] == 'scalar':
+        return data[0]
+    if diag_params[diag+'.datatype'] == 'vector':
+        return data['time']
+        
+def vme_get_signal_from_data(data, diag):
+    """ extracts time from data from vme_avg_sig """
+    if diag_params[diag+'.datatype'] == 'scalar':
+        return data[1]
+    if diag_params[diag+'.datatype'] == 'vector':
+        signal = list()
+        
+        for component in diag_params[diag + '.components']:
+            signal.append(data[component])
+        
+        print signal
+        return signal
+        
     
-def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
+    
+def vme_avg_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
     
         shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
