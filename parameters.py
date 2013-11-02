@@ -11,6 +11,7 @@ plot_diag_params = {
     'current.xlim': [10, 30],
     'current.ylim': [-40, 40],
     'current.smooth_win': 50,
+    'current.subplot.styles': 111,
     
     ## Tektronic HV probe parameters
     'tek_hv.name': 'Tektronic HV',
@@ -20,6 +21,7 @@ plot_diag_params = {
     'tek_hv.xlim': [10, 30],
     'tek_hv.ylim': [-4000, 1000],
     'tek_hv.smooth_win': 50,
+    'tek_hv.subplot.styles': 111,
 
     ## Xiang Zhai's Isolated HV probe parameters
     'iso_hv.name': 'Isolated HV Probe',
@@ -29,6 +31,7 @@ plot_diag_params = {
     'iso_hv.xlim': [10, 30],
     'iso_hv.ylim': [-4000, 1000],
     'iso_hv.smooth_win': 50,
+    'iso_hv.subplot.styles': 111,
 
     ## MPA plot properties.
     'sol_mpa.name': 'Solar MPA',

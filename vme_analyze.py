@@ -91,6 +91,7 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     
     if diag_params[diag+'.datatype'] == 'vector':
         return vme_avg_vector_sig(shotnums, diag=diag)
+        
 
         
 def get_diag_constructor(shotnum, vme_extension):

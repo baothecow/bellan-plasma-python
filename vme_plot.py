@@ -84,7 +84,6 @@ def vme_2d_plot_scalar(
 def vme_2d_plot_vector(
         time,
         vector, 
-        diag='sol_mpa',
         color=plot_diag_params['gen.color'],
         ls=plot_diag_params['gen.ls'],
         subplot=plot_diag_params['gen.subplot.vector'],
@@ -130,11 +129,33 @@ def vme_2d_plot_vector(
 def vme_plot_diagnostic(
         time, 
         signal,
-        diag='current',
+        diag,
         color=plot_diag_params['gen.color'],
         ls=plot_diag_params['gen.ls'],
         ):
-    """ Plots diagnostics of an array of shotnumbers """
+    """ Plots diagnostics of an array using generic parameters """
+    
+    
+    vme_cust_plot_diagnostic(time, signal, diag,        
+        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls)
+
+            
+def vme_cust_plot_diagnostic(
+        time, 
+        signal,
+        diag,
+        subplot,
+        color=plot_diag_params['gen.color'],
+        ls=plot_diag_params['gen.ls'],
+        ):
+    """ Used to make a customized diagnostics of an array of shotnumbers 
+
+    This routine also accepts the subplot command requires the user to
+    explicitly think about the location of the subplot and input it carefully.
+
+    There is very little error checking here.    
+    
+    """
     
     
     if diag_params[diag+'.datatype'] == 'scalar':
@@ -143,7 +164,7 @@ def vme_plot_diagnostic(
             signal,
             color=color,
             ls=ls,
-            subplot=plot_diag_params['gen.subplot.scalar'],
+            subplot=subplot,
             title=plot_diag_params[diag + '.title'],
             xtitle=plot_diag_params[diag + '.xtitle'],
             ytitle=plot_diag_params[diag + '.ytitle'],
@@ -156,10 +177,9 @@ def vme_plot_diagnostic(
         return vme_2d_plot_vector(
             time, 
             signal,
-            diag=diag,
             color=color,
             ls=ls,
-            subplot=plot_diag_params[diag + '.subplot.styles'],
+            subplot=subplot,
             title=plot_diag_params[diag + '.title'],
             subplot_title=plot_diag_params[diag + '.subplot.titles'],
             subplot_xtitle=plot_diag_params[diag + '.subplot.xtitles'],
@@ -167,4 +187,3 @@ def vme_plot_diagnostic(
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim']
             )
-    

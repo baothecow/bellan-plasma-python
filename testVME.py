@@ -15,12 +15,16 @@ from cookb_signalsmooth import smooth
 #
 #descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
 
-mpa_data = vme_avg_sig(['847', '859'], diag='sol_mpa')
+mpa_data = vme_avg_sig(['847', '848'], diag='sol_mpa')
 
 time = mpa_data['time']
 vector = (mpa_data['bx'], mpa_data['bz'], mpa_data['bz'])
 
 vme_plot_diagnostic(time, vector, diag='sol_mpa')
+
+
+#shotnums = ['847', '848']
+#vme_plot_diag_for_shots(shotnums, diag='sol_mpa', descript=descript)
 
 
 #shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \
