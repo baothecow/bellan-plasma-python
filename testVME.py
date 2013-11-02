@@ -16,13 +16,20 @@ shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
 descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
 
 
+mpa_data = vme_avg_mpa_probe(['847', '848', '849'])
+
+time = mpa_data['time']
+bx = mpa_data['bx']
+
+plt.plt(time, bx)
+
 #shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \
 #            ['250', '252', '253'], ['254', '255', '256'], \
 #            ['257', '258', '259', '260']]
 #
 #descript = ['0V', '50V', '100V', '150V', '200V']
 #
-vme_plot_diag_for_shots(shotnums, diag='iso_hv', descript=descript)
+#vme_plot_diag_for_shots(shotnums, diag='iso_hv', descript=descript)
 
 
 
