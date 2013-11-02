@@ -39,7 +39,7 @@ plot_diag_params = {
     'sol_mpa.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.xlim': [10, 30],
-    'sol_mpa.ylim': [-5, 5],
+    'sol_mpa.ylim': [-10, 10],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': [311, 312, 313],
     'sol_mpa.subplot.titles': [' ', ' ', ' '],
@@ -59,7 +59,7 @@ plot_diag_params = {
     'gen.thick_ln_width': 2,
     'gen.smooth_win': 50,
     'gen.shotnum': '-999',
-    'gen.vector.label': ['X', 'Y', 'Z'],    # Used in labeling vectors plots.
+    # 'gen.vector.label': 'Probe 1',    # Used in labeling vectors plots.
     'gen.subplot.scalar': [111],            # No generic sub plot.
     'gen.subplot.vector': [311, 312, 313],
     'gen.include.raw': True,                # Default is to include raw.
@@ -67,6 +67,7 @@ plot_diag_params = {
     'gen.subplot.ytitles': [' ', ' ', ' '],
     'gen.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'gen.subplot.titles': ['x', 'y', 'z'],
+    'gen.multiprobe.label': 'Probe 1',
 
     ## Default colors
     'gen.color0': 'r',

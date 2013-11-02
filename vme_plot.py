@@ -66,13 +66,11 @@ def vme_2d_plot_vector_signal(
         subplot_ytitle=plot_diag_params['gen.subplot.ytitles'],
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
-        smooth_win=plot_diag_params['gen.smooth_win']):
+        smooth_win=plot_diag_params['gen.smooth_win'],
+        label=True):
     """ Plot each vector components as individual plots aligned appropriately """
 
-    ## Error checking
-    if subplot == plot_diag_params['gen.subplot.vector']:
-        subplot = plot_diag_params['gen.subplot.vector']
-    
+   
     ## Loop through the components of the vector
     for i in range(0, len(signals)):
         plt.subplot(subplot[i])
@@ -93,10 +91,12 @@ def vme_2d_plot_vector_signal(
         
         # Label the plot.
         plt.setp(smooth, label=plot_diag_params['gen.shotnum'] + ': ' + \
-                 plot_diag_params['gen.vector.label'][i])
+                 plot_diag_params['gen.multiprobe.label'])
                
     ## Set overall title.    
     plt.suptitle(title)
+    
+    return smooth
   
 
            

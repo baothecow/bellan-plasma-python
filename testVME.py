@@ -8,12 +8,12 @@ from vme_analyze import *
 from cookb_signalsmooth import smooth
 
 
-#shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
-#            ['851', '852', '853', '854', '855'], \
-#            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
-#            ['864', '865', '866', '867', '868']]
-#
-#descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
+shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
+            ['851', '852', '853', '854', '855'], \
+            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
+            ['864', '865', '866', '867', '868']]
+
+descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
 #
 #mpa_data = vme_avg_sig(['847', '848'], diag='sol_mpa')
 #
@@ -23,7 +23,7 @@ from cookb_signalsmooth import smooth
 #vme_plot_diagnostic(time, vector, diag='sol_mpa')
 
 
-shotnums = ['847', '848']
+#shotnums = ['847', '848']
 vme_plot_diag_for_shots(shotnums, diag='sol_mpa', descript=descript)
 
 
