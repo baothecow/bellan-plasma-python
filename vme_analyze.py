@@ -96,9 +96,9 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
 def get_diag_constructor(shotnum, vme_extension):
     """ Construct the filename for a specific diagnostics """
     
-    if vme_extension == 'iv':
+    if vme_extension == 'current' or vme_extension == 'tek_hv':
         return '\\vi_t2ch13_' + shotnum + '.dat'
-    if vme_extension == 'HV':
+    if vme_extension == 'iso_hv':
         return '\\HV_' + shotnum + '.dat'
     if vme_extension == 'sol_mpa_bx':
         return '\\bx_4x16384_' + shotnum + '.dat'
