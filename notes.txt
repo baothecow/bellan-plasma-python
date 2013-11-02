@@ -1,0 +1,15 @@
+
+
+Notes on smoothing
+
+* Smoothing is enabled by default on all plots.
+* Default smoothing parameter is specified by gen.smooth_win.  Setting this to 1 turns off smoothing.
+* Diagnostics specific smoothing can be set by setting [diag].smooth_win desired number.
+
+
+Notes on subplot
+
+Default havior of the subplots are
+
+* Single plot if the diagnostic is a scalar.
+* 3 plots stacked on top of one another for vector plots.

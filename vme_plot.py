@@ -46,15 +46,14 @@ def vme_2d_plot_scalar(
         signal, 
         color=plot_diag_params['gen.color'],
         ls=plot_diag_params['gen.ls'],
+        subplot=plot_diag_params['gen.subplot.scalar'],
         title=plot_diag_params['gen.title'],
         xtitle=plot_diag_params['gen.xtitle'],
         ytitle=plot_diag_params['gen.ytitle'],
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win']):
-    """ Basic 2D plotting of a single quantity vs time """
-    
-        
+    """ Basic 2D plotting of a single quantity vs time """    
     
     ## Check to see if raw is wanted.
     if plot_diag_params['gen.include.raw']:
@@ -64,8 +63,7 @@ def vme_2d_plot_scalar(
         plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
     
     ## Plot the smoothed version using a thicker line.
-    smoothed_signal = smooth(signal, window_len=smooth_win)
-    smoothed = plt.plot(time, smoothed_signal)
+    smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
     plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
@@ -86,6 +84,7 @@ def vme_2d_plot_vector(
         diag='sol_mpa',
         color=plot_diag_params['gen.color'],
         ls=plot_diag_params['gen.ls'],
+        subplot=plot_diag_params['gen.subplot.vector'],
         title=plot_diag_params['gen.title'],
         xtitle=plot_diag_params['gen.xtitle'],
         ytitle=plot_diag_params['gen.ytitle'],
@@ -98,7 +97,7 @@ def vme_2d_plot_vector(
     
     ## Loop through the components of the vector
     for i in range(0, len(vector)):
-        plt.subplot(plot_diag_params[diag+'.subplot.styles'][i])
+        plt.subplot(subplot[i])
         raw = plt.plot(time, vector[i])
         plt.setp(raw, color=color, ls=ls)
         plt.setp(raw, label=plot_diag_params['gen.shotnum'] + ': ' + \
