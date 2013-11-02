@@ -1,6 +1,7 @@
 """ A collection of data analysis functions
 
-    vme_avg_sig:    Averages VME data given a list of shots.
+    vme_avg_scalar_sig:    Averages VME data given a list of shots 
+                            associated with a scalar diagnostic.
     get_diag_constructor:   Constructs the proper file name for a given data
         type.
     
@@ -13,19 +14,12 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 
-import matplotlib.pyplot as plt
-
-def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
+def vme_avg_scalar_sig(shotnums, diag='current', smoothing_constant=50):
     """ Averages the VME data associated with several shots 
     
-        shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
-        diag:   string denoting the wanted diagnostics.
-                    * 'current' is rogowski coil current.
-                    * 'tek_hv' is Tektronic high voltage'
-                    * 'iso_hv' is Xiang's high voltage probe
-        smoothing_constant: Smoothing to be used.
+        See vme_avg_sig for input description.
         
-        returns an list of 2 1d arrays with the time and the signal average.
+        returns a list of 2 1d arrays with the time and the signal average.
     """ 
     root = idlsup.get_idl_vme_path()
     
@@ -49,38 +43,56 @@ def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
     
     return (time, avg_signal)
     
-def vme_avg_mpa_probe(shotnums, diag='sol_mpa', probenum=1, smoothing_constant=50):
+def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1, smoothing_constant=50):
     """ Averages the VME magnetic probe data associated with user inputted shots
     
-        This function specializes in tricky diagnostics with multiple axes
-        and multiple probes.
-    
-        shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
-        diag:   string denoting the wanted diagnostics.
-                    * 'sol_mpa' is solar_mpa
+        See vme_avg_sig for input description.
         
-        probe:  probe number to be returned.
-
-        smoothing_constant: Smoothing to be used.
-        
-        return a dictinoary of 4 1-d arrays (time, bx, by, bz) for the desired probe.
+        return a dict with 1-d arrays corresponding to time and each 
+               element in diag.components
     """ 
      
     probe_data = {}  
     
-    ## Loop through the components of the diagnostics.  Ex: bx, by, bz
+    ## Loop through the components of the diagnostics.  ex: bx, by, bz
     for component in diag_params[diag+'.components']:
     ## Loop through and sum the data up.
         # Set up the appropriate probe num.
         diag_params[diag+'.ind'] = probenum
         diag_params[diag+'.vme'] = diag + '_' + component
-        avg_data = vme_avg_sig(shotnums, diag=diag)
-        plt.plot(avg_data[0], avg_data[1])
+        avg_data = vme_avg_scalar_sig(shotnums, diag)
         probe_data['time'] = avg_data[0]
         probe_data[component] = avg_data[1]
         
     return probe_data
     
+    
+def vme_avg_sig(shotnums, diag='current', smoothing_constant=50):
+    """ Averages the VME data associated with several shots 
+    
+        shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
+        diag:   string denoting the wanted diagnostics.
+                    * 'current' is rogowski coil current.
+                    * 'tek_hv' is Tektronic high voltage'
+                    * 'iso_hv' is Xiang's high voltage probe
+        smoothing_constant: Smoothing to be used.
+        
+        returns either:
+            * a list of 2 1-d arrays.
+            * a dict with 1-d arrays corresponding to time and each 
+              element in diag.components
+            
+    """ 
+
+    if diag_params[diag+'.datatype'] == 'scalar':
+        print 'hi there'
+        ret = vme_avg_scalar_sig(shotnums, diag=diag)
+    
+    if diag_params[diag+'.datatype'] == 'vector':
+        print 'hello there'
+        ret = vme_avg_vector_sig(shotnums, diag=diag)
+
+    return ret
         
 def get_diag_constructor(shotnum, vme_extension):
     """ Construct the filename for a specific diagnostics """
