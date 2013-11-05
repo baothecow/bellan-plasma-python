@@ -99,6 +99,7 @@ diag_params = {
     'current.vme': 'current',
     'current.datatype' : 'scalar',
     'current.numprobes': 1,
+    'current.correlation.range': (500, 2500), 
     'tek_hv.rows': 3,
     'tek_hv.cols': 8192,
     'tek_hv.ind': 1,

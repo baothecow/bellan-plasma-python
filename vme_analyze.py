@@ -14,7 +14,7 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 
-def vme_avg_scalar_sig(shotnums, diag='current'):
+def vme_avg_scalar_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
     
         See vme_avg_sig for input description.
@@ -29,6 +29,9 @@ def vme_avg_scalar_sig(shotnums, diag='current'):
     # If shotnums is a single string, turn it into a list eg '847' -> ['847']
     if isinstance(shotnums, basestring):
         shotnums = [shotnums]
+        
+    # Temp holder dict for signals.
+    signals = {}
     
     ## Loop through and sum the data up.
     for shotnum in shotnums:
@@ -39,11 +42,40 @@ def vme_avg_scalar_sig(shotnums, diag='current'):
         time = data[0, :]
         signal = data[diag_params[diag+'.ind'], :] 
         ## Subtract off any dc offset from the first 100 points of the signal.
-        signal = signal - np.mean(signal[0:100])
-        signal_sum = np.add(signal, signal_sum)
+        signals[shotnum] = signal - np.mean(signal[0:100])
+        signal_sum = np.add(signals[shotnum], signal_sum)
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
+    ## Checks the correlation between the different signals to see if there
+    ## are any odd man out.  Note: sending the diag.vme key instead of diag
+    ## because it is general and distinguishes for vector diagnostics.
+    vme_avg_sig_correlation(avg_signal, signals, diag_params[diag+'.vme'])
+    
     return (time, avg_signal)
+    
+def vme_avg_sig_correlation(avg_signal, signals, diag):
+    """ Correlations an avg signal with the signals stored in signals dicti
+    
+    Input:  avg_signal: 1-D array of the average signal.
+            signals: dict containing all the relevant shot signals.
+    
+    """
+    
+    SUSPECT_VME_FAILURE_THRESHOLD = .2
+    SUSPECT_USER_PARAM_THRESHOLD = .7
+    
+    COEFF_INDEX = (0,1)
+    
+    for shotnum in signals.keys():
+        ## Gets a 2x2 correlation matrix between the average signal and each ind signal.
+        corr_matrix = np.corrcoef(avg_signal, signals[shotnum])
+        if corr_matrix[COEFF_INDEX] < SUSPECT_VME_FAILURE_THRESHOLD:
+            print 'Suspect VME failure for ' + diag + ' in shotnum: ' + shotnum
+        ## Crude (read. imperfect) implementation of comparing a shot to its peers.
+        elif corr_matrix[COEFF_INDEX] < SUSPECT_USER_PARAM_THRESHOLD:
+            print diag + ' for shotnum: ' + shotnum + ' is different from its peers'
+    
+    
     
 def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
     """ Averages the VME magnetic probe data associated with user inputted shots
