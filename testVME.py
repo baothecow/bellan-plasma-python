@@ -10,31 +10,44 @@ from cookb_signalsmooth import smooth
 from vme_analyze import integrate
 
 
+
+
+#
+
 #shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
 #            ['851', '852', '853', '854', '855'], \
 #            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
 #            ['864', '865', '866', '867', '868']]
 #
 #descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
-
-#shotnums=['850']
 #
 #vme_plot_diag_for_shots(shotnums, diag='sol_mpa')
-##
-mpa_data = vme_avg_sig(['848'], diag='sol_mpa')
+
+
+
+
+mpa_data = vme_avg_sig(['848', '849'], diag='sol_mpa')
 
 time = mpa_data['time']
-vector = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
+bdot = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
+b = get_b_from_bdot(time, bdot)
+
+vme_plot_diagnostic(time, b, diag='sol_mpa.int')
 
 
-plt.figure()
-dt = time[1] - time[0]
-plt.subplot(211)
-plt.plot(time, integrate(dt, vector[0]))
-plt.xlim(15,30)
-plt.subplot(212)
-plt.plot(time, vector[0])
-plt.xlim(15,30)
+
+
+
+#
+#
+#plt.figure()
+#dt = time[1] - time[0]
+#plt.subplot(211)
+#plt.plot(time, integrate(dt, vector[0]))
+#plt.xlim(15,30)
+#plt.subplot(212)
+#plt.plot(time, vector[0])
+#plt.xlim(15,30)
 
 
 

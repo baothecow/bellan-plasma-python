@@ -36,7 +36,7 @@ plot_diag_params = {
     ## MPA plot properties.
     'sol_mpa.name': 'Solar MPA',
     'sol_mpa.title': 'Bdot vs time',
-    'sol_mpa.ytitle': 'B (Gauss)',
+    'sol_mpa.ytitle': 'Bdot (V)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.xlim': [10, 30],
     'sol_mpa.ylim': [-10, 10],
@@ -45,6 +45,17 @@ plot_diag_params = {
     'sol_mpa.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
+    # Subsection for plotting parameters when integrated.
+    'sol_mpa.int.name': 'Solar MPA',
+    'sol_mpa.int.title': 'B vs time',
+    'sol_mpa.int.ytitle': 'B (Gauss)',
+    'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
+    'sol_mpa.int.xlim': [10, 30],
+    'sol_mpa.int.ylim': [-1000, 1000],
+    'sol_mpa.int.subplot.styles': [311, 312, 313],
+    'sol_mpa.int.subplot.titles': ['Probe 1', ' ', ' '],
+    'sol_mpa.int.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
+    'sol_mpa.int.subplot.ytitles': ['Bx', 'By', 'Bz'],
 
     ## Default parameters.
     'gen.color': 'k',
@@ -122,6 +133,7 @@ diag_params = {
     'sol_mpa.vme': 'sol_mpa_bx',     # Default value is bx
     'sol_mpa.numprobes': 4,
     'sol_mpa.datatype': 'vector',
+    'sol_mpa.int.datatype': 'vector',
     'sol_mpa.corr.threshold': 0.5,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000

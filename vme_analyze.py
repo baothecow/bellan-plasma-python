@@ -108,17 +108,30 @@ def vme_avg_sig_correlation(avg_signal, signals, diag):
 def get_b_from_bdot(time, bdot):
     """ Converts a bdot signal matrix back into magnetic field matrix 
     
+    Currently employing Carlo's method.  May switch to Auna's method in
+    the future.
+    
     time: 1d time vector.
     bdot: list of 3 1d arrays corresponding to bdot_x, bdot_y, and bdot_z
     
     """
     
+    TESLA_TO_GAUSS = 1.0e4
+    
     ## Average value of turns*area.
     na = 1.0e-4
     
-    bdot = np.divide(bdot, na)
+    bdot_x = bdot[0]
+    bdot_y = bdot[1]
+    bdot_z = bdot[2]
     
-
+    dt = 1e-6 * time[1]-time[0]
+    
+    bx = -1*np.multiply(integrate(dt, bdot_x), (TESLA_TO_GAUSS/na))
+    by = -1*np.multiply(integrate(dt, bdot_y), (TESLA_TO_GAUSS/na))
+    bz = -1*np.multiply(integrate(dt, bdot_z), (TESLA_TO_GAUSS/na))
+    
+    return (bx, by, bz)
 
 
 
