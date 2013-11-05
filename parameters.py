@@ -92,31 +92,37 @@ plot_diag_params = {
 #       numprobes: number of probes associated with the diagnostics.
 #       components: denotes the components of the diagnostics and how they
 #           are saved within the VME.
+#       corr.threshold: may the code isolate trials which are diff from avg.
 diag_params = {
     'current.rows': 3,
     'current.cols': 8192,
     'current.ind': 2,
     'current.vme': 'current',
-    'current.datatype' : 'scalar',
     'current.numprobes': 1,
-    'current.correlation.range': (500, 2500), 
+    'current.datatype' : 'scalar',
+    'current.corr.threshold': 0.95,
     'tek_hv.rows': 3,
     'tek_hv.cols': 8192,
     'tek_hv.ind': 1,
     'tek_hv.vme': 'tek_hv',
     'tek_hv.numprobes': 1,
     'tek_hv.datatype' : 'scalar',
+    'tek_hv.corr.threshold': 0.90,
     'iso_hv.rows': 2,
     'iso_hv.cols': 8192,
     'iso_hv.ind': 1,
     'iso_hv.vme': 'iso_hv',
     'iso_hv.numprobes': 1,
     'iso_hv.datatype': 'scalar',
+    'iso_hv.corr.threshold': 0.90,
     'sol_mpa.rows': 5,
     'sol_mpa.cols': 16384,
     'sol_mpa.ind': 1,
     'sol_mpa.components': ['bx', 'by', 'bz'],
     'sol_mpa.vme': 'sol_mpa_bx',     # Default value is bx
     'sol_mpa.numprobes': 4,
-    'sol_mpa.datatype': 'vector'
+    'sol_mpa.datatype': 'vector',
+    'sol_mpa.corr.threshold': 0.5,
+    'gen.corr.lower.ind': 1450,
+    'gen.corr.upper.ind': 3000
 }

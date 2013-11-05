@@ -47,9 +47,8 @@ def vme_avg_scalar_sig(shotnums, diag):
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
     ## Checks the correlation between the different signals to see if there
-    ## are any odd man out.  Note: sending the diag.vme key instead of diag
-    ## because it is general and distinguishes for vector diagnostics.
-    vme_avg_sig_correlation(avg_signal, signals, diag_params[diag+'.vme'])
+    ## are any odd man out.
+    vme_avg_sig_correlation(avg_signal, signals, diag)
     
     return (time, avg_signal)
     
@@ -62,18 +61,22 @@ def vme_avg_sig_correlation(avg_signal, signals, diag):
     """
     
     SUSPECT_VME_FAILURE_THRESHOLD = .2
-    SUSPECT_USER_PARAM_THRESHOLD = .7
-    
     COEFF_INDEX = (0,1)
     
+    diag_ = diag_params[diag+'.vme']
+    corr_threshold = diag_params[diag+'.corr.threshold']
+    low_ind = diag_params['gen.corr.lower.ind']
+    high_ind = diag_params['gen.corr.upper.ind']
+    
     for shotnum in signals.keys():
-        ## Gets a 2x2 correlation matrix between the average signal and each ind signal.
-        corr_matrix = np.corrcoef(avg_signal, signals[shotnum])
+        # Gets a 2x2 correlation matrix between the average signal and each ind signal.
+        corr_matrix = np.corrcoef(avg_signal[low_ind: high_ind], 
+                                  signals[shotnum][low_ind: high_ind])
         if corr_matrix[COEFF_INDEX] < SUSPECT_VME_FAILURE_THRESHOLD:
-            print 'Suspect VME failure for ' + diag + ' in shotnum: ' + shotnum
-        ## Crude (read. imperfect) implementation of comparing a shot to its peers.
-        elif corr_matrix[COEFF_INDEX] < SUSPECT_USER_PARAM_THRESHOLD:
-            print diag + ' for shotnum: ' + shotnum + ' is different from its peers'
+            print 'Suspect VME failure for ' + diag_ + ' in shotnum: ' + shotnum
+        ## Crude implementation of comparing a shot to its peers.
+        elif corr_matrix[COEFF_INDEX] < corr_threshold:
+            print diag_ + ' for shotnum: ' + shotnum + ' may be different from its peers'
     
     
     

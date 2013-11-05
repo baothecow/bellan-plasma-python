@@ -14,16 +14,34 @@ from cookb_signalsmooth import smooth
 #            ['864', '865', '866', '867', '868']]
 #
 #descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
+
+#shotnums=['850']
 #
-#mpa_data = vme_avg_sig(['847', '848'], diag='sol_mpa')
+#vme_plot_diag_for_shots(shotnums, diag='sol_mpa')
+##
+#mpa_data = vme_avg_sig(['847', '848', '849', '850'], diag='sol_mpa')
 #
 #time = mpa_data['time']
 #vector = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
 #
+#
+#plt.plot(time[bottom_ind:top_ind], vector[0][bottom_ind:top_ind])
+
+
+data = vme_avg_sig(['847', '848', '849', '850'], diag='tek_hv')
+
+time = data[0]
+signal = data[1]
+
+bottom_ind = 1450
+top_ind = 3000
+
+plt.plot(time[bottom_ind:top_ind], signal[bottom_ind:top_ind])
+
 #vme_plot_diagnostic(time, vector, diag='sol_mpa')
 
-shotnums = [['908', '909', '911', '912', '913']]
-vme_plot_diag_for_shots(shotnums, diag='sol_mpa', descript=descript)
+#shotnums = [['847', '873', '874', '875']]
+#vme_plot_diag_for_shots(shotnums, diag='iso_hv', descript=descript)
 
 
 #shotnums = [map(str, range(241, 247)), map(str, range(247, 250)), \
