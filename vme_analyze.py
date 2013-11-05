@@ -131,7 +131,13 @@ def get_b_from_bdot(time, bdot):
     by = -1*np.multiply(integrate(dt, bdot_y), (TESLA_TO_GAUSS/na))
     bz = -1*np.multiply(integrate(dt, bdot_z), (TESLA_TO_GAUSS/na))
     
-    return (bx, by, bz)
+    return mpa_polarity_fix(bx, by, bz)         # Correct for polarity.
+    
+    
+def mpa_polarity_fix(bx, by, bz):
+    """ Corrects for polarity due to mistakes in wiring/labeling/etc"""
+    ## In our case, by and bz components are backwards.
+    return (bx, -1 * by, -1 * bz)
 
 
 

@@ -71,15 +71,25 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
-        for probenum in range(0, 4):
+        for probenum in range(1, 5):
+            ## Set plotting parameters.
             diag_params['gen.probenum'] = probenum
+            plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum),
+                '', '']
+            
+            # Clean up the plot.
+            if probenum > 1:
+                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']            
+                
+            ## Get data from saved files.
             data = vme_avg_sig(shots_array[i], diag)
             time = vme_get_time_from_data(data, diag)
-            signal = vme_get_signal_from_data(data, diag)
+            signal = get_b_from_bdot(time, vme_get_signal_from_data(data, diag))
             plot_diag_params['gen.shotnum'] = shots_array[i]
-            subplot = ((4, 3, (probenum)+1), (4, 3, (probenum)+5), (4, 3, (probenum)+9))
-            vme_cust_plot_diagnostic(time, signal, diag, subplot,
+            subplot = ((3, 4, (probenum)), (3, 4, (probenum)+4), (3, 4, (probenum)+8))
+            vme_cust_plot_diagnostic(time, signal, 'sol_mpa.int', subplot,
                                      color=plot_diag_params['gen.color'+str(i)])
+                                     
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
@@ -90,6 +100,9 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
         plt.gca().add_artist(legend1)
         
     plt.show()
+    
+    # Reset parameters back to default:
+    plot_diag_params[diag+'int.subplot.titles'] = ['Probe 1', ' ', ' ']
 
     
 
