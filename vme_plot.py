@@ -46,8 +46,9 @@ def vme_2d_plot_scalar_signal(
 
  
     plt.title(title)
+    
     plt.ylabel(ytitle)
-    plt.xlabel(xtitle)
+    plt.xlabel(xtitle)              
     plt.xlim(xlim)
     plt.ylim(ylim)
     
