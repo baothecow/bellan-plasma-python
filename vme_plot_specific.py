@@ -77,7 +77,7 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
             time = vme_get_time_from_data(data, diag)
             signal = vme_get_signal_from_data(data, diag)
             plot_diag_params['gen.shotnum'] = shots_array[i]
-            subplot = ((4, 3, (probenum)*4+1), (4, 3, (probenum)*4+5), (4, 3, (probenum)*4+9)
+            subplot = ((4, 3, (probenum)+1), (4, 3, (probenum)+5), (4, 3, (probenum)+9))
             vme_cust_plot_diagnostic(time, signal, diag, subplot,
                                      color=plot_diag_params['gen.color'+str(i)])
     # Generate legend for the figure using plt.figlegend
