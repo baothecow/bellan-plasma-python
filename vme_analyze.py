@@ -1,9 +1,12 @@
 """ A collection of data analysis functions
 
-    vme_avg_scalar_sig:    Averages VME data given a list of shots 
-                            associated with a scalar diagnostic.
-    get_diag_constructor:   Constructs the proper file name for a given data
-        type.
+    vme_avg_scalar_sig: Averages VME data given a list of shots 
+        associated with a scalar diagnostic.
+        
+    get_diag_constructor: Constructs the proper file name for a given data type.
+        
+    vme_avg_sig_correlation: Correlates an avg signal with the signals stored 
+    in signals dict
     
 
 """
@@ -46,39 +49,11 @@ def vme_avg_scalar_sig(shotnums, diag):
         signal_sum = np.add(signals[shotnum], signal_sum)
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
-    ## Checks the correlation between the different signals to see if there
-    ## are any odd man out.
+    ## Checks the correlation between the different signals to check for VME
+    ## failures or obvious bad data.
     vme_avg_sig_correlation(avg_signal, signals, diag)
     
     return (time, avg_signal)
-    
-def vme_avg_sig_correlation(avg_signal, signals, diag):
-    """ Correlations an avg signal with the signals stored in signals dicti
-    
-    Input:  avg_signal: 1-D array of the average signal.
-            signals: dict containing all the relevant shot signals.
-    
-    """
-    
-    SUSPECT_VME_FAILURE_THRESHOLD = .2
-    COEFF_INDEX = (0,1)
-    
-    diag_ = diag_params[diag+'.vme']
-    corr_threshold = diag_params[diag+'.corr.threshold']
-    low_ind = diag_params['gen.corr.lower.ind']
-    high_ind = diag_params['gen.corr.upper.ind']
-    
-    for shotnum in signals.keys():
-        # Gets a 2x2 correlation matrix between the average signal and each ind signal.
-        corr_matrix = np.corrcoef(avg_signal[low_ind: high_ind], 
-                                  signals[shotnum][low_ind: high_ind])
-        if corr_matrix[COEFF_INDEX] < SUSPECT_VME_FAILURE_THRESHOLD:
-            print 'Suspect VME failure for ' + diag_ + ' in shotnum: ' + shotnum
-        ## Crude implementation of comparing a shot to its peers.
-        elif corr_matrix[COEFF_INDEX] < corr_threshold:
-            print diag_ + ' for shotnum: ' + shotnum + ' may be different from its peers'
-    
-    
     
 def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
     """ Averages the VME magnetic probe data associated with user inputted shots
@@ -103,6 +78,59 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
         
     return probe_data
     
+def vme_avg_sig_correlation(avg_signal, signals, diag):
+    """ Correlates an avg signal with the signals stored in signals dict
+    
+    Input:  avg_signal: 1-D array of the average signal.
+            signals: dict containing all the relevant shot signals.
+    
+    """
+    
+    SUSPECT_VME_FAILURE_THRESHOLD = .2
+    COEFF_INDEX = (0,1)
+    
+    diag_ = diag_params[diag+'.vme']
+    corr_threshold = diag_params[diag+'.corr.threshold']
+    low_ind = diag_params['gen.corr.lower.ind']
+    high_ind = diag_params['gen.corr.upper.ind']
+    
+    for shotnum in signals.keys():
+        # Gets a 2x2 correlation matrix between the average signal and each ind signal.
+        corr_matrix = np.corrcoef(avg_signal[low_ind: high_ind], 
+                                  signals[shotnum][low_ind: high_ind])
+        if corr_matrix[COEFF_INDEX] < SUSPECT_VME_FAILURE_THRESHOLD:
+            print 'Suspect VME failure for ' + diag_ + ' in shotnum: ' + shotnum
+        ## Crude implementation of comparing a shot to its peers.
+        elif corr_matrix[COEFF_INDEX] < corr_threshold:
+            print diag_ + ' for shotnum: ' + shotnum + ' may be different from its peers'
+    
+
+def get_b_from_bdot(time, bdot):
+    """ Converts a bdot signal matrix back into magnetic field matrix 
+    
+    time: 1d time vector.
+    bdot: list of 3 1d arrays corresponding to bdot_x, bdot_y, and bdot_z
+    
+    """
+    
+    ## Average value of turns*area.
+    na = 1.0e-4
+    
+    bdot = np.divide(bdot, na)
+    
+
+
+
+
+def integrate(dt, signal):
+    """ Use cumsum and trapezoid rule to integrate a signal with unif spacing """
+    cumsum = np.cumsum(signal)
+    foo = np.subtract(np.subtract(np.multiply(cumsum, 2), signal), signal[0])
+    return np.multiply(foo, dt/2.)
+    
+    
+
+    
 def vme_get_time_from_data(data, diag):
     """ extracts time from data from vme_avg_sig """
     if diag_params[diag+'.datatype'] == 'scalar':
@@ -111,7 +139,12 @@ def vme_get_time_from_data(data, diag):
         return data['time']
         
 def vme_get_signal_from_data(data, diag):
-    """ extracts time from data from vme_avg_sig """
+    """ extracts sgnal from data from vme_avg_sig 
+
+    if scalar, returns a 1-D array.
+    if vector, returns a list of arrays correspondong to each component.
+    
+    """
     if diag_params[diag+'.datatype'] == 'scalar':
         return data[1]
     if diag_params[diag+'.datatype'] == 'vector':

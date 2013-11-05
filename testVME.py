@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from vme_analyze import *
 from cookb_signalsmooth import smooth
 
+from vme_analyze import integrate
+
 
 #shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
 #            ['851', '852', '853', '854', '855'], \
@@ -19,24 +21,34 @@ from cookb_signalsmooth import smooth
 #
 #vme_plot_diag_for_shots(shotnums, diag='sol_mpa')
 ##
-#mpa_data = vme_avg_sig(['847', '848', '849', '850'], diag='sol_mpa')
+mpa_data = vme_avg_sig(['848'], diag='sol_mpa')
+
+time = mpa_data['time']
+vector = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
+
+
+plt.figure()
+dt = time[1] - time[0]
+plt.subplot(211)
+plt.plot(time, integrate(dt, vector[0]))
+plt.xlim(15,30)
+plt.subplot(212)
+plt.plot(time, vector[0])
+plt.xlim(15,30)
+
+
+
+
+
+#data = vme_avg_sig(['847', '848', '849', '850'], diag='tek_hv')
 #
-#time = mpa_data['time']
-#vector = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
+#time = data[0]
+#signal = data[1]
 #
+#bottom_ind = 1450
+#top_ind = 3000
 #
-#plt.plot(time[bottom_ind:top_ind], vector[0][bottom_ind:top_ind])
-
-
-data = vme_avg_sig(['847', '848', '849', '850'], diag='tek_hv')
-
-time = data[0]
-signal = data[1]
-
-bottom_ind = 1450
-top_ind = 3000
-
-plt.plot(time[bottom_ind:top_ind], signal[bottom_ind:top_ind])
+#plt.plot(time[bottom_ind:top_ind], signal[bottom_ind:top_ind])
 
 #vme_plot_diagnostic(time, vector, diag='sol_mpa')
 
