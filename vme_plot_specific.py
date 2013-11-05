@@ -4,7 +4,12 @@
 import matplotlib.pyplot as plt
 from vme_plot import *
 from pylab import subplots_adjust
-from vme_analyze import vme_avg_sig, vme_get_time_from_data, vme_get_signal_from_data
+from vme_analyze import vme_avg_sig, vme_get_time_from_data, \
+    vme_get_signal_from_data, get_b_from_bdot
+
+
+## User defined parameters.
+from parameters import plot_diag_params, diag_params
 
 
 
@@ -41,8 +46,7 @@ def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
         signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
         vme_plot_diagnostic(time, signal, diag, 
-                            color=plot_diag_params['gen.color'+str(i)])
-
+                            color=plot_diag_params['gen.color'+str(i)])       
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
@@ -53,6 +57,41 @@ def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
         plt.gca().add_artist(legend1)
         
     plt.show()    
+    
+    
+    
+def plot_sol_mpa_for_shots(shots_array, descript=""):
+    """ Used to plot the solar magnetic probe array across all for probes """
+    
+    diag = 'sol_mpa'
+
+    # Start a new figure
+    plt.figure()
+
+    # Iterate through the shot numbers.
+    for i in range(0, len(shots_array)):
+        print shots_array[i]
+        for probenum in range(0, 4):
+            diag_params['gen.probenum'] = probenum
+            data = vme_avg_sig(shots_array[i], diag)
+            time = vme_get_time_from_data(data, diag)
+            signal = vme_get_signal_from_data(data, diag)
+            plot_diag_params['gen.shotnum'] = shots_array[i]
+            subplot = ((4, 3, (probenum)*4+1), (4, 3, (probenum)*4+5), (4, 3, (probenum)*4+9)
+            vme_cust_plot_diagnostic(time, signal, diag, subplot,
+                                     color=plot_diag_params['gen.color'+str(i)])
+    # Generate legend for the figure using plt.figlegend
+    handles, labels = plt.gca().get_legend_handles_labels()
+    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    ## If an additional description is included, use it!
+    if descript != "":
+        plt.figlegend(handles, descript, loc=4, prop={'size':10})
+        # Creation of new removes legend1 so add legend1 as separate artist.
+        plt.gca().add_artist(legend1)
+        
+    plt.show()
+
+    
 
 ## Plot of two signals with common time axis.
 def vme_2diag_2d_plot(

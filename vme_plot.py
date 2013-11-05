@@ -73,7 +73,7 @@ def vme_2d_plot_vector_signal(
    
     ## Loop through the components of the vector
     for i in range(0, len(signals)):
-        plt.subplot(subplot[i])
+        plt.subplot(subplot[i][0], subplot[i][1], subplot[i][2])
         
         smooth = vme_2d_plot_scalar_signal(
             time, 

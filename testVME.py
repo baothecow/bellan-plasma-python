@@ -23,16 +23,20 @@ from vme_analyze import integrate
 #
 #vme_plot_diag_for_shots(shotnums, diag='sol_mpa')
 
+shotnums = [['843', '844'], ['847', '848', '849'], \
+            ['851', '852']]
+
+plot_sol_mpa_for_shots(shotnums)
 
 
 
-mpa_data = vme_avg_sig(['848', '849'], diag='sol_mpa')
-
-time = mpa_data['time']
-bdot = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
-b = get_b_from_bdot(time, bdot)
-
-vme_plot_diagnostic(time, b, diag='sol_mpa.int')
+#mpa_data = vme_avg_sig(['848', '849'], diag='sol_mpa')
+#
+#time = mpa_data['time']
+#bdot = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
+#b = get_b_from_bdot(time, bdot)
+#
+#vme_plot_diagnostic(time, b, diag='sol_mpa.int')
 
 
 

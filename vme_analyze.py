@@ -55,7 +55,7 @@ def vme_avg_scalar_sig(shotnums, diag):
     
     return (time, avg_signal)
     
-def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
+def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
     """ Averages the VME magnetic probe data associated with user inputted shots
     
         See vme_avg_sig for input description.
@@ -70,7 +70,7 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa', probenum=1):
     for component in diag_params[diag+'.components']:
     ## Loop through and sum the data up.
         # Set up the appropriate probe num.
-        diag_params[diag+'.ind'] = probenum
+        diag_params[diag+'.ind'] = diag_params['gen.probenum']
         diag_params[diag+'.vme'] = diag + '_' + component
         avg_data = vme_avg_scalar_sig(shotnums, diag)
         probe_data['time'] = avg_data[0]

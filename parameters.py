@@ -135,6 +135,7 @@ diag_params = {
     'sol_mpa.datatype': 'vector',
     'sol_mpa.int.datatype': 'vector',
     'sol_mpa.corr.threshold': 0.5,
+    'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000
 }
