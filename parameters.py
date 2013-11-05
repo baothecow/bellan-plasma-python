@@ -79,6 +79,7 @@ plot_diag_params = {
     'gen.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'gen.subplot.titles': ['x', 'y', 'z'],
     'gen.multiprobe.label': 'Probe 1',
+    'gen.tick.off': False,
 
     ## Default colors
     'gen.color0': 'r',

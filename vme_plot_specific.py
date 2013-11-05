@@ -66,21 +66,24 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
     diag = 'sol_mpa'
 
     # Start a new figure
-    plt.figure()
+    fig, axes = plt.subplots(nrows=4, ncols=3)
+    fig.tight_layout()
 
 
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
         for probenum in range(1, 5):
+            
             ## Set plotting parameters.
             diag_params['gen.probenum'] = probenum
             plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum),
                 '', '']
-            
+                
             # Clean up the plot.
             if probenum > 1:
-                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']            
+                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']  
+                
             ## Get data from saved files.
             data = vme_avg_sig(shots_array[i], diag)
             time = vme_get_time_from_data(data, diag)
@@ -100,9 +103,7 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
         plt.gca().add_artist(legend1)
         
     plt.show()
-    
-    subplots_adjust(hspace=0.001)
-    
+        
     # Reset parameters back to default:
     plot_diag_params[diag+'int.subplot.titles'] = ['Probe 1', ' ', ' ']
 

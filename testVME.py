@@ -25,7 +25,7 @@ from vme_analyze import integrate
 
 shotnums = ['844']
 
-plot_sol_mpa_for_shots(shotnums)
+plot_sol_mpa_for_shots(shotnums, descript)
 
 
 
