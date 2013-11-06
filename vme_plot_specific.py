@@ -68,7 +68,7 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
     # Start a new figure
     fig, axes = plt.subplots(nrows=4, ncols=3)
     fig.tight_layout()
-
+    
 
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
@@ -77,12 +77,14 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
             
             ## Set plotting parameters.
             diag_params['gen.probenum'] = probenum
-            plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum),
+            plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum), \
                 '', '']
                 
             # Clean up the plot.
-            if probenum > 1:
-                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']  
+            if probenum == 1:
+                plot_diag_params[diag+'.int.subplot.ytitles'] = ['Bx (G)', 'By (G)', 'Bz (G)']
+            else:
+                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']
                 
             ## Get data from saved files.
             data = vme_avg_sig(shots_array[i], diag)
@@ -102,11 +104,7 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
         # Creation of new removes legend1 so add legend1 as separate artist.
         plt.gca().add_artist(legend1)
         
-    plt.show()
-        
-    # Reset parameters back to default:
-    plot_diag_params[diag+'int.subplot.titles'] = ['Probe 1', ' ', ' ']
-
+    plt.show()    
     
 
 ## Plot of two signals with common time axis.

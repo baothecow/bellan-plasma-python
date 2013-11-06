@@ -137,7 +137,7 @@ def get_b_from_bdot(time, bdot):
 def mpa_polarity_fix(bx, by, bz):
     """ Corrects for polarity due to mistakes in wiring/labeling/etc"""
     ## In our case, by and bz components are backwards.
-    return (bx, -1 * by, -1 * bz)
+    return (-1 * bx, by, -1 * bz)
 
 
 

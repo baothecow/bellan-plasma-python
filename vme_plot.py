@@ -35,7 +35,7 @@ def vme_2d_plot_scalar_signal(
         raw = plt.plot(time, signal)
         plt.setp(raw, color=color, ls=ls)
         plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
-    
+        
     ## Plot the smoothed version using a thicker line.
     smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
     plt.setp(smoothed, color=color, ls=ls)
@@ -46,7 +46,6 @@ def vme_2d_plot_scalar_signal(
 
  
     plt.title(title)
-    
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)              
     plt.xlim(xlim)

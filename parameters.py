@@ -51,11 +51,11 @@ plot_diag_params = {
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.int.xlim': [10, 30],
-    'sol_mpa.int.ylim': [-1000, 1000],
+    'sol_mpa.int.ylim': [-600, 600],
     'sol_mpa.int.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'sol_mpa.int.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.int.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
-    'sol_mpa.int.subplot.ytitles': ['Bx', 'By', 'Bz'],
+    'sol_mpa.int.subplot.ytitles': ['Bx (G)', 'By (G)', 'Bz (G)'],
 
     ## Default parameters.
     'gen.color': 'k',

@@ -11,29 +11,78 @@ from vme_analyze import integrate
 
 
 
-
-#
-
-#shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
-#            ['851', '852', '853', '854', '855'], \
-#            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
-#            ['864', '865', '866', '867', '868']]
-#
-#descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
-#
-#vme_plot_diag_for_shots(shotnums, diag='sol_mpa')
-
-shotnums = ['844']
-
+# Probe has been lowered.
+shotnums = [['879', '880', '881'], ['882', '883', '884'], \
+            ['885', '886', '887'], \
+            ['888', '889', '890']]
+descript = ['0V', '30V', '60V', '90V']
 plot_sol_mpa_for_shots(shotnums, descript)
 
+#plt.figure()
+#
+#shotnums = ['888']
+#plot_sol_mpa_for_shots(shotnums)
 
 
-#mpa_data = vme_avg_sig(['848', '849'], diag='sol_mpa')
+
+
+
+
+
+
+## Probe has been lowered.
+#shotnums = [['891', '892', '893', '894'], ['895', '896', '897'], \
+#            ['899', '900', '901', '902', '903'], \
+#            ['904', '905', '906', '907']]
+#descript = ['90V', '60V', '30V', '0V']
+#plot_sol_mpa_for_shots(shotnums, descript)
+
+
+#shotnums = [['843', '844', '845', '846'], ['847', '848', '849'], \
+#            ['851', '854', '855'], \
+#            ['856', '857', '858'], ['859', '860', '861', '862', '863'], \
+#            ['864', '865', '867']]
+#descript = ['0V', '15V', '30V', '45V','60V', '75V', '90V']
+#plot_sol_mpa_for_shots(shotnums, descript)
+
+#shotnums=['843', '844', '845', '846', ['843', '844', '845', '846']]
+#plot_sol_mpa_for_shots(shotnums)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#mpa_data = vme_avg_sig(['844'], diag='sol_mpa')
 #
 #time = mpa_data['time']
 #bdot = (mpa_data['bx'], mpa_data['by'], mpa_data['bz'])
 #b = get_b_from_bdot(time, bdot)
+#plt.plot([0, 30], [0, 0], '-k')
+#plt.plot(time, b[0], color='g')
+#plt.plot(time, b[1], color='b')
+#plt.plot(time, b[2], color='r')
+#plt.xlim(15, 30)
+#plt.ylim(-600, 600)
+
+
+
 #
 #vme_plot_diagnostic(time, b, diag='sol_mpa.int')
 
@@ -101,7 +150,7 @@ plot_sol_mpa_for_shots(shotnums, descript)
 #
 ##vme_plot_current(shotnums)
 #
-#vme_plot_diag_for_shots(shotnums, diag='current', descript=descript)
+#vme_plot_diag_for_shots(shotnums, diag='sol_mpa', descript=descript)
 #
 #
 #
