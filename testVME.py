@@ -11,9 +11,9 @@ from vme_analyze import integrate
 
 
 
-diag = 'solar'
 shotnums = ['846', '868']
-plot_sol_mpa_for_shots(shotnums)
+delay = [-14.46, -14.46]
+plot_sol_mpa_for_shots(shotnums, delay=delay)
 
 
 #diag = 'tek_hv'

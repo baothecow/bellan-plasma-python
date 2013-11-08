@@ -100,13 +100,12 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
             ## Get data from saved files.
             data = vme_avg_sig(shots_array[i], diag)
             time = vme_get_time_from_data(data, diag)
+            signal = get_b_from_bdot(time, vme_get_signal_from_data(data, diag))
             
             if delay != 0:
                 print delay[i]
-                time = np.add(time, delay[i])
+                time = np.add(time, delay[i])            
             
-            
-            signal = get_b_from_bdot(time, vme_get_signal_from_data(data, diag))
             plot_diag_params['gen.shotnum'] = shots_array[i]
             subplot = ((3, 4, (probenum)), (3, 4, (probenum)+4), (3, 4, (probenum)+8))
             vme_cust_plot_diagnostic(time, signal, 'sol_mpa.int', subplot,
