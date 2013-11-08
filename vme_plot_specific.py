@@ -13,7 +13,7 @@ from parameters import plot_diag_params, diag_params
 
 
 
-def vme_plot_diag_for_shots(shots_array, diag='current', descript=""):
+def vme_plot_diag_for_shots(shots_array, diag, descript=""):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -68,6 +68,8 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
     # Start a new figure
     fig, axes = plt.subplots(nrows=4, ncols=3)
     fig.tight_layout()
+    
+    
     
 
     # Iterate through the shot numbers.

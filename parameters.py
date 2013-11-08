@@ -47,7 +47,7 @@ plot_diag_params = {
     'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
     # Subsection for plotting parameters when integrated.
     'sol_mpa.int.name': 'Solar MPA',
-    'sol_mpa.int.title': 'B vs time',
+    'sol_mpa.int.title': 'Change probe position.  Strapfield @ 30V',
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.int.xlim': [10, 30],
@@ -55,7 +55,7 @@ plot_diag_params = {
     'sol_mpa.int.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'sol_mpa.int.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.int.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
-    'sol_mpa.int.subplot.ytitles': ['Bx (G)', 'By (G)', 'Bz (G)'],
+    'sol_mpa.int.subplot.ytitles': ['Bx (G)', 'By ( G)', 'Bz (G)'],
 
     ## Default parameters.
     'gen.color': 'k',
