@@ -2,10 +2,12 @@
 
 
 import matplotlib.pyplot as plt
+import numpy as np
 from vme_plot import *
 from pylab import subplots_adjust
 from vme_analyze import vme_avg_sig, vme_get_time_from_data, \
     vme_get_signal_from_data, get_b_from_bdot
+
 
 
 ## User defined parameters.
@@ -48,6 +50,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
         time = vme_get_time_from_data(data, diag)
         # Allows time shifts to match plots
         if delay != 0:
+            print delay[i]
             time = np.add(time, delay[i])
         signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
@@ -55,18 +58,18 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
                             color=plot_diag_params['gen.color'+str(i)])       
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
-    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    #legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.figlegend(handles, descript, loc=4, prop={'size':10})
+        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
         # Creation of new removes legend1 so add legend1 as separate artist.
-        plt.gca().add_artist(legend1)
+        #plt.gca().add_artist(legend1)
         
     plt.show()    
     
     
     
-def plot_sol_mpa_for_shots(shots_array, descript=""):
+def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
     """ Used to plot the solar magnetic probe array across all for probes """
     
     diag = 'sol_mpa'
@@ -97,6 +100,12 @@ def plot_sol_mpa_for_shots(shots_array, descript=""):
             ## Get data from saved files.
             data = vme_avg_sig(shots_array[i], diag)
             time = vme_get_time_from_data(data, diag)
+            
+            if delay != 0:
+                print delay[i]
+                time = np.add(time, delay[i])
+            
+            
             signal = get_b_from_bdot(time, vme_get_signal_from_data(data, diag))
             plot_diag_params['gen.shotnum'] = shots_array[i]
             subplot = ((3, 4, (probenum)), (3, 4, (probenum)+4), (3, 4, (probenum)+8))

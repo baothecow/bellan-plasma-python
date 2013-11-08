@@ -15,7 +15,7 @@ plot_diag_params = {
     
     ## Tektronic HV probe parameters
     'tek_hv.name': 'Tektronic HV',
-    'tek_hv.title': 'Voltage vs time',
+    'tek_hv.title': 'Voltage vs Time',
     'tek_hv.ytitle': 'Voltage (V)',
     'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
     'tek_hv.xlim': [10, 30],
