@@ -13,7 +13,7 @@ from parameters import plot_diag_params, diag_params
 
 
 
-def vme_plot_diag_for_shots(shots_array, diag, descript=""):
+def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -32,6 +32,9 @@ def vme_plot_diag_for_shots(shots_array, diag, descript=""):
                     
         descript - an array of strings containing additional description of
                 each elment in shots_array.
+                
+        delay - an array of numbers containing the appropriate time delay in
+                microseconds to be added to the VME time.
     
     """
     
@@ -43,18 +46,21 @@ def vme_plot_diag_for_shots(shots_array, diag, descript=""):
         print shots_array[i]
         data = vme_avg_sig(shots_array[i], diag)
         time = vme_get_time_from_data(data, diag)
+        # Allows time shifts to match plots
+        if delay != 0:
+            time = np.add(time, delay[i])
         signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
         vme_plot_diagnostic(time, signal, diag, 
                             color=plot_diag_params['gen.color'+str(i)])       
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
-    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    #legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.figlegend(handles, descript, loc=4, prop={'size':10})
+        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
         # Creation of new removes legend1 so add legend1 as separate artist.
-        plt.gca().add_artist(legend1)
+        #plt.gca().add_artist(legend1)
         
     plt.show()    
     

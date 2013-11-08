@@ -12,8 +12,19 @@ from vme_analyze import integrate
 
 
 
+## Plots the antistrapping currents for 0, 30, 60, 90 for the poster.
+#diag = 'tek_hv'
+#shotnums = [['879', '880', '881', '904', '905', '906', '907', '843', '844', '845', '846'], \
+#    ['882', '883', '884', '899', '900', '901', '902', '903', '851', '854', '855'], \
+#    ['885', '886', '887', '895', '896', '897', '860', '861', '863'], \
+#    ['888', '889', '890', '891', '892', '893', '894', '869', '870', '871', '872']]
+#descript = ['0V', '30V', '60V', '90V']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+
+
+
 # Plots the antistrapping currents for 0, 30, 60, 90 for the poster.
-diag = 'current'
+diag = 'tek_hv'
 shotnums = [['815', '816', '817', '818'], ['822', '823', '824'], \
         ['828', '829', '830'], ['834', '835', '836']]
 descript = ['0V', '30V', '60V', '90V']

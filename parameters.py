@@ -5,7 +5,7 @@
 plot_diag_params = {
     ## Rogowski current parameteres
     'current.name': 'Rogowski',
-    'current.title': 'Current vs time',
+    'current.title': 'Current vs Time',
     'current.ytitle': 'Current (kA)',
     'current.xtitle': 'Time (' + '$\mu$' + 's)',
     'current.xlim': [10, 30],
