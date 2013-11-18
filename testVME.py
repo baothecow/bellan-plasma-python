@@ -10,10 +10,11 @@ from cookb_signalsmooth import smooth
 from vme_analyze import integrate
 
 
-
+diag = 'tek_hv'
 shotnums = ['846', '868']
 delay = [-14.46, -14.46]
-plot_sol_mpa_for_shots(shotnums, delay=delay)
+vme_plot_diag_for_shots(shotnums, diag, delay)
+
 
 
 #diag = 'tek_hv'

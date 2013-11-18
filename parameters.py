@@ -1,5 +1,7 @@
 """ Container of all the different variables """
 
+## Determines which experiment is being used.
+EXP = 'singleloop'
 
 
 plot_diag_params = {
@@ -140,3 +142,17 @@ diag_params = {
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000
 }
+
+
+
+## Dict containing various path variables associated with solar singleloop
+# experiments.
+
+exp_paths = {
+    # General parameters
+    'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
+    'gen.PY_LIB_PATH': 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\',
+    # Singleloop parameters
+    'singleloop.IDL_LIB_PATH': 'G:\\programs\\idl\\singleloop_lib\\',
+    'singleloop.IDL_VME_PATH': 'G:\\data\\singleloop\\singleloop_VME\\data\\'
+}    

@@ -11,11 +11,12 @@
 
 import subprocess
 import os
+from parameters import exp_paths, EXP
 
-ENVIR = {'PATH': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\'}
-PY_LIB_PATH = 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\'
-IDL_LIB_PATH = 'G:\\programs\\idl\\singleloop_lib\\'
-IDL_VME_PATH = 'G:\\data\\singleloop\\singleloop_VME\\data\\'
+ENVIR = {'PATH': exp_paths['gen.ENVIR']}
+PY_LIB_PATH = exp_paths['gen.PY_LIB_PATH']
+IDL_LIB_PATH = exp_paths[EXP+'.IDL_LIB_PATH']
+IDL_VME_PATH = exp_paths[EXP+'.IDL_VME_PATH']
 
 
 def gen_read_foldername_pro(shotnum):
