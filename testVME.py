@@ -10,9 +10,13 @@ from cookb_signalsmooth import smooth
 from vme_analyze import integrate
 
 
+diag = 'current'
+shotnums = ['10382', '10385', '10387', '10389', '10391']
+descript = ['0G', '150G', '300G', '450G', '600G']
+delay = vme_get_breakdown_times(shotnums)
+delay = np.multiply(delay, -1)
+vme_plot_diag_for_shots(shotnums, diag, descript, delay)
 
-shotnums = ['10538', '10539', '10540', ['10538', '10539', '10540']]
-times =  vme_get_breakdown_time(shotnums)
 
 
 #shot = '10538'

@@ -15,7 +15,7 @@ from parameters import plot_diag_params, diag_params
 
 
 
-def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
+def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -49,7 +49,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
         data = vme_avg_sig(shots_array[i], diag)
         time = vme_get_time_from_data(data, diag)
         # Allows time shifts to match plots
-        if delay != 0:
+        if delay != None:
             print delay[i]
             time = np.add(time, delay[i])
         signal = vme_get_signal_from_data(data, diag)
