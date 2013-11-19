@@ -129,6 +129,12 @@ diag_params = {
     'iso_hv.numprobes': 1,
     'iso_hv.datatype': 'scalar',
     'iso_hv.corr.threshold': 0.90,
+    'collimator.rows': 2,
+    'collimator.cols': 8192,
+    'collimator.ind': 1,
+    'collimator.vme': 'optical_trigger',
+    'collimator.datatype': 'scalar',
+    'collimator.corr.threshold': 0.90,
     'sol_mpa.rows': 5,
     'sol_mpa.cols': 16384,
     'sol_mpa.ind': 1,
@@ -158,5 +164,4 @@ exp_paths = {
     # Solar parameters
     'solar.IDL_LIB_PATH': 'G:\\programs\\idl\\solar_lib\\',
     'solar.IDL_VME_PATH': 'G:\\data\\solar\\solar_accretion\\data\\'
-    
 }    

@@ -23,9 +23,7 @@ def vme_avg_scalar_sig(shotnums, diag):
         See vme_avg_sig for input description.
         
         returns a list of 2 1d arrays with the time and the signal average.
-    """ 
-    root = idlsup.get_idl_vme_path()
-    
+    """    
     # Storage array of all the signal.
     signal_sum = np.zeros(diag_params[diag+'.cols'])
     
@@ -38,9 +36,8 @@ def vme_avg_scalar_sig(shotnums, diag):
     
     ## Loop through and sum the data up.
     for shotnum in shotnums:
-        constructor = get_diag_constructor(shotnum, diag_params[diag+'.vme'])
-        filename = root + idlsup.get_shot_date(shotnum) + constructor
-        data = readVME(filename, cols=diag_params[diag+'.cols'], 
+        filepath = vme_get_filepath(shotnum, diag)
+        data = readVME(filepath, cols=diag_params[diag+'.cols'], 
                        rows=diag_params[diag+'.rows'])
         time = data[0, :]
         signal = data[diag_params[diag+'.ind'], :] 
@@ -146,8 +143,52 @@ def integrate(dt, signal):
     cumsum = np.cumsum(signal)
     foo = np.subtract(np.subtract(np.multiply(cumsum, 2), signal), signal[0])
     return np.multiply(foo, dt/2.)
+
+
+def vme_get_breakdown_times(shotnums):
+    """ Extract breakdown time of an array of shots """
+    a = []    
+    for shotnum in shotnums:
+        if isinstance(shotnum, list):
+            print 'hello'
+            a = a + [vme_get_breakdown_times(shotnum)]
+        elif isinstance(shotnum, str):
+            print 'hi'
+            a = a + [vme_get_breakdown_time(shotnum)]   
+    return a
+        
+
+def vme_get_breakdown_time(shotnum):
+    """ Extracts breakdown time (in us) from optical trigger data. """
     
+    # If shotnum is actually a list, extract the first element.
+    if isinstance(shotnum, list):
+        shotnum = shotnum[0]
     
+    # Sets the number of points to ignore.  May help with noise.
+    IGNORE_PTS = 500
+
+    diag = 'collimator'
+    filepath = vme_get_filepath(shotnum, diag)
+    data = readVME(filepath, cols=diag_params[diag+'.cols'], 
+                   rows=diag_params[diag+'.rows'])
+                   
+    ## Get the diff between points while ignoring the first 500 points.
+    diff = list(np.diff(data[1][IGNORE_PTS:]))
+    
+    # Get the index of the largest diff value.
+    max_ind = diff.index(np.max(diff))
+    
+    # Return the time assocaited with that index.
+    return data[0][IGNORE_PTS + max_ind]    
+   
+    
+def vme_get_filepath(shotnum, diag):
+    """ Get path of a given shotnumber and diagnostic """
+    
+    root = idlsup.get_idl_vme_path()
+    constructor = get_diag_constructor(shotnum, diag_params[diag+'.vme'])
+    return root + idlsup.get_shot_date(shotnum) + constructor    
 
     
 def vme_get_time_from_data(data, diag):
@@ -177,12 +218,11 @@ def vme_get_signal_from_data(data, diag):
 def vme_avg_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
     
-        shot:   a list of strings denoting shot numbers eg ('525', '526', '571')
+        shotnums: a list of strings denoting shot numbers eg ['525', '526', '571']
         diag:   string denoting the wanted diagnostics.
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
                     * 'iso_hv' is Xiang's high voltage probe
-        smoothing_constant: Smoothing to be used.
         
         returns either:
             * a list of 2 1-d arrays.
@@ -212,6 +252,8 @@ def get_diag_constructor(shotnum, vme_extension):
         return '\\by_4x16384_' + shotnum + '.dat'
     if vme_extension == 'sol_mpa_bz':
         return '\\bz_4x16384_' + shotnum + '.dat'
+    if vme_extension == 'optical_trigger':
+        return '\\optical_trigger_t1ch13_' + shotnum + '.dat'    
 
 
 

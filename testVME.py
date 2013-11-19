@@ -10,11 +10,30 @@ from cookb_signalsmooth import smooth
 from vme_analyze import integrate
 
 
-diag = 'tek_hv'
-shotnums = ['10382', '10385', '10387', '10389', '10391']
-descript = ['0G', '150G', '300G', '450G', '600G']
-#delay = [-14.46, -14.46]
-vme_plot_diag_for_shots(shotnums, diag, descript)#, delay)
+
+shotnums = ['10538', '10539', '10540', ['10538', '10539', '10540']]
+times =  vme_get_breakdown_time(shotnums)
+
+
+#shot = '10538'
+#data = vme_get_breakdown_time(shot)
+#time = list(data[0][500:])
+#signal = data[1][500:]
+#diff = list(np.diff(signal))
+#
+#
+#diff.index(max(diff))
+#
+#
+#plt.plot(time, diff)
+#plt.plot(time, signal)
+
+
+#diag = 'tek_hv'
+#shotnums = ['10382', '10385', '10387', '10389', '10391']
+#descript = ['0G', '150G', '300G', '450G', '600G']
+##delay = [-14.46, -14.46]
+#vme_plot_diag_for_shots(shotnums, diag, descript)#, delay)
 
 
 
