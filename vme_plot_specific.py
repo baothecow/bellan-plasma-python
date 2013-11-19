@@ -58,12 +58,12 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=0):
                             color=plot_diag_params['gen.color'+str(i)])       
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
-    #legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
         plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
         # Creation of new removes legend1 so add legend1 as separate artist.
-        #plt.gca().add_artist(legend1)
+        plt.gca().add_artist(legend1)
         
     plt.show()    
     

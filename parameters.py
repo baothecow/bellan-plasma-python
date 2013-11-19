@@ -1,7 +1,7 @@
 """ Container of all the different variables """
 
 ## Determines which experiment is being used.
-EXP = 'singleloop'
+EXP = 'solar'
 
 
 plot_diag_params = {
@@ -21,7 +21,7 @@ plot_diag_params = {
     'tek_hv.ytitle': 'Voltage (V)',
     'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
     'tek_hv.xlim': [10, 30],
-    'tek_hv.ylim': [-4000, 1000],
+    'tek_hv.ylim': [-8000, 1000],
     'tek_hv.smooth_win': 50,
     'tek_hv.subplot.styles': 111,
 
@@ -154,5 +154,9 @@ exp_paths = {
     'gen.PY_LIB_PATH': 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\',
     # Singleloop parameters
     'singleloop.IDL_LIB_PATH': 'G:\\programs\\idl\\singleloop_lib\\',
-    'singleloop.IDL_VME_PATH': 'G:\\data\\singleloop\\singleloop_VME\\data\\'
+    'singleloop.IDL_VME_PATH': 'G:\\data\\singleloop\\singleloop_VME\\data\\',
+    # Solar parameters
+    'solar.IDL_LIB_PATH': 'G:\\programs\\idl\\solar_lib\\',
+    'solar.IDL_VME_PATH': 'G:\\data\\solar\\solar_accretion\\data\\'
+    
 }    

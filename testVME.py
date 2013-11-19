@@ -11,9 +11,10 @@ from vme_analyze import integrate
 
 
 diag = 'tek_hv'
-shotnums = ['846', '868']
-delay = [-14.46, -14.46]
-vme_plot_diag_for_shots(shotnums, diag, delay)
+shotnums = ['10382', '10385', '10387', '10389', '10391']
+descript = ['0G', '150G', '300G', '450G', '600G']
+#delay = [-14.46, -14.46]
+vme_plot_diag_for_shots(shotnums, diag, descript)#, delay)
 
 
 
