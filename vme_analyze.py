@@ -150,19 +150,18 @@ def vme_get_breakdown_times(shotnums):
     a = []    
     for shotnum in shotnums:
         if isinstance(shotnum, list):
-            print 'hello'
-            a = a + [vme_get_breakdown_times(shotnum)]
+            a = a + [vme_get_breakdown_time(shotnum[0])]
         elif isinstance(shotnum, str):
-            print 'hi'
             a = a + [vme_get_breakdown_time(shotnum)]   
     return a
         
 
 def vme_get_breakdown_time(shotnum):
     """ Extracts breakdown time (in us) from optical trigger data. """
-    
+      
     # If shotnum is actually a list, extract the first element.
     if isinstance(shotnum, list):
+        print 'list is here'
         shotnum = shotnum[0]
     
     # Sets the number of points to ignore.  May help with noise.
@@ -179,7 +178,7 @@ def vme_get_breakdown_time(shotnum):
     # Get the index of the largest diff value.
     max_ind = diff.index(np.max(diff))
     
-    # Return the time assocaited with that index.
+    # Return the time associated with that index.
     return data[0][IGNORE_PTS + max_ind]    
    
     
