@@ -11,7 +11,7 @@ from vme_analyze import integrate
 
 
 diag = 'current'
-shotnums = ['10382', '10385', '10387', '10389', '10391']
+shotnums = ['10382', '10385', '10387', '10389', '10391', ['10382', '10385', '10387', '10389', '10391']]
 descript = ['0G', '150G', '300G', '450G', '600G']
 delay = vme_get_breakdown_times(shotnums)
 delay = np.multiply(delay, -1)

@@ -3,6 +3,7 @@
 
     get_shot_date(shotnum): returns a string with date associated with shotnum.
     gen_read_foldername_pro(shotnum): gemerate tmp file to interact with IDL.
+    inialize_exp(shotnum): det. if use singleloop or solar paths.
     get_idl_lib_path()
     get_idl_vme_path()
 
@@ -18,7 +19,6 @@ PY_LIB_PATH = exp_paths['gen.PY_LIB_PATH']
 IDL_LIB_PATH = exp_paths[EXP+'.IDL_LIB_PATH']
 IDL_VME_PATH = exp_paths[EXP+'.IDL_VME_PATH']
 
-
 def gen_read_foldername_pro(shotnum):
     """ Gen temp file to call IDL's foldername
     
@@ -32,6 +32,20 @@ def gen_read_foldername_pro(shotnum):
     f.write("foldername, " + str(shotnum) + ", folder, verbal=1\n")
     f.write("wait, 0.01\n")       # Process may terminate too early otherwise.
     f.close()
+    
+    
+def initialize_exp(shotnum):
+    """ Determines appropriate experiment based on the shotnumber"""
+
+    global IDL_LIB_PATH, IDL_VME_PATH    
+    
+    if int(shotnum) > 5000:
+        EXP = 'solar'
+    else:
+        EXP = 'singleloop'
+        
+    IDL_LIB_PATH = exp_paths[EXP+'.IDL_LIB_PATH']
+    IDL_VME_PATH = exp_paths[EXP+'.IDL_VME_PATH']
 
 
 def get_idl_lib_path():

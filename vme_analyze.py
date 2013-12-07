@@ -186,6 +186,9 @@ def vme_get_breakdown_time(shotnum):
 def vme_get_filepath(shotnum, diag):
     """ Get path of a given shotnumber and diagnostic """
     
+    ## Determine which experiment is associated with the path.    
+    idlsup.initialize_exp(shotnum)    
+    
     root = idlsup.get_idl_vme_path()
     constructor = get_diag_constructor(shotnum, diag_params[diag+'.vme'])
     return root + idlsup.get_shot_date(shotnum) + constructor    
