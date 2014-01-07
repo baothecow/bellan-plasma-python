@@ -65,8 +65,8 @@ def imacon_choose_frame(imagepath, frame_num):
     frame_x_size = image_shape[0]/4
     frame_y_size = image_shape[1]/4
     
-    x_position = (frame_num - 1) % 4
-    y_position = (frame_num - 1) // 4
+    x_position = (frame_num - 1) // 4
+    y_position = (frame_num - 1) % 4
     
     
     return Image.fromarray(imarr[(x_position) * frame_x_size:(x_position+1) * frame_x_size, 
@@ -74,9 +74,10 @@ def imacon_choose_frame(imagepath, frame_num):
     
 ## Scripts
 paths = get_file_paths()
+frame = 13
 
 for path in paths:
-    image = imacon_choose_frame(path, 10)
+    image = imacon_choose_frame(path, frame)
     image.show()
     
 
