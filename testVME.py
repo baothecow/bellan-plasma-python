@@ -10,12 +10,40 @@ from cookb_signalsmooth import smooth
 from vme_analyze import integrate
 
 
+
 diag = 'current'
-shotnums = ['10382', '10385', '10387', '10389', '10391', ['10382', '10385', '10387', '10389', '10391']]
-descript = ['0G', '150G', '300G', '450G', '600G']
-delay = vme_get_breakdown_times(shotnums)
-delay = np.multiply(delay, -1)
-vme_plot_diag_for_shots(shotnums, diag, descript, delay)
+shotnums = [['1002', '1003', '1004'], ['1005', '1006', '1007'], ['1008', '1009', '1010'], \
+['1011', '1012', '1013'], ['1014', '1015', '1016']]
+descript = ['3kV', '3.5kV', '4kV', '4.5kV', '5kV']
+vme_plot_diag_for_shots(shotnums, diag, descript=descript)
+
+
+
+
+#diag = 'sol_mpa'
+#shotnums = [['844', '845', '846'], \
+#['851', '854', '855'], \
+#['860', '861', '863'], \
+#['870', '871', '872']]
+#descript = ['0V', '30V', '60V', '90V']
+#plot_diff_mpa_for_shots(shotnums,descript=descript)
+
+
+
+#diag = 'sol_mpa'
+#shotnums = [['954', '955', '956'], ['975', '976', '977'], ['957', '958', '959'], \
+#            ['972', '973', '974'], ['960', '961', '962'], ['969', '970', '971'], \
+#            ['963', '964', '965']]
+#descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
+#plot_diff_mpa_for_shots(shotnums,descript=descript)
+##vme_plot_diag_for_shots(shotnums, diag, descript)
+
+#diag = 'current'
+#shotnums = ['10382', '10385', '10387', '10389', '10391', ['10382', '10385', '10387', '10389', '10391']]
+#descript = ['0G', '150G', '300G', '450G', '600G']
+#delay = vme_get_breakdown_times(shotnums)
+#delay = np.multiply(delay, -1)
+#vme_plot_diag_for_shots(shotnums, diag, descript, delay)
 
 
 
