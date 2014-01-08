@@ -69,8 +69,12 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
     
 
     
-def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
-    """ Used to plot the solar magnetic probe array across all for probes """
+def plot_sol_mpa_for_shots(shots_array, descript="", delay=0, num_probe=4):
+    """ Used to plot the solar magnetic probe array 
+    
+    num_probe - determines how many probes to plot.
+    
+    """
     
     diag = 'sol_mpa'
 
@@ -81,7 +85,7 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
-        for probenum in range(1, 5):
+        for probenum in range(1, num_probe+1):
             
             ## Set plotting parameters.
             diag_params['gen.probenum'] = probenum
@@ -104,7 +108,8 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
                 time = np.add(time, delay[i])            
             
             plot_diag_params['gen.shotnum'] = shots_array[i]
-            subplot = ((3, 4, (probenum)), (3, 4, (probenum)+4), (3, 4, (probenum)+8))
+            subplot = ((3, num_probe, (probenum)), (3, num_probe, (probenum)+num_probe), \
+                (3, num_probe, (probenum)+(2*num_probe)))
             vme_cust_plot_diagnostic(time, signal, 'sol_mpa.int', subplot,
                                      color=plot_diag_params['gen.color'+str(i)])
                                      
