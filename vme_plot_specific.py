@@ -68,69 +68,6 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
     plt.show()    
     
 
-
-def plot_diff_mpa_for_shots(shots_array, descript="", delay=0):
-    """ Used to plot the solar magnetic probe array across all for probes """
-    
-    diag = 'sol_mpa'
-
-    # Start a new figure
-    fig, axes = plt.subplots(nrows=4, ncols=3)
-    fig.tight_layout()
-    
-    nofield_signal = {
-        'probe1': None,
-        'probe2': None,
-        'probe3': None,
-        'probe4': None
-    }
-    
-
-    # Iterate through the shot numbers.
-    for i in range(0, len(shots_array)):
-        print shots_array[i]
-        for probenum in range(1, 5):
-            
-            ## Set plotting parameters.
-            diag_params['gen.probenum'] = probenum
-            plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum), \
-                '', '']
-                
-            # Clean up the plot.
-            if probenum == 1:
-                plot_diag_params[diag+'.int.subplot.ytitles'] = ['Bx (G)', 'By (G)', 'Bz (G)']
-            else:
-                plot_diag_params[diag+'.int.subplot.ytitles'] = ['', '', '']
-                
-            ## Get data from saved files.
-            data = vme_avg_sig(shots_array[i], diag)
-            time = vme_get_time_from_data(data, diag)
-            signal = get_b_from_bdot(time, vme_get_signal_from_data(data, diag))
-            # Assume that the user input the first value as strapping field.
-            if i == 0:
-                nofield_signal['probe'+str(probenum)]= signal
-            # Subtract off the 0 strapping field value
-            signal = np.subtract(signal, nofield_signal['probe'+str(probenum)])
-            
-            if delay != 0:
-                print delay[i]
-                time = np.add(time, delay[i])            
-            
-            plot_diag_params['gen.shotnum'] = shots_array[i]
-            subplot = ((3, 4, (probenum)), (3, 4, (probenum)+4), (3, 4, (probenum)+8))
-            vme_cust_plot_diagnostic(time, signal, 'sol_mpa.int', subplot,
-                                     color=plot_diag_params['gen.color'+str(i)])
-                                     
-    # Generate legend for the figure using plt.figlegend
-    handles, labels = plt.gca().get_legend_handles_labels()
-    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
-    ## If an additional description is included, use it!
-    if descript != "":
-        plt.figlegend(handles, descript, loc=4, prop={'size':10})
-        # Creation of new removes legend1 so add legend1 as separate artist.
-        plt.gca().add_artist(legend1)
-        
-    plt.show()       
     
 def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
     """ Used to plot the solar magnetic probe array across all for probes """
@@ -140,9 +77,6 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0):
     # Start a new figure
     fig, axes = plt.subplots(nrows=4, ncols=3)
     fig.tight_layout()
-    
-    
-    
 
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):

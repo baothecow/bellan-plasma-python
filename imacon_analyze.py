@@ -72,17 +72,13 @@ def imacon_choose_frame(imagepath, frame_num):
     return Image.fromarray(imarr[(x_position) * frame_x_size:(x_position+1) * frame_x_size, 
                               y_position * frame_y_size:(y_position + 1) * frame_y_size])
     
-## Scripts
-paths = get_file_paths()
-frame = 13
 
-for path in paths:
-    image = imacon_choose_frame(path, frame)
-    image.show()
+def imacon_generate_new_output_path(imagepath, extra='_extra'):
+    """ Adds extra str just before the extension.  eg.  'a.txt' --> 'a_extra.txt' """
     
-
-#imout.show()
-
+    patharr = imagepath.split('.')
+    prefix = ".".join(patharr[0:-1])  # Extract everything except the extension.
+    return "".join(prefix + extra + '.' + patharr[-1])
 
 
 
