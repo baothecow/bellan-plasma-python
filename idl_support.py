@@ -16,8 +16,8 @@ from parameters import exp_paths, EXP
 
 ENVIR = {'PATH': exp_paths['gen.ENVIR']}
 PY_LIB_PATH = exp_paths['gen.PY_LIB_PATH']
-IDL_LIB_PATH = exp_paths[EXP+'.IDL_LIB_PATH']
-IDL_VME_PATH = exp_paths[EXP+'.IDL_VME_PATH']
+IDL_LIB_PATH = 'NOT SET YET'    # See vme_get_filepath in vme_analyze.
+IDL_VME_PATH = 'NOT SET YET'
 
 def gen_read_foldername_pro(shotnum):
     """ Gen temp file to call IDL's foldername
@@ -37,7 +37,7 @@ def gen_read_foldername_pro(shotnum):
 def initialize_exp(shotnum):
     """ Determines appropriate experiment based on the shotnumber"""
 
-    global IDL_LIB_PATH, IDL_VME_PATH, EXP    
+    global IDL_LIB_PATH, IDL_VME_PATH, EXP 
     
     if EXP == 'NOTSET':
         if int(shotnum) > 4998:
