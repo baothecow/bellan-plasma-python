@@ -6,7 +6,10 @@
     get_diag_constructor: Constructs the proper file name for a given data type.
         
     vme_avg_sig_correlation: Correlates an avg signal with the signals stored 
-    in signals dict
+        in signals dict
+    
+    vme_remove_transients: Some VME ports have large transients compared to others.  This
+        function helps to remove those transients.
     
 
 """
@@ -41,9 +44,14 @@ def vme_avg_scalar_sig(shotnums, diag):
                        rows=diag_params[diag+'.rows'])
         time = data[0, :]
         signal = data[diag_params[diag+'.ind'], :] 
+            
+        # Remove transients.
+        signal = vme_remove_transients(signal)
+        
         ## Subtract off any dc offset from the first 100 points of the signal.
         signals[shotnum] = signal - np.mean(signal[0:100])
         signal_sum = np.add(signals[shotnum], signal_sum)
+        
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
     ## Checks the correlation between the different signals to check for VME
@@ -215,6 +223,21 @@ def vme_get_signal_from_data(data, diag):
             signal.append(data[component])       
         return signal
         
+def vme_remove_transients(signal):
+    """ A collection of hot patches to deal with transients """
+    # Test #1: See if there is a large spike at the beginning compared to the end.
+    # If the mean of the points test range are over 10x as large
+    # as the last points in test_range, set them to the average of the next 50
+    # points after the test range.
+    # Relevance: Hall sensor Bx data for one of the VME ports.
+    
+    test_range = 50
+    factor = 10
+    
+    if (abs(np.mean(signal[0:test_range])) / abs(np.mean(signal[-1*test_range:-1])) > factor):
+            signal[0:test_range] = np.mean(signal[test_range+1:test_range+50])
+        
+    return signal
     
     
 def vme_avg_sig(shotnums, diag):

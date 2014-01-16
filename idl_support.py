@@ -12,7 +12,7 @@
 
 import subprocess
 import os
-from parameters import exp_paths, EXP
+from parameters import exp_paths
 
 ENVIR = {'PATH': exp_paths['gen.ENVIR']}
 PY_LIB_PATH = exp_paths['gen.PY_LIB_PATH']
@@ -37,7 +37,9 @@ def gen_read_foldername_pro(shotnum):
 def initialize_exp(shotnum):
     """ Determines appropriate experiment based on the shotnumber"""
 
-    global IDL_LIB_PATH, IDL_VME_PATH, EXP 
+    global IDL_LIB_PATH, IDL_VME_PATH
+    
+    EXP = exp_paths['EXP']
     
     if EXP == 'NOTSET':
         if int(shotnum) > 4998:

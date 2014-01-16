@@ -1,7 +1,5 @@
 """ Container of all the different variables """
 
-## Determines which experiment is being used.
-EXP = 'NOTSET'
 
 
 plot_diag_params = {
@@ -46,7 +44,7 @@ plot_diag_params = {
     'sol_mpa.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'sol_mpa.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
-    'sol_mpa.subplot.ytitles': ['Bx', 'By', 'Bz'],
+    'sol_mpa.subplot.ytitles': ['Vx', 'Vy', 'Vz'],
     # Subsection for plotting parameters when integrated.
     'sol_mpa.int.name': 'Solar MPA',
     'sol_mpa.int.title': 'Probe @ high/central position & vary strapping field',
@@ -58,6 +56,16 @@ plot_diag_params = {
     'sol_mpa.int.subplot.titles': ['Probe 1', ' ', ' '],
     'sol_mpa.int.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'sol_mpa.int.subplot.ytitles': ['Bx (G)', 'By ( G)', 'Bz (G)'],
+                                    
+    ## Hall probe plot properties
+    'hall.title': 'Hall voltage vs Time',
+    'hall.xlim': [0, 20000],
+    'hall.ylim': [-1, 1],
+    'hall.smooth_win': 50,
+    'hall.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
+    'hall.subplot.titles': ['Sensor Output', ' ', ' '],
+    'hall.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
+    'hall.subplot.ytitles': ['Vx', 'Vy', 'Vz'],
 
     ## Default parameters.
     'gen.color': 'k',
@@ -169,6 +177,8 @@ diag_params = {
 # experiments.
 
 exp_paths = {
+    # Experiment
+    'EXP':'NOTSET',
     # General parameters
     'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
     'gen.PY_LIB_PATH': 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\',
@@ -179,6 +189,6 @@ exp_paths = {
     'solar.IDL_LIB_PATH': 'E:\\programs\\idl\\solar_lib\\',
     'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\',
     # Hall parameters
-    'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project',
-    'hall.IDL_LIB_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
+    'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project\\',
+    'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
 }    
