@@ -1,7 +1,7 @@
 """ Container of all the different variables """
 
 ## Determines which experiment is being used.
-EXP = 'solar'
+EXP = 'NOTSET'
 
 
 plot_diag_params = {
@@ -20,8 +20,8 @@ plot_diag_params = {
     'tek_hv.title': 'Voltage vs Time',
     'tek_hv.ytitle': 'Voltage (V)',
     'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
-    'tek_hv.xlim': [10, 30],
-    'tek_hv.ylim': [-8000, 1000],
+    'tek_hv.xlim': [5, 30],
+    'tek_hv.ylim': [-4000, 1000],
     'tek_hv.smooth_win': 50,
     'tek_hv.subplot.styles': 111,
 

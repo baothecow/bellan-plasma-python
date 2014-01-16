@@ -11,7 +11,7 @@ from imacon_analyze import *
 
 
 
-framenum = 10
+framenum = 8
 filepaths = get_file_paths(folderpath=INITIAL_DIR)
 
 for path in filepaths:

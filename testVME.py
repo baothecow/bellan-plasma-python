@@ -12,14 +12,21 @@ from vme_analyze import integrate
 
 
 
-diag = 'sol_mpa'
-shotnums = [['954', '955', '956'], ['975', '976', '977'], ['957', '958', '959'], \
-            ['972', '973', '974'], ['960', '961', '962'], ['969', '970', '971'], \
-            ['963', '964', '965']]
-descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
-#plot_diff_mpa_for_shots(shotnums,descript=descript)
-plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
-#vme_plot_diag_for_shots(shotnums, diag, descript)
+diag = 'tek_hv'
+shotnums = [['1112'], ['1113'], ['1114']]
+#descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
+#plot_diff_mpa_for_shots(shotnums,descript=descript, num_probe=1)
+#plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+vme_plot_diag_for_shots(shotnums, diag) #, descript)
+
+#diag = 'sol_mpa'
+#shotnums = [['954', '955', '956'], ['975', '976', '977'], ['957', '958', '959'], \
+#            ['972', '973', '974'], ['960', '961', '962'], ['969', '970', '971'], \
+#            ['963', '964', '965']]
+#descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
+#plot_diff_mpa_for_shots(shotnums,descript=descript, num_probe=1)
+##plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+##vme_plot_diag_for_shots(shotnums, diag, descript)
 
 
 

@@ -15,7 +15,7 @@ import PIL.Image as Image
 import Tkinter, tkFileDialog
 
 #INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
-INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\vary_probe_position\\30V_strap'
+INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
 OUTPUT_DIR = ''
 
 

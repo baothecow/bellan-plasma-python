@@ -37,12 +37,13 @@ def gen_read_foldername_pro(shotnum):
 def initialize_exp(shotnum):
     """ Determines appropriate experiment based on the shotnumber"""
 
-    global IDL_LIB_PATH, IDL_VME_PATH    
+    global IDL_LIB_PATH, IDL_VME_PATH, EXP    
     
-    if int(shotnum) > 5000:
-        EXP = 'solar'
-    else:
-        EXP = 'singleloop'
+    if EXP == 'NOTSET':
+        if int(shotnum) > 4998:
+            EXP = 'solar'
+        else:
+            EXP = 'singleloop'
         
     IDL_LIB_PATH = exp_paths[EXP+'.IDL_LIB_PATH']
     IDL_VME_PATH = exp_paths[EXP+'.IDL_VME_PATH']
