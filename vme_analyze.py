@@ -67,7 +67,7 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
     for component in diag_params[diag+'.components']:
     ## Loop through and sum the data up.
         # Set up the appropriate probe num.
-        diag_params[diag+'.ind'] = diag_params['gen.probenum']
+        diag_params[diag+'.ind'] = diag_params[diag+'.'+component+'.ind']
         diag_params[diag+'.vme'] = diag + '_' + component
         avg_data = vme_avg_scalar_sig(shotnums, diag)
         probe_data['time'] = avg_data[0]
@@ -256,7 +256,12 @@ def get_diag_constructor(shotnum, vme_extension):
         return '\\bz_4x16384_' + shotnum + '.dat'
     if vme_extension == 'optical_trigger':
         return '\\optical_trigger_t1ch13_' + shotnum + '.dat'    
-
+    if vme_extension == 'hall_bx':
+        return '\\shot' + shotnum + 'sensor'+'A'+'_t3ch_n16.dat'
+    if vme_extension == 'hall_by':
+        return '\\shot' + shotnum + 'sensor'+'A'+'_t3ch_n16.dat'
+    if vme_extension == 'hall_bz':
+        return '\\shot' + shotnum + 'sensor'+'A'+'_t3ch_n16.dat'
 
 
 

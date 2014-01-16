@@ -135,15 +135,29 @@ diag_params = {
     'collimator.vme': 'optical_trigger',
     'collimator.datatype': 'scalar',
     'collimator.corr.threshold': 0.90,
-    'sol_mpa.rows': 5,
+    'sol_mpa.rows': 5,   # Each file contains info on time and 4 channels.
     'sol_mpa.cols': 16384,
     'sol_mpa.ind': 1,
     'sol_mpa.components': ['bx', 'by', 'bz'],
+    'sol_mpa.bx.ind': 1,    # All three components are 1 because the sol_mpa
+    'sol_mpa.by.ind': 1,    # stores multiple probe data within 1 file
+    'sol_mpa.bz.ind': 1,    # instead of multiple components.
     'sol_mpa.vme': 'sol_mpa_bx',     # Default value is bx
     'sol_mpa.numprobes': 4,
     'sol_mpa.datatype': 'vector',
     'sol_mpa.int.datatype': 'vector',
     'sol_mpa.corr.threshold': 0.5,
+    'hall.rows': 4,
+    'hall.cols': 65536,
+    'hall.ind': 1,   # Default behavior is to just plot the Bx value.
+    'hall.components': ['bx', 'by', 'bz'],
+    'hall.bx.ind': 1,   
+    'hall.by.ind': 2,   
+    'hall.bz.ind': 3,   
+    'hall.vme': 'hall_bx',     # Default value is bx
+    'hall.numprobes': 1,       # Set between 1-5 depending on sensors A-E used.
+    'hall.datatype': 'vector',
+    'hall.corr.threshold': 0.9,
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000
@@ -163,5 +177,8 @@ exp_paths = {
     'singleloop.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\data\\',
     # Solar parameters
     'solar.IDL_LIB_PATH': 'E:\\programs\\idl\\solar_lib\\',
-    'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\'
+    'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\',
+    # Hall parameters
+    'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project',
+    'hall.IDL_LIB_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
 }    

@@ -88,7 +88,10 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0, num_probe=4):
         for probenum in range(1, num_probe+1):
             
             ## Set plotting parameters.
-            diag_params['gen.probenum'] = probenum
+            diag_params[diag+'.bx.ind'] = probenum
+            diag_params[diag+'.by.ind'] = probenum
+            diag_params[diag+'.bz.ind'] = probenum
+            
             plot_diag_params[diag+'.int.subplot.titles'] = ['Probe ' + str(probenum), \
                 '', '']
                 
