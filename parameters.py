@@ -165,10 +165,12 @@ diag_params = {
     'hall.vme': 'hall_bx',     # Default value is bx
     'hall.numprobes': 1,       # Set between 1-5 depending on sensors A-E used.
     'hall.datatype': 'vector',
-    'hall.corr.threshold': 0.9,
+    'hall.corr.threshold': 0.95,   
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
-    'gen.corr.upper.ind': 3000
+    'gen.corr.upper.ind': 3000,
+    'gen.presmooth': 0,
+    'gen.presmooth.const': 100
 }
 
 

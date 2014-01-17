@@ -19,6 +19,8 @@ import idl_support as idlsup
 import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
+from cookb_signalsmooth import smooth
+import matplotlib.pyplot as plt
 
 def vme_avg_scalar_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
@@ -48,10 +50,14 @@ def vme_avg_scalar_sig(shotnums, diag):
         # Remove transients.
         signal = vme_remove_transients(signal)
         
+        # If pre-smooth is activated, it smooth the VME input.
+        if (diag_params['gen.presmooth']):
+            signal = smooth(signal, diag_params['gen.presmooth.const'])
+        
         ## Subtract off any dc offset from the first 100 points of the signal.
         signals[shotnum] = signal - np.mean(signal[0:100])
         signal_sum = np.add(signals[shotnum], signal_sum)
-        
+    
     avg_signal = np.divide(signal_sum, np.size(shotnums))
     
     ## Checks the correlation between the different signals to check for VME
@@ -98,11 +104,11 @@ def vme_avg_sig_correlation(avg_signal, signals, diag):
     corr_threshold = diag_params[diag+'.corr.threshold']
     low_ind = diag_params['gen.corr.lower.ind']
     high_ind = diag_params['gen.corr.upper.ind']
-    
+   
     for shotnum in signals.keys():
         # Gets a 2x2 correlation matrix between the average signal and each ind signal.
         corr_matrix = np.corrcoef(avg_signal[low_ind: high_ind], 
-                                  signals[shotnum][low_ind: high_ind])
+                                  (signals[shotnum])[low_ind: high_ind])
         if corr_matrix[COEFF_INDEX] < SUSPECT_VME_FAILURE_THRESHOLD:
             print 'Suspect VME failure for ' + diag_ + ' in shotnum: ' + shotnum
         ## Crude implementation of comparing a shot to its peers.
