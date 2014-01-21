@@ -6,6 +6,7 @@
 
 ## VME plotting routines
 import matplotlib.pyplot as plt
+import numpy as np
 from cookb_signalsmooth import smooth
 
 ## User defined parameters.
@@ -26,7 +27,8 @@ def vme_2d_plot_scalar_signal(
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
-        label=True):
+        label=True,
+        autolimit=plot_diag_params['gen.autolimit']):
     """ Basic 2D plotting of a single quantity vs time """    
     
     ## Check to see if raw is wanted.
@@ -35,7 +37,7 @@ def vme_2d_plot_scalar_signal(
         raw = plt.plot(time, signal)
         plt.setp(raw, color=color, ls=ls)
         plt.setp(raw, linewidth=plot_diag_params['gen.thin_ln_width'])
-        
+    
     ## Plot the smoothed version using a thicker line.
     smoothed = plt.plot(time, smooth(signal, window_len=smooth_win))
     plt.setp(smoothed, color=color, ls=ls)
@@ -47,7 +49,18 @@ def vme_2d_plot_scalar_signal(
  
     plt.title(title)
     plt.ylabel(ytitle)
-    plt.xlabel(xtitle)              
+    plt.xlabel(xtitle)  
+
+    # Check to see if autolimit is set
+    if autolimit:
+        ylow = np.min(signal)*plot_diag_params['gen.autolimit.lim_scaling']
+        yhigh = np.max(signal)*plot_diag_params['gen.autolimit.lim_scaling']
+        # Compare the current plot limit with what has already been previously stored
+        # to see if it is appropriate.
+        ylim = [np.min([ylim[0], ylow]), np.max([ylim[1], yhigh])]
+        
+        
+        
     plt.xlim(xlim)
     plt.ylim(ylim)
     
@@ -67,7 +80,8 @@ def vme_2d_plot_vector_signal(
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
-        label=True):
+        label=True
+        ):
     """ Plot each vector components as individual plots aligned appropriately """
 
    
@@ -105,7 +119,7 @@ def vme_cust_plot_diagnostic(
         diag,
         subplot,
         color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls'],
+        ls=plot_diag_params['gen.ls']
         ):
     """ Used to make a customized diagnostics of an array of shotnumbers 
 
@@ -153,7 +167,7 @@ def vme_plot_diagnostic(
         signal,
         diag,
         color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls'],
+        ls=plot_diag_params['gen.ls']
         ):
     """ Plots diagnostics of an array using generic parameters """
     

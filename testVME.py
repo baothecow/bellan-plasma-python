@@ -11,15 +11,22 @@ from parameters import exp_paths
 from vme_analyze import integrate
 
 
+diag = 'current'
+shotnums = [['1131'], ['1156'], ['1153'], ['1150'], ['1147']]
+descript = ['0V', '30V', '60V', '90V', '150V']
+vme_plot_diag_for_shots(shotnums, diag, descript)
+#plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
 
-#diag = 'sol_mpa'
-exp_paths['EXP'] = 'hall'
-shotnums = [['226'], ['227']]
-plot_hall_for_shots(shotnums)
-#descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
-#plot_diff_mpa_for_shots(shotnums,descript=descript, num_probe=1)
-#plot_sol_mpa_for_shots(shotnums, num_probe=4)
-#vme_plot_diag_for_shots(shotnums, diag) #, descript)
+
+#
+##diag = 'sol_mpa'
+#exp_paths['EXP'] = 'hall'
+#shotnums = [['226'], ['227']]
+#plot_hall_for_shots(shotnums)
+##descript = ['0G', '15V', '30V', '45V', '60V', '75V', '90V']
+##plot_diff_mpa_for_shots(shotnums,descript=descript, num_probe=1)
+##plot_sol_mpa_for_shots(shotnums, num_probe=4)
+##vme_plot_diag_for_shots(shotnums, diag) #, descript)
 
 #diag = 'sol_mpa'
 #shotnums = [['954', '955', '956'], ['975', '976', '977'], ['957', '958', '959'], \
