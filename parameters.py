@@ -60,7 +60,7 @@ plot_diag_params = {
     ## Hall probe plot properties
     'hall.title': 'Hall voltage vs Time',
     'hall.xlim': [0, 20000],
-    'hall.ylim': [-1, 1],
+    'hall.ylim': [-.8, .2],
     'hall.smooth_win': 50,
     'hall.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'hall.subplot.titles': ['Sensor Output', ' ', ' '],

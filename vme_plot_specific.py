@@ -6,7 +6,7 @@ import numpy as np
 from vme_plot import *
 from pylab import subplots_adjust
 from vme_analyze import vme_avg_sig, vme_get_time_from_data, \
-    vme_get_signal_from_data, get_b_from_bdot
+    vme_get_signal_from_data, get_b_from_bdot, get_b_from_hall
 
 
 
@@ -67,7 +67,65 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
         
     plt.show()    
     
+    
+def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
+    """ Plots the diagnostic vs time over multiple shots
 
+        Input:        
+        shots = A array with strings of shot num or lists of strings of shotnums
+            
+            Examples: 
+            ['847'] : plot diagnostic for shot 847. (single line)
+            ['847', '848', '849'] : plot diagnostic for shots 847, 848 and 849.
+            [['847', '848'], '849'] : plot the average and 847 and 848 also plot 849.
+                                
+        descript - an array of strings containing additional description of
+                each elment in shots_array.
+                
+        delay - an array of numbers containing the appropriate time delay in
+                microseconds to be added to the VME time.
+                
+        sensor - The name of the sensor.  It must have a corresponding calibration
+                matrix defined in vme_analyze.
+    
+    """
+    
+    diag = 'hall'
+
+#    timerange = [min(time), max(time)]/1e3
+#    vmax = max([vx, vy, vz])
+#    vmin = min([vx, vy, vz])
+#    vrange = [vmin, vmax]*1.5
+    
+    # Start a new figure
+    plt.figure()
+
+    # Iterate through the shot numbers.
+    for i in range(0, len(shots_array)):
+        print shots_array[i]
+        data = vme_avg_sig(shots_array[i], diag)
+        time = vme_get_time_from_data(data, diag)
+        # Allows time shifts to match plots
+        if delay != None:
+            print delay[i]
+            time = np.add(time, delay[i])
+        signal = vme_get_signal_from_data(data, diag)
+        signal = get_b_from_hall(signal, sensor=sensor)        
+        
+        plot_diag_params['gen.shotnum'] = shots_array[i]
+        vme_plot_diagnostic(time, signal, diag, 
+                            color=plot_diag_params['gen.color'+str(i)])       
+    # Generate legend for the figure using plt.figlegend
+    handles, labels = plt.gca().get_legend_handles_labels()
+    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    ## If an additional description is included, use it!
+    if descript != "":
+        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
+        # Creation of new removes legend1 so add legend1 as separate artist.
+        plt.gca().add_artist(legend1)
+        
+    plt.show()
+    
     
 def plot_sol_mpa_for_shots(shots_array, descript="", delay=0, num_probe=4):
     """ Used to plot the solar magnetic probe array 

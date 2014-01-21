@@ -145,6 +145,28 @@ def get_b_from_bdot(time, bdot):
     return mpa_polarity_fix(bx, by, bz)         # Correct for polarity.
     
     
+
+def get_b_from_hall(signal, sensor='A'):
+    """ Use Auna's matrix method to calculate the magnetic field 
+    
+    hall: list of 3 1d arrays corresponding to hall_x, hall_y, and hall_z
+    
+    """
+    #bx = signal
+    
+#    print np.shape(signal)
+#    
+#    signal = np.reshape(signal, (3, diag_params['hall.cols']))
+#    
+    print np.shape(signal)
+
+    calibration_matrix = [[0.780625, -0.0390558, 0.0189126], [-0.00338635, 0.876258, -0.00521402], [0.0361111, 0.0381362, 0.860203]]
+    
+    print np.shape(calibration_matrix)
+    
+    return np.dot(calibration_matrix, signal)
+
+    
 def mpa_polarity_fix(bx, by, bz):
     """ Corrects for polarity due to mistakes in wiring/labeling/etc"""
     ## In our case, by and bz components are backwards.
