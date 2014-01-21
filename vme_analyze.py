@@ -152,19 +152,27 @@ def get_b_from_hall(signal, sensor='A'):
     hall: list of 3 1d arrays corresponding to hall_x, hall_y, and hall_z
     
     """
-    #bx = signal
-    
-#    print np.shape(signal)
-#    
-#    signal = np.reshape(signal, (3, diag_params['hall.cols']))
-#    
-    print np.shape(signal)
 
-    calibration_matrix = [[0.780625, -0.0390558, 0.0189126], [-0.00338635, 0.876258, -0.00521402], [0.0361111, 0.0381362, 0.860203]]
-    
-    print np.shape(calibration_matrix)
+    calibration_matrix = get_hall_calibration_matrix(sensor)
     
     return np.dot(calibration_matrix, signal)
+    
+def get_hall_calibration_matrix(sensor):
+    if sensor == 'A': 
+        return [[0.0780625, -0.00390558, 0.00189126], [-0.000338635, 0.0876258, -0.000521402], [0.00361111, 0.00381362, 0.0860203]]
+    if sensor == 'B':
+        return [[0.0829776, -0.00337371, 0.00172883], [0.00353229, 0.0868474, -0.00203384], [0.00109795, 0.00886673, 0.0836279]]
+    if sensor == 'C':
+        return [[0.0835019, 0.00166185, 0.00697365], [-0.00151638, 0.0906578, -0.00237361], [0.00210450, 0.00484992, 0.0845391]]
+    if sensor == 'D':
+        return [[0.0834475, -0.00148635, -0.00390268], [0.00917581, 0.0783704, -0.505646e-005], [0.0170444, -0.000291056, 0.0821908]]
+    if sensor == 'E':
+        return [[0.0896002, -0.00723647, -0.00446408], [0.00451907, 0.0859051, 0.00257616], [0.00530865, 0.00425686, 0.0846567]]
+    if sensor == 'F':
+        return [[0.0855627, 0.000342191, -0.000336037], [0.00682840, 0.0817025, 0.000688643], [0.00186146, 0.00246870, 0.0822300]]
+    else:
+        print 'Calibration matrix not found for sensor.  Returning identity'
+        return np.identity(3)
 
     
 def mpa_polarity_fix(bx, by, bz):
