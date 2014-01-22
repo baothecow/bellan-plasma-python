@@ -28,7 +28,7 @@ def vme_2d_plot_scalar_signal(
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
         label=True,
-        autolimit=plot_diag_params['gen.autolimit']):
+        ):
     """ Basic 2D plotting of a single quantity vs time """    
     
     ## Check to see if raw is wanted.
@@ -43,6 +43,8 @@ def vme_2d_plot_scalar_signal(
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
     
+    
+    
     # Label the plot.
     if label: plt.setp(smoothed, label=plot_diag_params['gen.shotnum'])
 
@@ -51,18 +53,12 @@ def vme_2d_plot_scalar_signal(
     plt.ylabel(ytitle)
     plt.xlabel(xtitle)  
 
-    # Check to see if autolimit is set
-    if autolimit:
-        ylow = np.min(signal)*plot_diag_params['gen.autolimit.lim_scaling']
-        yhigh = np.max(signal)*plot_diag_params['gen.autolimit.lim_scaling']
-        # Compare the current plot limit with what has already been previously stored
-        # to see if it is appropriate.
-        ylim = [np.min([ylim[0], ylow]), np.max([ylim[1], yhigh])]
-        
-        
-        
-    plt.xlim(xlim)
-    plt.ylim(ylim)
+    # Check to see if custom limits are desired.
+    if plot_diag_params['gen.custom.limit.x']:
+        plt.xlim(xlim)    
+    if plot_diag_params['gen.custom.limit.y']:
+        plt.ylim(ylim)
+            
     
     return smoothed
     

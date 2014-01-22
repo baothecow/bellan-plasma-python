@@ -90,10 +90,8 @@ plot_diag_params = {
     'gen.subplot.titles': ['x', 'y', 'z'],
     'gen.multiprobe.label': 'Probe 1',
     'gen.tick.off': False,
-    'gen.autolimit': False,     # If set, the plot will automatically rescale appropriately.
-    'gen.autolimit.lim_scaling': 1.5,
-    'gen.autolimit.ylow': 0,
-    'gen.autolimit.yhigh': 0,
+    'gen.custom.limit.x': True,     # If set, plotting will use user limits.
+    'gen.custom.limit.y': False,
 
     ## Default colors
     'gen.color0': 'r',
