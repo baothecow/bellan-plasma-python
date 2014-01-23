@@ -177,8 +177,8 @@ def get_hall_calibration_matrix(sensor):
     
 def mpa_polarity_fix(bx, by, bz):
     """ Corrects for polarity due to mistakes in wiring/labeling/etc"""
-    ## In our case, by and bz components are backwards.
-    return (-1 * bx, by, -1 * bz)
+    ## In our case, bx and by components are backwards.
+    return (-1 * bx, -1 * by, bz)
 
 
 
