@@ -224,8 +224,43 @@ def vme_get_breakdown_time(shotnum):
     
     # Return the time associated with that index.
     return data[0][IGNORE_PTS + max_ind]    
-   
+
+
+def vme_get_shot_peak_time_and_value(shots_array, diag):
+    """ Takes in arrays of arrays containing strings of shotnumbers
+        Example: [['123', '124'], ['125', '126'], ['127']]. 
+        
+        Returns a list.  Every odd value is a time, and every even value is a signal.
+        
+    """
     
+    peak_times = []
+    peak_values = []
+        
+    for i in range(0, len(shots_array)):
+        data = vme_avg_sig(shots_array[i], diag)
+        time = vme_get_time_from_data(data, diag)
+        signal = vme_get_signal_from_data(data, diag)
+        (peak_time, peak_value) = vme_get_peak_time_and_value(time, signal)
+        peak_times = peak_times + [peak_time]
+        peak_values = peak_values + [peak_value]
+        
+    return (peak_times, peak_values)
+        
+
+def vme_get_peak_time_and_value(time, signal):
+    """ Returns the time and value of the peak """
+    
+    peak_index = vme_get_peak_index(signal)        
+    return (time[peak_index], signal[peak_index])
+    
+def vme_get_peak_index(signal):
+    """ Return the index of the peak value in a signal """
+    
+    max_index = np.where(np.abs(signal) == np.max(np.abs(signal)))
+    return max_index[0][0]  # Returns the first value if there are multiple peaks.
+
+
 def vme_get_filepath(shotnum, diag):
     """ Get path of a given shotnumber and diagnostic """
     

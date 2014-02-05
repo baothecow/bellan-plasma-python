@@ -2,20 +2,65 @@
 
 from vme_plot import *
 from vme_plot_specific import * 
-#from vme_cust_plot import *
+from vme_cust_plot import *
 import numpy as np
 import matplotlib.pyplot as plt
 from vme_analyze import *
 from cookb_signalsmooth import smooth
-from parameters import exp_paths
+from parameters import exp_paths, plot_diag_params
 from vme_analyze import integrate
 
 
+
 diag = 'current'
-shotnums = [['1131'], ['1156'], ['1153'], ['1150'], ['1147']]
-descript = ['0V', '30V', '60V', '90V', '150V']
-vme_plot_diag_for_shots(shotnums, diag, descript)
-#plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+#shotnums = [['1160', '1161', '1163'], ['1164', '1165', '1166'], ['1167', '1168', '1169'], \
+#            ['1170', '1172'], ['1173', '1174', '1175'], ['1176', '1177', '1178'], \
+#            ['1179', '1180'], ['1182', '1183'], ['1185', '1186', '1187'], \
+#            ['1188', '1189', '1190'], ['1191', '1192', '1193']]
+
+range1 = range(1001, 1010)
+range2 = range(1011, 1020)
+
+strarr1 = map(str, range1)
+strarr2 = map(str, range2)
+
+# Convoluted method to change ['1', '2', '3'] to [['1'], ['2'], ['3']]
+arr = array(strarr1)
+arr_res = arr.reshape(-1, 1)
+list_arr = arr_res.tolist()
+
+print list_arr
+
+
+(peak_times, peak_values) = vme_get_shot_peak_time_and_value(shotnums, diag)
+
+plt.scatter(peak_times, peak_values)
+plt.show()
+
+
+
+
+
+
+#diag = 'current'
+#shotnums = [['1160', '1161', '1163'], ['1164', '1165', '1166'], ['1167', '1168', '1169'], \
+#            ['1170', '1172'], ['1173', '1174', '1175'], ['1176', '1177', '1178'], \
+#            ['1179', '1180'], ['1182', '1183'], ['1185', '1186', '1187'], \
+#            ['1188', '1189', '1190'], ['1191', '1192', '1193']]
+#descript = ['0V', '-30V', '-60V', '-90V', '-120V', '-150V', '30V', '60V', '90V', '120V', '150V']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+##plot_diag_params['sol_mpa.int.xlim'] = [15, 25]
+##plot_diff_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+
+
+
+
+#diag = 'sol_mpa'
+#shotnums = [['1159'], ['1157'], ['1154'], ['1151'], ['1145'], ['1148']]
+#descript = ['0V', '30V', '60V', '90V', '120V', '150V']
+##vme_plot_diag_for_shots(shotnums, diag, descript)
+#plot_diag_params['sol_mpa.int.xlim'] = [15, 25]
+#plot_diff_mpa_for_shots(shotnums, descript=descript, num_probe=1)
 
 
 #
