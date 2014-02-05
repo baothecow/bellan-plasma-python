@@ -10,8 +10,7 @@ Created on Mon Jan 06 23:20:57 2014
 from imacon_analyze import *
 
 
-
-framenum = 8
+framenum = 6
 filepaths = get_file_paths(folderpath=INITIAL_DIR)
 
 for path in filepaths:

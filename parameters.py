@@ -47,7 +47,7 @@ plot_diag_params = {
     'sol_mpa.subplot.ytitles': ['Vx', 'Vy', 'Vz'],
     # Subsection for plotting parameters when integrated.
     'sol_mpa.int.name': 'Solar MPA',
-    'sol_mpa.int.title': 'Probe @ high/central position & vary strapping field',
+    'sol_mpa.int.title': '',
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
     'sol_mpa.int.xlim': [15, 30],
@@ -100,7 +100,13 @@ plot_diag_params = {
     'gen.color3': 'c',
     'gen.color4': 'm',
     'gen.color5': 'y',
-    'gen.color6': 'k'
+    'gen.color6': 'k',
+    'gen.color7': '#6495ed',
+    'gen.color8': '#00ffff',
+    'gen.color9': '#adff2f',
+    'gen.color10': '#ffff00',
+    'gen.color11': '#ff1493',
+    'gen.color12': '#8b8989'
 }     
 
 

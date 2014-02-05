@@ -246,7 +246,16 @@ def vme_get_shot_peak_time_and_value(shots_array, diag):
         peak_values = peak_values + [peak_value]
         
     return (peak_times, peak_values)
-        
+
+def vme_unflatten_list(flat_list):
+    """ Takes a flat list like [1, 2, 3] and turns it into [[1], [2], [3]] """
+    
+    flat_list_arr = np.array(flat_list)
+    reshaped_arr = flat_list_arr.reshape(-1, 1)
+    unflattened_list = reshaped_arr.tolist()
+    
+    return unflattened_list
+
 
 def vme_get_peak_time_and_value(time, signal):
     """ Returns the time and value of the peak """

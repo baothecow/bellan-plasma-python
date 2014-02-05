@@ -18,23 +18,24 @@ diag = 'current'
 #            ['1179', '1180'], ['1182', '1183'], ['1185', '1186', '1187'], \
 #            ['1188', '1189', '1190'], ['1191', '1192', '1193']]
 
-range1 = range(1001, 1010)
-range2 = range(1011, 1020)
 
-strarr1 = map(str, range1)
-strarr2 = map(str, range2)
+
+strarr1 = map(str, [1160, 1161, 1162])
+strarr2 = map(str, [1176, 1177, 1178])
+strarr3 = map(str, [1170, 1171, 1172])
 
 # Convoluted method to change ['1', '2', '3'] to [['1'], ['2'], ['3']]
-arr = array(strarr1)
-arr_res = arr.reshape(-1, 1)
-list_arr = arr_res.tolist()
 
-print list_arr
+shots1 = vme_unflatten_list(strarr1)
+shots2 = vme_unflatten_list(strarr2)
+shots3 = vme_unflatten_list(strarr3)
 
-
-(peak_times, peak_values) = vme_get_shot_peak_time_and_value(shotnums, diag)
-
-plt.scatter(peak_times, peak_values)
+(peak_times, peak_values) = vme_get_shot_peak_time_and_value(shots1, diag)
+plt.scatter(peak_times, peak_values, c='g')
+(peak_times, peak_values) = vme_get_shot_peak_time_and_value(shots2, diag)
+plt.scatter(peak_times, peak_values, c='b')
+(peak_times, peak_values) = vme_get_shot_peak_time_and_value(shots3, diag)
+plt.scatter(peak_times, peak_values, c='r')
 plt.show()
 
 
