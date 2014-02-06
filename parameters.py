@@ -25,13 +25,23 @@ plot_diag_params = {
 
     ## Xiang Zhai's Isolated HV probe parameters
     'iso_hv.name': 'Isolated HV Probe',
-    'iso_hv.title': 'Voltage vs time',
+    'iso_hv.title': 'Voltage vs Time',
     'iso_hv.ytitle': 'Voltage (V)',
     'iso_hv.xtitle': 'Time (' + '$\mu$' + 's)',
     'iso_hv.xlim': [10, 30],
     'iso_hv.ylim': [-4000, 1000],
     'iso_hv.smooth_win': 50,
     'iso_hv.subplot.styles': 111,
+
+    ## Collimator probe parameters
+    'collimator.name': 'Collimator Signal',
+    'collimator.title': 'Voltage vs Time',
+    'collimator.ytitle': 'Voltage (V)',
+    'collimator.xtitle': 'Time (' + '$\mu$' + 's)',
+    'collimator.xlim': [10, 30],
+    'collimator.ylim': [-1, 5],
+    'collimator.smooth_win': 50,
+    'collimator.subplot.styles': 111,
 
     ## MPA plot properties.
     'sol_mpa.name': 'Solar MPA',
