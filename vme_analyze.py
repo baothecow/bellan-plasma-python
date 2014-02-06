@@ -221,8 +221,8 @@ def vme_get_breakdown_time(shotnum):
     # Sets start and end window (in microseconds to look for the breakdown time)
     START_WINDOW = 10
     END_WINDOW = 18
-    THRESHOLD = 100
-    SMOOTH_WIN = 10
+    THRESHOLD = 75
+    SMOOTH_WIN = 20
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator.
@@ -243,7 +243,7 @@ def vme_get_breakdown_time(shotnum):
     if len(max_ind_arr) > 0:
         max_ind = max_ind_arr[0]
     else:
-        print 'The diff of shotnum' + str(shotnum) + ' never passes ' + str(THRESHOLD)
+        print 'The diff of shotnum ' + str(shotnum) + ' never passes ' + str(THRESHOLD)
         print 'Setting the value to ' + str(START_WINDOW)
         max_ind = 0
     
