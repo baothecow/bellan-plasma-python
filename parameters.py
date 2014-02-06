@@ -8,7 +8,7 @@ plot_diag_params = {
     'current.title': 'Current vs Time',
     'current.ytitle': 'Current (kA)',
     'current.xtitle': 'Time (' + '$\mu$' + 's)',
-    'current.xlim': [10, 30],
+    'current.xlim': [-5, 15],
     'current.ylim': [-80, 20],
     'current.smooth_win': 50,
     'current.subplot.styles': 111,
@@ -18,7 +18,7 @@ plot_diag_params = {
     'tek_hv.title': 'Voltage vs Time',
     'tek_hv.ytitle': 'Voltage (V)',
     'tek_hv.xtitle': 'Time (' + '$\mu$' + 's)',
-    'tek_hv.xlim': [5, 30],
+    'tek_hv.xlim': [-5, 15],
     'tek_hv.ylim': [-4000, 1000],
     'tek_hv.smooth_win': 50,
     'tek_hv.subplot.styles': 111,
@@ -28,7 +28,7 @@ plot_diag_params = {
     'iso_hv.title': 'Voltage vs Time',
     'iso_hv.ytitle': 'Voltage (V)',
     'iso_hv.xtitle': 'Time (' + '$\mu$' + 's)',
-    'iso_hv.xlim': [10, 30],
+    'iso_hv.xlim': [-5, 15],
     'iso_hv.ylim': [-4000, 1000],
     'iso_hv.smooth_win': 50,
     'iso_hv.subplot.styles': 111,
@@ -38,7 +38,7 @@ plot_diag_params = {
     'collimator.title': 'Voltage vs Time',
     'collimator.ytitle': 'Voltage (V)',
     'collimator.xtitle': 'Time (' + '$\mu$' + 's)',
-    'collimator.xlim': [10, 30],
+    'collimator.xlim': [-5, 15],
     'collimator.ylim': [-1, 5],
     'collimator.smooth_win': 50,
     'collimator.subplot.styles': 111,
@@ -48,8 +48,8 @@ plot_diag_params = {
     'sol_mpa.title': 'Bdot vs time',
     'sol_mpa.ytitle': 'Bdot (V)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.xlim': [10, 30],
-    'sol_mpa.ylim': [-10, 10],
+    'sol_mpa.xlim': [-5, 15],
+    'sol_mpa.ylim': [-5, 15],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'sol_mpa.subplot.titles': ['Probe 1', ' ', ' '],
@@ -60,7 +60,7 @@ plot_diag_params = {
     'sol_mpa.int.title': '',
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.int.xlim': [15, 30],
+    'sol_mpa.int.xlim': [-5, 15],
     'sol_mpa.int.ylim': [-500, 1000],
     'sol_mpa.int.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'sol_mpa.int.subplot.titles': ['Probe 1', ' ', ' '],
@@ -83,7 +83,7 @@ plot_diag_params = {
     'gen.title': 'Generic plot title',
     'gen.xtitle': 'Generic x title',
     'gen.ytitle': 'Generic y title',
-    'gen.xlim': (10, 30),
+    'gen.xlim': [-5, 15],
     'gen.ylim': (-40, 40),
     'gen.thin_ln_width': .5,
     'gen.med_ln_width': 1,
@@ -100,7 +100,7 @@ plot_diag_params = {
     'gen.subplot.titles': ['x', 'y', 'z'],
     'gen.multiprobe.label': 'Probe 1',
     'gen.tick.off': False,
-    'gen.custom.limit.x': True,     # If set, plotting will use user limits.
+    'gen.custom.limit.x': True,     # If set to True, plotting will use user limits.
     'gen.custom.limit.y': False,
 
     ## Default colors
@@ -188,7 +188,8 @@ diag_params = {
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000,
     'gen.presmooth': 0,
-    'gen.presmooth.const': 100
+    'gen.presmooth.const': 100,
+    'gen.set.breakdown.time.to.zero': True   
 }
 
 

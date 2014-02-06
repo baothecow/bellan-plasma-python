@@ -20,6 +20,7 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 from cookb_signalsmooth import smooth
+import matplotlib.pyplot as plt
 
 def vme_avg_scalar_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
@@ -44,6 +45,10 @@ def vme_avg_scalar_sig(shotnums, diag):
         data = readVME(filepath, cols=diag_params[diag+'.cols'], 
                        rows=diag_params[diag+'.rows'])
         time = data[0, :]
+
+        if diag_params['gen.set.breakdown.time.to.zero']:
+            time = time - vme_get_breakdown_time(shotnum)
+        
         signal = data[diag_params[diag+'.ind'], :] 
             
         # Remove transients.
@@ -190,6 +195,7 @@ def integrate(dt, signal):
 
 def vme_get_breakdown_times(shotnums):
     """ Extract breakdown time of an array of shots """
+    
     a = []    
     for shotnum in shotnums:
         if isinstance(shotnum, list):
@@ -201,19 +207,26 @@ def vme_get_breakdown_times(shotnums):
 
 def vme_get_breakdown_time(shotnum):
     """ Extracts breakdown time (in us) from optical trigger data. """
+
+    ## Make sure that the vme is not subtracting the breakdown time.
+    CURRENT_BREAKDOWN_CONFIG = diag_params['gen.set.breakdown.time.to.zero']
+    diag_params['gen.set.breakdown.time.to.zero'] = False
+    
       
     # If shotnum is actually a list, extract the first element.
     if isinstance(shotnum, list):
-        print 'list is here'
+        print 'vme_get_breakdown_time called with a list as input'
         shotnum = shotnum[0]
     
     # Sets start and end window (in microseconds to look for the breakdown time)
     START_WINDOW = 10
     END_WINDOW = 18
+    THRESHOLD = 100
+    SMOOTH_WIN = 10
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator.
-    diag = 'iso_hv'
+    diag = 'tek_hv'
     filepath = vme_get_filepath(shotnum, diag)
     data = readVME(filepath, cols=diag_params[diag+'.cols'], 
                    rows=diag_params[diag+'.rows'])
@@ -223,10 +236,20 @@ def vme_get_breakdown_time(shotnum):
     end_index = time.index(END_WINDOW)
     
     ## Get the diff for points within the window.
-    diff = list(np.diff(data[1][start_index:end_index]))
+    diff = np.diff(smooth(data[1][start_index:end_index], SMOOTH_WIN))
     
-    # Get the index of the largest diff value.
-    max_ind = diff.index(np.max(diff))
+    # Get locations that passes the threshold.
+    max_ind_arr = np.where(diff > THRESHOLD)[0]
+    if len(max_ind_arr) > 0:
+        max_ind = max_ind_arr[0]
+    else:
+        print 'The diff of shotnum' + str(shotnum) + ' never passes ' + str(THRESHOLD)
+        print 'Setting the value to ' + str(START_WINDOW)
+        max_ind = 0
+    
+    
+    # Set configurations back to user settings.
+    diag_params['gen.set.breakdown.time.to.zero'] = CURRENT_BREAKDOWN_CONFIG    
     
     # Return the time associated with that index.
     return data[0][start_index + max_ind]    
