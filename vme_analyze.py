@@ -20,7 +20,6 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 from cookb_signalsmooth import smooth
-import matplotlib.pyplot as plt
 
 def vme_avg_scalar_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
@@ -208,22 +207,29 @@ def vme_get_breakdown_time(shotnum):
         print 'list is here'
         shotnum = shotnum[0]
     
-    # Sets the number of points to ignore.  May help with noise.
-    IGNORE_PTS = 500
+    # Sets start and end window (in microseconds to look for the breakdown time)
+    START_WINDOW = 10
+    END_WINDOW = 18
 
-    diag = 'collimator'
+    # Looks largest rising peak.  Can change the diagnostics to look at to be
+    # the tek_hv, iso_hv, or the collimator.
+    diag = 'iso_hv'
     filepath = vme_get_filepath(shotnum, diag)
     data = readVME(filepath, cols=diag_params[diag+'.cols'], 
                    rows=diag_params[diag+'.rows'])
                    
-    ## Get the diff between points while ignoring the first 500 points.
-    diff = list(np.diff(data[1][IGNORE_PTS:]))
+    time = list(data[0])
+    start_index = time.index(START_WINDOW)
+    end_index = time.index(END_WINDOW)
+    
+    ## Get the diff for points within the window.
+    diff = list(np.diff(data[1][start_index:end_index]))
     
     # Get the index of the largest diff value.
     max_ind = diff.index(np.max(diff))
     
     # Return the time associated with that index.
-    return data[0][IGNORE_PTS + max_ind]    
+    return data[0][start_index + max_ind]    
 
 
 def vme_get_shot_peak_time_and_value(shots_array, diag):
