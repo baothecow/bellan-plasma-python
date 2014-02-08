@@ -103,20 +103,20 @@ plot_diag_params = {
     'gen.custom.limit.x': True,     # If set to True, plotting will use user limits.
     'gen.custom.limit.y': False,
 
-    ## Default colors
-    'gen.color0': 'r',
-    'gen.color1': 'b',
-    'gen.color2': 'g',
-    'gen.color3': 'c',
-    'gen.color4': 'm',
-    'gen.color5': 'y',
-    'gen.color6': 'k',
-    'gen.color7': '#6495ed',
-    'gen.color8': '#00ffff',
-    'gen.color9': '#adff2f',
-    'gen.color10': '#ffff00',
-    'gen.color11': '#ff1493',
-    'gen.color12': '#8b8989'
+    ## Default colors  (Use of brewer colors -- colorbrew2.org) 
+    'gen.color0': '#1f78b4',
+    'gen.color1': '#33a02c',
+    'gen.color2': '#e31a1c',
+    'gen.color3': '#ff7f00',
+    'gen.color4': '#6a3d9a',
+    'gen.color5': '#ffff99',
+    'gen.color6': '#a6cee3',
+    'gen.color7': '#b2df8a',  
+    'gen.color8': '#fb9a99',
+    'gen.color9': '#fdbf6f',
+    'gen.color10': '#cab2d6',
+    'gen.color11': '#ffff99',
+    'gen.color12': '#000000'
 }     
 
 
