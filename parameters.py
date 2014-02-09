@@ -187,8 +187,10 @@ diag_params = {
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000,
-    'gen.presmooth': 0,
+    'gen.presmooth': False,
     'gen.presmooth.const': 100,
+    'gen.prefilter': False,
+    'gen.filter.application': '',
     'gen.set.breakdown.time.to.zero': True   
 }
 
