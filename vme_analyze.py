@@ -397,7 +397,7 @@ def vme_get_IIR_poly_for_application(application):
         the IIR polynomial coefficient (b, a) to be used in IIR filterting functions like
         filtfilt. """
         
-    vme_sampling_rate = 10e6
+    vme_sampling_rate = 100e6
     nyquist = vme_sampling_rate/2.
     
     # Used to get the profile of the current without the transient spikes that
