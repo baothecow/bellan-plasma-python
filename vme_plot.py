@@ -139,7 +139,7 @@ def vme_cust_plot_diagnostic(
             ytitle=plot_diag_params[diag + '.ytitle'],
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim'],
-            smooth_win=plot_diag_params[diag+'.smooth_win']
+            smooth_win=plot_diag_params[diag+'.smooth_win'],
             )
     
     ## If the user sent in a vector diagnostic w/o specifying the subplot
@@ -171,5 +171,4 @@ def vme_plot_diagnostic(
     
     
     vme_cust_plot_diagnostic(time, signal, diag,        
-        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls,
-        smooth_win=plot_diag_params[diag+'.smooth_win'])
+        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls)
