@@ -20,7 +20,7 @@ import numpy as np
 from parameters import diag_params
 from file_io_lib import readVME
 from cookb_signalsmooth import smooth
-import matplotlib.pyplot as plt
+import scipy.signal as scisig
 
 def vme_avg_scalar_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
@@ -57,6 +57,10 @@ def vme_avg_scalar_sig(shotnums, diag):
         # If pre-smooth is activated, it smooth the VME input.
         if (diag_params['gen.presmooth']):
             signal = smooth(signal, diag_params['gen.presmooth.const'])
+            
+        # If pre-filter is activated, it will apply a pre-filter to the signal.
+        if (diag_params['gen.prefilter']):
+            signal = vme_filter_signal(signal, diag_params['gen.filter.application'])
         
         ## Subtract off any dc offset from the first 100 points of the signal.
         signals[shotnum] = signal - np.mean(signal[0:100])
@@ -348,6 +352,8 @@ def vme_remove_transients(signal):
         
     return signal
     
+
+    
     
 def vme_avg_sig(shotnums, diag):
     """ Averages the VME data associated with several shots 
@@ -370,7 +376,42 @@ def vme_avg_sig(shotnums, diag):
     
     if diag_params[diag+'.datatype'] == 'vector':
         return vme_avg_vector_sig(shotnums, diag=diag)
+
         
+def vme_filter_signal(signal, application):
+    """ Use filtfilt to digitally filter a signal depending on application """
+    
+    if application == '':
+        print 'Please specificy gen.filter.application within diag_params. ' + \
+            'Defaulting to \'heavy_current_low_pass\'.'
+        application = 'heavy_current_low_pass'
+    
+    # Obtain the appropritae IIR polynomials.
+    (b, a) = vme_get_IIR_poly_for_application(application)
+    
+    return scisig.filtfilt(b, a, signal)
+    
+    
+def vme_get_IIR_poly_for_application(application):
+    """ User inputs the application (string) and the program returns:
+        the IIR polynomial coefficient (b, a) to be used in IIR filterting functions like
+        filtfilt. """
+        
+    vme_sampling_rate = 10e6
+    nyquist = vme_sampling_rate/2.
+    
+    # Used to get the profile of the current without the transient spikes that
+    # may come from plasma reconneciton events.
+    if application == 'heavy_current_low_pass':
+        passband = 1e5
+        stopband = 4e5
+        max_loss = 0.1
+        min_atten = 20
+
+    N, Wn = scisig.buttord(wp=passband/nyquist, ws=stopband/nyquist, 
+                           gpass=max_loss, gstop=min_atten)
+    b, a = scisig.butter(N, Wn, 'lowpass')
+    return (b, a)
 
         
 def get_diag_constructor(shotnum, vme_extension):
