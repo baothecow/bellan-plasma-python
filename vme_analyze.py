@@ -144,11 +144,13 @@ def get_b_from_bdot(time, bdot):
     bdot_y = bdot[1]
     bdot_z = bdot[2]
     
-    dt = 1e-6 * time[1]-time[0]
+    dt = 1e-6 * (time[1]-time[0])
     
-    bx = -1*np.multiply(integrate(dt, bdot_x), (TESLA_TO_GAUSS/na))
-    by = -1*np.multiply(integrate(dt, bdot_y), (TESLA_TO_GAUSS/na))
-    bz = -1*np.multiply(integrate(dt, bdot_z), (TESLA_TO_GAUSS/na))
+    print dt
+    
+    bx = -1*np.multiply(vme_integrate(dt, bdot_x), (TESLA_TO_GAUSS/na))
+    by = -1*np.multiply(vme_integrate(dt, bdot_y), (TESLA_TO_GAUSS/na))
+    bz = -1*np.multiply(vme_integrate(dt, bdot_z), (TESLA_TO_GAUSS/na))
     
     return mpa_polarity_fix(bx, by, bz)         # Correct for polarity.
     
@@ -190,7 +192,7 @@ def mpa_polarity_fix(bx, by, bz):
 
 
 
-def integrate(dt, signal):
+def vme_integrate(dt, signal):
     """ Use cumsum and trapezoid rule to integrate a signal with unif spacing """
     cumsum = np.cumsum(signal)
     foo = np.subtract(np.subtract(np.multiply(cumsum, 2), signal), signal[0])
