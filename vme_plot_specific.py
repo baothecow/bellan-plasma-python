@@ -69,7 +69,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
     
     
 def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
-    """ Plots the diagnostic vs time over multiple shots
+    """ Plots the hall sensor vs time over multiple shots
 
         Input:        
         shots = A array with strings of shot num or lists of strings of shotnums

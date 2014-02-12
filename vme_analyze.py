@@ -146,8 +146,6 @@ def get_b_from_bdot(time, bdot):
     
     dt = 1e-6 * (time[1]-time[0])
     
-    print dt
-    
     bx = -1*np.multiply(vme_integrate(dt, bdot_x), (TESLA_TO_GAUSS/na))
     by = -1*np.multiply(vme_integrate(dt, bdot_y), (TESLA_TO_GAUSS/na))
     bz = -1*np.multiply(vme_integrate(dt, bdot_z), (TESLA_TO_GAUSS/na))
@@ -409,6 +407,15 @@ def vme_get_IIR_poly_for_application(application):
         stopband = 4e5
         max_loss = 0.1
         min_atten = 20
+        
+    # Used to get the profile of the current without the transient spikes that
+    # may come from plasma reconneciton events.
+    if application == 'tek_hv_low_pass':
+        passband = 1e6
+        stopband = 10e6
+        max_loss = 0.1
+        min_atten = 20
+
 
     N, Wn = scisig.buttord(wp=passband/nyquist, ws=stopband/nyquist, 
                            gpass=max_loss, gstop=min_atten)

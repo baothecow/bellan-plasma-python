@@ -8,20 +8,81 @@ import matplotlib.pyplot as plt
 from vme_analyze import *
 from cookb_signalsmooth import smooth
 from parameters import exp_paths, plot_diag_params
-from vme_analyze import integrate
+import scipy.signal as scisig
 
 
 
+
+#diag_params['gen.presmooth'] = True
+#diag_params['gen.presmooth.const'] = 50
+
+#diag_params['gen.prefilter'] = True
+##diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag_params['gen.filter.application'] = 'tek_hv_low_pass'
 
 diag = 'tek_hv'
-shotnums = [['1160', '1161', '1163'], ['1164', '1165', '1166'], ['1167', '1168', '1169'], \
-            ['1170', '1172'], ['1173', '1174', '1175'], ['1176', '1177', '1178'], \
-            ['1179', '1180'], ['1182', '1183'], ['1185', '1186', '1187'], \
-            ['1188', '1189', '1190'], ['1191', '1192', '1193']]
-descript = ['0V', '-30V', '-60V', '-90V', '-120V', '-150V', '30V', '60V', '90V', '120V', '150V']
+shots = map(str, range(837, 843))
+shotnums = vme_unflatten_list(shots)
+descript = shots
 vme_plot_diag_for_shots(shotnums, diag, descript)
-#plot_diag_params['sol_mpa.int.xlim'] = [15, 25]
-#plot_diff_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+plt.xlim(0, )
+#plot_diag_params['sol_mpa.int.xlim'] = [0, 10]
+#plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+
+
+#
+### Code to play around with butterworth digital filter.
+#plt.figure()
+#
+#diag = 'current'
+#shotnums = range(803, 804) 
+#shotnums = map(str, shotnums)
+#data = vme_avg_scalar_sig(shotnums, diag)
+#time = data[0]
+#signal = data[1]
+#
+#BACK = 100
+#
+#zero_index = np.where(time == 0)[0][0]
+#end_index = np.where(time > 50)[0][0]
+##time = time[zero_index - BACK:end_index]
+##signal = signal[zero_index - BACK:end_index]
+#
+#
+#fs = 100e6
+#fso2 = fs/2    # Nyquist frequency is half of sampling frequency.
+#N, Wn = scisig.buttord(wp=1e5/fso2, ws=4e5/fso2, gpass=0.1, gstop=20)
+#b, a = scisig.butter(N, Wn, 'lowpass')
+#output_signal = scisig.filtfilt(b, a, signal)
+#
+#
+#plt.plot(time, signal)
+#plt.plot(time, output_signal, linewidth=2)
+#plt.xlim(0,15)
+
+
+
+
+
+#
+#diag = 'current'
+#shotnums = range(806, 807)
+#shotnums = map(str, shotnums)
+#shotnums = vme_unflatten_list(shotnums)
+#vme_plot_diag_for_shots(shotnums, diag)
+#plt.xlim(0, 15)
+
+
+
+#diag = 'current'
+#shotnums = [['1160', '1161', '1163'], ['1164', '1165', '1166'], ['1167', '1168', '1169'], \
+#            ['1170', '1172'], ['1173', '1174', '1175'], ['1176', '1177', '1178'], \
+#            ['1179', '1180'], ['1182', '1183'], ['1185', '1186', '1187'], \
+#            ['1188', '1189', '1190'], ['1191', '1192', '1193']]
+#descript = ['0V', '-30V', '-60V', '-90V', '-120V', '-150V', '30V', '60V', '90V', '120V', '150V']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+##plot_diag_params['sol_mpa.int.xlim'] = [15, 25]
+##plot_diff_mpa_for_shots(shotnums, descript=descript, num_probe=1)
 
 
 
