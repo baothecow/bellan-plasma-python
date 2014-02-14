@@ -216,6 +216,12 @@ def vme_get_breakdown_time(shotnum):
     CURRENT_BREAKDOWN_CONFIG = diag_params['gen.set.breakdown.time.to.zero']
     diag_params['gen.set.breakdown.time.to.zero'] = False
     
+    # Disable the current state of the filters and smoothing.
+    CURRENT_FILTER_STATE = diag_params['gen.prefilter']
+    CURRENT_PRESMOOTH_STATE = diag_params['gen.presmooth']
+    diag_params['gen.prefilter'] = False
+    diag_params['gen.presmooth'] = False
+    
       
     # If shotnum is actually a list, extract the first element.
     if isinstance(shotnum, list):
@@ -254,6 +260,8 @@ def vme_get_breakdown_time(shotnum):
     
     # Set configurations back to user settings.
     diag_params['gen.set.breakdown.time.to.zero'] = CURRENT_BREAKDOWN_CONFIG    
+    diag_params['gen.prefilter'] = CURRENT_FILTER_STATE
+    diag_params['gen.presmooth'] = CURRENT_PRESMOOTH_STATE
     
     # Return the time associated with that index.
     return data[0][start_index + max_ind]    
