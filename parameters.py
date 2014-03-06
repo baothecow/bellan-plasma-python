@@ -110,7 +110,7 @@ plot_diag_params = {
     'gen.color2': '#e31a1c',
     'gen.color3': '#ff7f00',
     'gen.color4': '#6a3d9a',
-    'gen.color5': '#ffff99',
+    'gen.color5': '#b15928',
     'gen.color6': '#a6cee3',
     'gen.color7': '#b2df8a',  
     'gen.color8': '#fb9a99',

@@ -12,22 +12,86 @@ import scipy.signal as scisig
 
 
 
+diag_params['gen.prefilter'] = False
+diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+diag = 'tek_hv'
+shotnums = range(1364, 1371)
+shotnums = map(str, shotnums)
+shotnums = vme_unflatten_list(shotnums)
+vme_plot_diag_for_shots(shotnums, diag)
+plt.xlim(0, 15)
 
-#diag_params['gen.presmooth'] = True
+
+
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag = 'current'
+#shotnums = [['834', '835', '836'], ['828', '829', '830'], \
+#            ['822', '823', '824'], ['815', '816', '817', '818'], \
+#            ['879', '880', '881', '904', '905', '906', '907', '843', '844', '845', '846'], \
+#            ['882', '883', '884', '899', '900', '901', '902', '903', '851', '854', '855'], \
+#            ['885', '886', '887', '895', '896', '897', '860', '861', '863'], \
+#            ['888', '889', '890', '891', '892', '893', '894', '869', '870', '871', '872']]
+#descript = ['-90V', '-60V', '-30V', '-0V', '0V', '30G', '60G', '90']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+
+
+#
+#diag = 'current'
+#shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
+#map(str, range(522, 528)), map(str, range(528, 534))]
+#descript = ['Gas: 450V', 'Gas: 500V', 'Gas: 550V', 'Gas: 600V', 'Gas: 650V']#, '11/01/13', '10/08/13', '10/07/13', '9/11/13', '9/10/13', '3/13/13', '1/24/13', '1/23/13']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+#
+#plt.xlim(0, )
+
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag = 'current'
+#shotnums = ['10100', '10103', '10101', '10105', '10107']
+#descript = ['0G', '-150G', '-300G', '-450G', '-600G']
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+
+
+
+#diag_params['gen.presmooth'] = False
 #diag_params['gen.presmooth.const'] = 50
 
 #diag_params['gen.prefilter'] = True
-##diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
 #diag_params['gen.filter.application'] = 'tek_hv_low_pass'
 
-diag = 'tek_hv'
-shots = map(str, range(837, 843))
-shotnums = vme_unflatten_list(shots)
-descript = shots
-vme_plot_diag_for_shots(shotnums, diag, descript)
-plt.xlim(0, )
-#plot_diag_params['sol_mpa.int.xlim'] = [0, 10]
+#diag = 'current'
+#shots = map(str, (846, 868))
+#shotnums = vme_unflatten_list(shots)
+#descript = shots
+##vme_plot_diag_for_shots(shotnums, diag, descript)
+##plt.xlim(0, )
+##plot_diag_params['sol_mpa.int.xlim'] = [0, 10]
 #plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
+
+
+
+
+
+
+
+##diag_params['gen.presmooth'] = True
+##diag_params['gen.presmooth.const'] = 50
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+##diag_params['gen.filter.application'] = 'tek_hv_low_pass'
+#
+#diag = 'current'
+#shots = map(str, range(1296, 1300))
+#shotnums = vme_unflatten_list(shots)
+#descript = shots
+#vme_plot_diag_for_shots(shotnums, diag, descript)
+#plt.xlim(0, )
+##plot_diag_params['sol_mpa.int.xlim'] = [0, 10]
+##plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=1)
 
 
 #

@@ -74,6 +74,7 @@ def vme_avg_scalar_sig(shotnums, diag):
     
     return (time, avg_signal)
     
+    
 def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
     """ Averages the VME magnetic probe data associated with user inputted shots
     
@@ -231,7 +232,7 @@ def vme_get_breakdown_time(shotnum):
     # Sets start and end window (in microseconds to look for the breakdown time)
     START_WINDOW = 10
     END_WINDOW = 18
-    THRESHOLD = 75
+    THRESHOLD = 55
     SMOOTH_WIN = 20
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
@@ -254,7 +255,7 @@ def vme_get_breakdown_time(shotnum):
         max_ind = max_ind_arr[0]
     else:
         print 'The diff of shotnum ' + str(shotnum) + ' never passes ' + str(THRESHOLD)
-        print 'Setting the value to ' + str(START_WINDOW)
+        print 'Check THRESHOLD within vme_analyze.  Setting the value to ' + str(START_WINDOW)
         max_ind = 0
     
     

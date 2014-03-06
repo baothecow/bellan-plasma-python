@@ -30,7 +30,7 @@ def gen_read_foldername_pro(shotnum):
     f.write(".compile " + IDL_LIB_PATH + "foldername.pro\n")
     f.write("folder = \"\"\n")
     f.write("foldername, " + str(shotnum) + ", folder, verbal=1\n")
-    f.write("wait, 0.01\n")       # Process may terminate too early otherwise.
+    f.write("wait, 0.05\n")       # Process may terminate too early otherwise.
     f.close()
     
     
