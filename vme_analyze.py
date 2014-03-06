@@ -102,17 +102,30 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa', extra=''):
         
     return probe_data
 
-def vme_get_sig_min_and_max(signals):
-    """ Calculates the average signal and also some interval around the average 
-        by looking at the signal average and 
+def vme_get_sig_min_and_max(signals, band):
+    """ Calculates the average signal and also some interval around the average
+    signal
+    
+        signals - a dict containing the various signals.
+        band - a constant which is multiplied to the appropriate interval.
     
     """
            
     sig_val_list = signals.values()
     sig_val_arr = np.array(sig_val_list)
     
-    sig_max = np.max(sig_val_arr, axis=0)
-    sig_min = np.min(sig_val_arr, axis=0)
+    sig_avg = np.mean(sig_val_arr, axis=0)
+    
+    # Uncomment if want to use the standard deviation.
+    sig_std = np.std(sig_val_arr, axis=0)
+    sig_max = np.add(sig_avg, np.multiply(sig_std, band))
+    sig_min = np.subtract(sig_avg, np.multiply(sig_std, band))
+    
+#    # Uncomment if want to use min/max of signals.
+#    sig_max = np.max(sig_val_arr, axis=0)
+#    sig_min = np.min(sig_val_arr, axis=0)
+#    sig_max = np.add(np.multiply(np.subtract(sig_max, sig_avg), band), sig_avg)
+#    sig_min = np.add(np.multiply(np.subtract(sig_min, sig_avg), band), sig_avg)
     
     return (sig_min, sig_max)
     

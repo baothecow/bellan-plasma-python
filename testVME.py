@@ -12,7 +12,8 @@ import scipy.signal as scisig
 
 
 
-
+diag_params['gen.prefilter'] = True
+diag_params['gen.filter.application'] = 'heavy_current_low_pass'
 diag = 'current'
 shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
 map(str, range(522, 528)), map(str, range(528, 534))]
