@@ -12,14 +12,13 @@ import scipy.signal as scisig
 
 
 
-shotnums = map(str, range(1364, 1371))
+
 diag = 'current'
-(time, avg_signal, sig_min, sig_max) = vme_get_avg_scalar_sig_and_band(shotnums, diag)
-
-abc = plt.plot(time, avg_signal)
-abc.fill_between(time, sig_min, sig_max, color = 'green', facecolor = 'green', alpha = 0.5)
-
-
+shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
+map(str, range(522, 528)), map(str, range(528, 534))]
+descript = ['Gas: 450V', 'Gas: 500V', 'Gas: 550V', 'Gas: 600V', 'Gas: 650V']#, '11/01/13', '10/08/13', '10/07/13', '9/11/13', '9/10/13', '3/13/13', '1/24/13', '1/23/13']
+vme_plot_diag_for_shots(shotnums, diag, descript, band=1, extra='indiv_signals')
+plt.xlim(0, )
 
 
 

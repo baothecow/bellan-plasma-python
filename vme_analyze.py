@@ -79,7 +79,7 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
     return (time, avg_signal, extra)
     
     
-def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
+def vme_avg_vector_sig(shotnums, diag='sol_mpa', extra=''):
     """ Averages the VME magnetic probe data associated with user inputted shots
     
         See vme_avg_sig for input description.
@@ -393,7 +393,7 @@ def vme_remove_transients(signal):
 
     
     
-def vme_avg_sig(shotnums, diag):
+def vme_avg_sig(shotnums, diag, extra=''):
     """ Averages the VME data associated with several shots 
     
         shotnums: a list of strings denoting shot numbers eg ['525', '526', '571']
@@ -401,6 +401,9 @@ def vme_avg_sig(shotnums, diag):
                     * 'current' is rogowski coil current.
                     * 'tek_hv' is Tektronic high voltage'
                     * 'iso_hv' is Xiang's high voltage probe
+                    
+        extra:  Extra parameter for special purpose use.
+                    * 'indiv_signals' - returns a dict containing the individual signals.
         
         returns either:
             * a list of 2 1-d arrays.
@@ -410,10 +413,10 @@ def vme_avg_sig(shotnums, diag):
     """ 
 
     if diag_params[diag+'.datatype'] == 'scalar':
-        return vme_avg_scalar_sig(shotnums, diag=diag)
+        return vme_avg_scalar_sig(shotnums, diag=diag, extra=extra)
     
     if diag_params[diag+'.datatype'] == 'vector':
-        return vme_avg_vector_sig(shotnums, diag=diag)
+        return vme_avg_vector_sig(shotnums, diag=diag, extra=extra)
 
         
 def vme_filter_signal(signal, application):

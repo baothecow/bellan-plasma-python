@@ -6,7 +6,8 @@ import numpy as np
 from vme_plot import *
 from pylab import subplots_adjust
 from vme_analyze import vme_avg_sig, vme_get_time_from_data, \
-    vme_get_signal_from_data, get_b_from_bdot, get_b_from_hall
+    vme_get_signal_from_data, get_b_from_bdot, get_b_from_hall, \
+    vme_get_sig_min_and_max, vme_get_extra_from_data
 
 
 
@@ -15,7 +16,7 @@ from parameters import plot_diag_params, diag_params
 
 
 
-def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
+def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra='', band=0):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -37,6 +38,10 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
                 
         delay - an array of numbers containing the appropriate time delay in
                 microseconds to be added to the VME time.
+                
+        extra - specify which piece of extra information to return within a call.
+                
+        band - Checks to see if a band is also plotted.
     
     """
     
@@ -46,7 +51,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
-        data = vme_avg_sig(shots_array[i], diag)
+        data = vme_avg_sig(shots_array[i], diag, extra=extra)
         time = vme_get_time_from_data(data, diag)
         # Allows time shifts to match plots
         if delay != None:
@@ -55,7 +60,13 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None):
         signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
         vme_plot_diagnostic(time, signal, diag, 
-                            color=plot_diag_params['gen.color'+str(i)])       
+                            color=plot_diag_params['gen.color'+str(i)])
+        if band > 0:
+            (sig_min, sig_max) = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag))
+            plt.fill_between(time, sig_min, sig_max, color = 'none', \
+            facecolor = plot_diag_params['gen.color'+str(i)], alpha = 0.5)
+        
+        
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
