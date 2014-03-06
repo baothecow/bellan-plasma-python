@@ -73,7 +73,7 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
     vme_avg_sig_correlation(avg_signal, signals, diag)
     
     # If the calling function wants the individual signal traces.
-    if extra == 'signals':
+    if extra == 'indiv_signals':
         extra = signals
     
     return (time, avg_signal, extra)
@@ -102,13 +102,11 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
         
     return probe_data
 
-def vme_get_avg_scalar_sig_and_band(shotnums, diag, band=1):
+def vme_get_sig_min_and_max(signals):
     """ Calculates the average signal and also some interval around the average 
         by looking at the signal average and 
     
     """
-    
-    (time, avg_signal, signals) = vme_avg_scalar_sig(shotnums, diag, extra='signals')
            
     sig_val_list = signals.values()
     sig_val_arr = np.array(sig_val_list)
@@ -116,7 +114,7 @@ def vme_get_avg_scalar_sig_and_band(shotnums, diag, band=1):
     sig_max = np.max(sig_val_arr, axis=0)
     sig_min = np.min(sig_val_arr, axis=0)
     
-    return (time, avg_signal, sig_min, sig_max)
+    return (sig_min, sig_max)
     
 
     
@@ -352,6 +350,7 @@ def vme_get_time_from_data(data, diag):
     if diag_params[diag+'.datatype'] == 'vector':
         return data['time']
         
+        
 def vme_get_signal_from_data(data, diag):
     """ extracts sgnal from data from vme_avg_sig 
 
@@ -366,6 +365,14 @@ def vme_get_signal_from_data(data, diag):
         for component in diag_params[diag + '.components']:
             signal.append(data[component])       
         return signal
+
+        
+def vme_get_extra_from_data(data, diag):
+    """ Returns the extra component from the data depending on scalar vs vector """
+    
+    if diag_params[diag+'.datatype'] == 'scalar':
+        return data[2]
+    
         
 def vme_remove_transients(signal):
     """ A collection of hot patches to deal with transients """

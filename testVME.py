@@ -16,8 +16,8 @@ shotnums = map(str, range(1364, 1371))
 diag = 'current'
 (time, avg_signal, sig_min, sig_max) = vme_get_avg_scalar_sig_and_band(shotnums, diag)
 
-plt.plot(time, avg_signal)
-plt.fill_between(time, sig_min, sig_max, color = 'green', facecolor = 'green', alpha = 0.5)
+abc = plt.plot(time, avg_signal)
+abc.fill_between(time, sig_min, sig_max, color = 'green', facecolor = 'green', alpha = 0.5)
 
 
 
