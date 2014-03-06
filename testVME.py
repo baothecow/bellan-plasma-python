@@ -12,14 +12,25 @@ import scipy.signal as scisig
 
 
 
-diag_params['gen.prefilter'] = False
-diag_params['gen.filter.application'] = 'heavy_current_low_pass'
-diag = 'tek_hv'
-shotnums = range(1364, 1371)
-shotnums = map(str, shotnums)
-shotnums = vme_unflatten_list(shotnums)
-vme_plot_diag_for_shots(shotnums, diag)
-plt.xlim(0, 15)
+shotnums = map(str, range(1364, 1371))
+diag = 'current'
+(time, avg_signal, sig_min, sig_max) = vme_get_avg_scalar_sig_and_band(shotnums, diag)
+
+plt.plot(time, avg_signal)
+plt.fill_between(time, sig_min, sig_max, color = 'green', facecolor = 'green', alpha = 0.5)
+
+
+
+
+
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag = 'tek_hv'
+#shotnums = range(1364, 1371)
+#shotnums = map(str, shotnums)
+#shotnums = vme_unflatten_list(shotnums)
+#vme_plot_diag_for_shots(shotnums, diag)
+#plt.xlim(0, 15)
 
 
 

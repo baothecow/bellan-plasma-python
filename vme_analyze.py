@@ -22,7 +22,7 @@ from file_io_lib import readVME
 from cookb_signalsmooth import smooth
 import scipy.signal as scisig
 
-def vme_avg_scalar_sig(shotnums, diag):
+def vme_avg_scalar_sig(shotnums, diag, extra=''):
     """ Averages the VME data associated with several shots 
     
         See vme_avg_sig for input description.
@@ -72,7 +72,11 @@ def vme_avg_scalar_sig(shotnums, diag):
     ## failures or obvious bad data.
     vme_avg_sig_correlation(avg_signal, signals, diag)
     
-    return (time, avg_signal)
+    # If the calling function wants the individual signal traces.
+    if extra == 'signals':
+        extra = signals
+    
+    return (time, avg_signal, extra)
     
     
 def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
@@ -97,6 +101,24 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa'):
         probe_data[component] = avg_data[1]
         
     return probe_data
+
+def vme_get_avg_scalar_sig_and_band(shotnums, diag, band=1):
+    """ Calculates the average signal and also some interval around the average 
+        by looking at the signal average and 
+    
+    """
+    
+    (time, avg_signal, signals) = vme_avg_scalar_sig(shotnums, diag, extra='signals')
+           
+    sig_val_list = signals.values()
+    sig_val_arr = np.array(sig_val_list)
+    
+    sig_max = np.max(sig_val_arr, axis=0)
+    sig_min = np.min(sig_val_arr, axis=0)
+    
+    return (time, avg_signal, sig_min, sig_max)
+    
+
     
 def vme_avg_sig_correlation(avg_signal, signals, diag):
     """ Correlates an avg signal with the signals stored in signals dict
