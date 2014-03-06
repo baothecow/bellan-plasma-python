@@ -13,13 +13,21 @@ import scipy.signal as scisig
 
 
 diag_params['gen.prefilter'] = True
-diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+diag_params['gen.filter.application'] = 'current_light_low_pass'
 diag = 'current'
-shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
-map(str, range(522, 528)), map(str, range(528, 534))]
-descript = ['Gas: 450V', 'Gas: 500V', 'Gas: 550V', 'Gas: 600V', 'Gas: 650V']#, '11/01/13', '10/08/13', '10/07/13', '9/11/13', '9/10/13', '3/13/13', '1/24/13', '1/23/13']
-vme_plot_diag_for_shots(shotnums, diag, descript, band=1, extra='indiv_signals')
-plt.xlim(0, )
+shotnums = [['1173', '1174', '1175'], ['1167', '1168', '1169'], ['1160', '1161', '1163'], \
+            ['1182', '1183'], ['1188', '1189', '1190']]
+descript = ['-120V', '-60V', '0V', '60V', '120V']
+vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
+
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'heavy_current_low_pass'
+#diag = 'current'
+#shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
+#map(str, range(522, 528)), map(str, range(528, 534))]
+#descript = ['Gas: 450V', 'Gas: 500V', 'Gas: 550V', 'Gas: 600V', 'Gas: 650V']#, '11/01/13', '10/08/13', '10/07/13', '9/11/13', '9/10/13', '3/13/13', '1/24/13', '1/23/13']
+#vme_plot_diag_for_shots(shotnums, diag, descript, band=1, extra='indiv_signals')
+#plt.xlim(0, )
 
 
 

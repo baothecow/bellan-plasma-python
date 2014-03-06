@@ -456,11 +456,20 @@ def vme_get_IIR_poly_for_application(application):
     
     # Used to get the profile of the current without the transient spikes that
     # may come from plasma reconneciton events.
-    if application == 'heavy_current_low_pass':
+    if application == 'current_heavy_low_pass':
         passband = 1e5
         stopband = 4e5
         max_loss = 0.1
         min_atten = 20
+        
+        
+    # Use to smooth out any high frequencies above 3MHz.
+    if application == 'current_light_low_pass':
+        passband = 1e6
+        stopband = 3e6
+        max_loss = 0.1
+        min_atten = 20
+
         
     # Used to get the profile of the current without the transient spikes that
     # may come from plasma reconneciton events.

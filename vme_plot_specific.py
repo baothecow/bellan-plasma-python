@@ -16,7 +16,7 @@ from parameters import plot_diag_params, diag_params
 
 
 
-def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra='', band=0):
+def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra='', band=1):
     """ Plots the diagnostic vs time over multiple shots
 
         Input:        
@@ -61,7 +61,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
         plot_diag_params['gen.shotnum'] = shots_array[i]
         vme_plot_diagnostic(time, signal, diag, 
                             color=plot_diag_params['gen.color'+str(i)])
-        if band > 0:
+        if extra != '':
             (sig_min, sig_max) = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
             plt.fill_between(time, sig_min, sig_max, color = 'none', \
             facecolor = plot_diag_params['gen.color'+str(i)], alpha = 0.5)
