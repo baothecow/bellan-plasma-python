@@ -9,16 +9,36 @@ from vme_analyze import *
 from cookb_signalsmooth import smooth
 from parameters import exp_paths, plot_diag_params
 import scipy.signal as scisig
+from shot_dict import shot_dict
+    
 
-
-
+shotnums = [map(str, range(1300, 1304)), map(str, range(1304, 1306) + range(1307, 1314))]
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
+diag_params['gen.trim'] = True
 diag = 'current'
-shotnums = [['1173', '1174', '1175'], ['1167', '1168', '1169'], ['1160', '1161', '1163'], \
-            ['1182', '1183'], ['1188', '1189', '1190']]
-descript = ['-120V', '-60V', '0V', '60V', '120V']
-vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
+vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+
+
+
+
+
+#
+#Strap0 = range(787, 792)
+#Strap45 = range(797, 801)
+#Strap90 = range(806, 813)  # 806 and 808 have a large transient associated with them.
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+##shotnums = [map(str, Strap0), map(str, Strap45), map(str, Strap90)]
+#shotnums = vme_unflatten_list(map(str, range(1304, 1306)+range(1307, 1314)))
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+#
+
+
+
+
 
 #diag_params['gen.prefilter'] = True
 #diag_params['gen.filter.application'] = 'heavy_current_low_pass'

@@ -29,9 +29,7 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
         
         returns a list of 2 1d arrays with the time and the signal average.
     """    
-    # Storage array of all the signal.
-    signal_sum = np.zeros(diag_params[diag+'.cols'])
-    
+   
     # If shotnums is a single string, turn it into a list eg '847' -> ['847']
     if isinstance(shotnums, basestring):
         shotnums = [shotnums]
@@ -50,6 +48,14 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
             time = time - vme_get_breakdown_time(shotnum)
         
         signal = data[diag_params[diag+'.ind'], :] 
+        
+        # If need to trim the arrays to a given time interval.
+        if diag_params['gen.trim']:
+            (low_trim, high_trim) = diag_params['gen.trim.interval']
+            low_ind = np.where(time > low_trim)[0][0]
+            high_ind = np.where(time > high_trim)[0][0]
+            time = time[low_ind: high_ind] 
+            signal = signal[low_ind: high_ind]
             
         # Remove transients.
         signal = vme_remove_transients(signal)
@@ -64,9 +70,8 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
         
         ## Subtract off any dc offset from the first 100 points of the signal.
         signals[shotnum] = signal - np.mean(signal[0:100])
-        signal_sum = np.add(signals[shotnum], signal_sum)
     
-    avg_signal = np.divide(signal_sum, np.size(shotnums))
+    avg_signal = np.mean(signals.values(), axis=0)
     
     ## Checks the correlation between the different signals to check for VME
     ## failures or obvious bad data.

@@ -192,7 +192,9 @@ diag_params = {
     'gen.presmooth.const': 100,
     'gen.prefilter': False,
     'gen.filter.application': '',
-    'gen.set.breakdown.time.to.zero': True   
+    'gen.set.breakdown.time.to.zero': True,
+    'gen.trim': False,              # If ncessary, trim the data to within a certain time interval.
+    'gen.trim.interval': (-10, 60)      # Time interval in microseconds.
 }
 
 
