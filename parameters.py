@@ -194,7 +194,8 @@ diag_params = {
     'gen.filter.application': '',
     'gen.set.breakdown.time.to.zero': True,
     'gen.trim': False,              # If ncessary, trim the data to within a certain time interval.
-    'gen.trim.interval': (-10, 60)      # Time interval in microseconds.
+    'gen.trim.low.limit': -10,      # lower limit in microseconds.
+    'gen.trim.range': 7000          # Number of points to look after the lower limit.
 }
 
 

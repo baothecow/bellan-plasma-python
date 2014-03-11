@@ -51,9 +51,9 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
         
         # If need to trim the arrays to a given time interval.
         if diag_params['gen.trim']:
-            (low_trim, high_trim) = diag_params['gen.trim.interval']
+            low_trim= diag_params['gen.trim.low.limit']
             low_ind = np.where(time > low_trim)[0][0]
-            high_ind = np.where(time > high_trim)[0][0]
+            high_ind = low_ind + diag_params['gen.trim.range']
             time = time[low_ind: high_ind] 
             signal = signal[low_ind: high_ind]
             

@@ -11,11 +11,12 @@ from parameters import exp_paths, plot_diag_params
 import scipy.signal as scisig
 from shot_dict import shot_dict
     
+diag_params['gen.trim'] = True
+
 
 shotnums = [map(str, range(1300, 1304)), map(str, range(1304, 1306) + range(1307, 1314))]
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-diag_params['gen.trim'] = True
 diag = 'current'
 vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
