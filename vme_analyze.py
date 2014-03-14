@@ -101,38 +101,49 @@ def vme_avg_vector_sig(shotnums, diag='sol_mpa', extra=''):
         # Set up the appropriate probe num.
         diag_params[diag+'.ind'] = diag_params[diag+'.'+component+'.ind']
         diag_params[diag+'.vme'] = diag + '_' + component
-        avg_data = vme_avg_scalar_sig(shotnums, diag)
+        avg_data = vme_avg_scalar_sig(shotnums, diag, extra=extra)
         probe_data['time'] = avg_data[0]
         probe_data[component] = avg_data[1]
+        probe_data[component+'.extra'] = avg_data[2]
         
     return probe_data
 
-def vme_get_sig_min_and_max(signals, band):
+def vme_get_sig_min_and_max(signals_list, band):
     """ Calculates the average signal and also some interval around the average
-    signal
+    signal given a list of dicts of signals.
     
-        signals - a dict containing the various signals.
+        signals - a list of dict containing the various signals.  Each dict
+                corresponds to a component of a vector.  For a scalar quantity
+                is considered a vector with one component ie a list with a single dict.
         band - a constant which is multiplied to the appropriate interval.
     
     """
+    
+    sig_min_list = list()
+    sig_max_list = list()
+    
+    for signals in signals_list:
            
-    sig_val_list = signals.values()
-    sig_val_arr = np.array(sig_val_list)
+        sig_val_list = signals.values()
+        sig_val_arr = np.array(sig_val_list)
+        
+        sig_avg = np.mean(sig_val_arr, axis=0)
+        
+        # Uncomment if want to use the standard deviation.
+        sig_std = np.std(sig_val_arr, axis=0)
+        sig_max = np.add(sig_avg, np.multiply(sig_std, band))
+        sig_min = np.subtract(sig_avg, np.multiply(sig_std, band))
     
-    sig_avg = np.mean(sig_val_arr, axis=0)
+    #    # Uncomment if want to use min/max of signals.
+    #    sig_max = np.max(sig_val_arr, axis=0)
+    #    sig_min = np.min(sig_val_arr, axis=0)
+    #    sig_max = np.add(np.multiply(np.subtract(sig_max, sig_avg), band), sig_avg)
+    #    sig_min = np.add(np.multiply(np.subtract(sig_min, sig_avg), band), sig_avg)
+      
+        sig_min_list.append(sig_min)
+        sig_max_list.append(sig_max)
     
-    # Uncomment if want to use the standard deviation.
-    sig_std = np.std(sig_val_arr, axis=0)
-    sig_max = np.add(sig_avg, np.multiply(sig_std, band))
-    sig_min = np.subtract(sig_avg, np.multiply(sig_std, band))
-    
-#    # Uncomment if want to use min/max of signals.
-#    sig_max = np.max(sig_val_arr, axis=0)
-#    sig_min = np.min(sig_val_arr, axis=0)
-#    sig_max = np.add(np.multiply(np.subtract(sig_max, sig_avg), band), sig_avg)
-#    sig_min = np.add(np.multiply(np.subtract(sig_min, sig_avg), band), sig_avg)
-    
-    return (sig_min, sig_max)
+    return (sig_min_list, sig_max_list)
     
 
     
@@ -386,10 +397,25 @@ def vme_get_signal_from_data(data, diag):
 
         
 def vme_get_extra_from_data(data, diag):
-    """ Returns the extra component from the data depending on scalar vs vector """
+    """ Returns the extra component from the data depending on scalar vs vector 
+    
+    If the diagnostic is a scalar, return a list containing a single dict element.
+    If the diagnostic is a vector, return a list containing a dict element for each
+        vector component.
+    
+    """
+    
+    extras = list()
+    
     
     if diag_params[diag+'.datatype'] == 'scalar':
-        return data[2]
+        extras.append(data[2])
+    if diag_params[diag+'.datatype'] == 'vector':
+        for component in diag_params[diag + '.components']:
+            extras.append(data[component+'.extra'])       
+        
+    return extras       # This should return a list of dicts.
+    
     
         
 def vme_remove_transients(signal):

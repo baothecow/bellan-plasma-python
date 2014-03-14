@@ -28,6 +28,7 @@ def vme_2d_plot_scalar_signal(
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
         label=True,
+        extra_signals=''
         ):
     """ Basic 2D plotting of a single quantity vs time """    
     
@@ -43,6 +44,11 @@ def vme_2d_plot_scalar_signal(
     plt.setp(smoothed, color=color, ls=ls)
     plt.setp(smoothed, linewidth=plot_diag_params['gen.thick_ln_width'])
     
+    ## At the moment, extra signals is only used for plotting the bands.
+    if extra_signals != '':
+        (sig_min, sig_max) = extra_signals
+        plt.fill_between(time, sig_min, sig_max, color = 'none', \
+                facecolor = color, alpha = 0.5)
     
     
     # Label the plot.
@@ -76,15 +82,17 @@ def vme_2d_plot_vector_signal(
         xlim=plot_diag_params['gen.xlim'],
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
-        label=True
+        label=True,
+        extra_signals=['', '', '']
         ):
     """ Plot each vector components as individual plots aligned appropriately """
-
-   
+  
     ## Loop through the components of the vector
     for i in range(0, len(signals)):
         plt.subplot(subplot[i][0], subplot[i][1], subplot[i][2])
         
+        ## Note!  The shape of extra_signals is 2 x # components x # pts.       
+       
         smooth = vme_2d_plot_scalar_signal(
             time, 
             signals[i],
@@ -96,11 +104,15 @@ def vme_2d_plot_vector_signal(
             ytitle=subplot_ytitle[i],
             xlim=xlim,
             ylim=ylim,
-            label=False
+            label=False,
+            extra_signals=(extra_signals[0][i], extra_signals[1][i])
             )
         
         # Label the plot.
         plt.setp(smooth, label=plot_diag_params['gen.shotnum'])
+
+
+
                
     ## Set overall title.    
     plt.suptitle(title)
@@ -115,7 +127,8 @@ def vme_cust_plot_diagnostic(
         diag,
         subplot,
         color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls']
+        ls=plot_diag_params['gen.ls'],
+        extra_signals=''
         ):
     """ Used to make a customized diagnostics of an array of shotnumbers 
 
@@ -140,6 +153,8 @@ def vme_cust_plot_diagnostic(
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim'],
             smooth_win=plot_diag_params[diag+'.smooth_win'],
+            # For a scalar, there is only 1 component so the second bracket is always 0.
+            extra_signals=(extra_signals[0][0], extra_signals[1][0])
             )
     
     ## If the user sent in a vector diagnostic w/o specifying the subplot
@@ -156,7 +171,8 @@ def vme_cust_plot_diagnostic(
             subplot_ytitle=plot_diag_params[diag + '.subplot.ytitles'],
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim'],
-            smooth_win=plot_diag_params[diag+'.smooth_win']
+            smooth_win=plot_diag_params[diag+'.smooth_win'],
+            extra_signals=extra_signals  # For a vector, further synthesis done within vme_2d_plot_vector_signal
             )
             
             
@@ -165,10 +181,11 @@ def vme_plot_diagnostic(
         signal,
         diag,
         color=plot_diag_params['gen.color'],
-        ls=plot_diag_params['gen.ls']
+        ls=plot_diag_params['gen.ls'],
+        extra_signals=''
         ):
     """ Plots diagnostics of an array using generic parameters """
     
     
     vme_cust_plot_diagnostic(time, signal, diag,        
-        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls)
+        subplot=plot_diag_params[diag + '.subplot.styles'], color=color, ls=ls, extra_signals=extra_signals)

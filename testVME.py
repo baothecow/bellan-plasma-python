@@ -13,29 +13,52 @@ from shot_dict import shot_dict
     
 diag_params['gen.trim'] = True
 
-
-shotnums = [map(str, range(1300, 1304)), map(str, range(1304, 1306) + range(1307, 1314))]
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-diag = 'current'
-vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+diag = 'sol_mpa'
+shotnums = [map(str, range(1397, 1407)), map(str, range(1407, 1414)), \
+            map(str, range(1414, 1419)), map(str, range(1427, 1430))] 
+#shotnums = [['1397', '1398'], ['1407'], ['1414'], ['1427']]
+descript = ['First series of shots', 'Waited 1 hr', 'Waited 1 more hr', 'After some 60V shots']
+vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+plt.xlim(0, 15)
+
 
 
 
 
 
 #
-#Strap0 = range(787, 792)
-#Strap45 = range(797, 801)
-#Strap90 = range(806, 813)  # 806 and 808 have a large transient associated with them.
-#
-#diag_params['gen.prefilter'] = False
+#shotnums = [map(str, range(1160, 1164)), map(str, range(1198, 1203)), \
+#            map(str, range(1219, 1224)), map(str, range(1300, 1304)), \
+#            map(str, range(1307, 1314)), ['1194'], \
+#            map(str, range(1129, 1132)), ['1159']]
+#            
+#descript = ['1/25/14', '2/06/14 - Early', '2/06/14 - Later', '2/10/14 - Early', \
+#             '2/10/14 - Later', '1/25/14 - Last shot', '1/21/14 - Early', \
+#             '1/21/14 - Last shot']
+#diag_params['gen.prefilter'] = True
 #diag_params['gen.filter.application'] = 'current_light_low_pass'
 #diag = 'current'
-##shotnums = [map(str, Strap0), map(str, Strap45), map(str, Strap90)]
-#shotnums = vme_unflatten_list(map(str, range(1304, 1306)+range(1307, 1314)))
-#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 #
+
+
+
+
+#
+#Strap0 = range(1248, 1252)
+#Strap30 = range(1255, 1258)
+#Strap60 = range(1261, 1264)
+#Strap90 = range(1258, 1261)
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'tek_hv_low_pass'
+#diag = 'current'
+#shotnums = [map(str, Strap0), map(str, Strap30), map(str, Strap60), map(str, Strap90)]
+#descript = ['0V', '30V', '60V', '90V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
 
 
 

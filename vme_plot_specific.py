@@ -59,12 +59,18 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
             time = np.add(time, delay[i])
         signal = vme_get_signal_from_data(data, diag)
         plot_diag_params['gen.shotnum'] = shots_array[i]
-        vme_plot_diagnostic(time, signal, diag, 
-                            color=plot_diag_params['gen.color'+str(i)])
+        
+        extra_signals = ''  # Null value of extra_signal.
         if extra != '':
-            (sig_min, sig_max) = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
-            plt.fill_between(time, sig_min, sig_max, color = 'none', \
-            facecolor = plot_diag_params['gen.color'+str(i)], alpha = 0.5)
+            #(sig_min, sig_max) = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
+            extra_signals = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
+#            plt.fill_between(time, sig_min, sig_max, color = 'none', \
+#            facecolor = plot_diag_params['gen.color'+str(i)], alpha = 0.5)
+            #extra_signals = (sig_min, sig_max)
+            
+        vme_plot_diagnostic(time, signal, diag, 
+                            color=plot_diag_params['gen.color'+str(i)], extra_signals=extra_signals)
+
         
         
     # Generate legend for the figure using plt.figlegend
