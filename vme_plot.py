@@ -83,7 +83,7 @@ def vme_2d_plot_vector_signal(
         ylim=plot_diag_params['gen.ylim'],
         smooth_win=plot_diag_params['gen.smooth_win'],
         label=True,
-        extra_signals=['', '', '']
+        extra_signals=''
         ):
     """ Plot each vector components as individual plots aligned appropriately """
   
@@ -92,6 +92,10 @@ def vme_2d_plot_vector_signal(
         plt.subplot(subplot[i][0], subplot[i][1], subplot[i][2])
         
         ## Note!  The shape of extra_signals is 2 x # components x # pts.       
+        if extra_signals != '':
+            extra_for_single_plot = (extra_signals[0][i], extra_signals[1][i])
+        else:
+            extra_for_single_plot = extra_signals
        
         smooth = vme_2d_plot_scalar_signal(
             time, 
@@ -105,7 +109,7 @@ def vme_2d_plot_vector_signal(
             xlim=xlim,
             ylim=ylim,
             label=False,
-            extra_signals=(extra_signals[0][i], extra_signals[1][i])
+            extra_signals=extra_for_single_plot
             )
         
         # Label the plot.
@@ -141,6 +145,9 @@ def vme_cust_plot_diagnostic(
     
     
     if diag_params[diag+'.datatype'] == 'scalar':
+        # For a scalar, there is only 1 component so the second bracket is always 0.
+        if extra_signals != '':
+            extra_signals=(extra_signals[0][0], extra_signals[1][0])
         return vme_2d_plot_scalar_signal(
             time, 
             signal,
@@ -153,8 +160,7 @@ def vme_cust_plot_diagnostic(
             xlim=plot_diag_params[diag + '.xlim'],
             ylim=plot_diag_params[diag + '.ylim'],
             smooth_win=plot_diag_params[diag+'.smooth_win'],
-            # For a scalar, there is only 1 component so the second bracket is always 0.
-            extra_signals=(extra_signals[0][0], extra_signals[1][0])
+            extra_signals=extra_signals
             )
     
     ## If the user sent in a vector diagnostic w/o specifying the subplot
