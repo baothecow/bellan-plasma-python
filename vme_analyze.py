@@ -282,7 +282,7 @@ def vme_get_breakdown_time(shotnum):
     START_WINDOW = 10
     END_WINDOW = 18
     THRESHOLD = 55
-    SMOOTH_WIN = 20
+    SMOOTH_WIN = 30
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator.
