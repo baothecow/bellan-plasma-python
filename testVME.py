@@ -6,7 +6,7 @@
 ## found within hallfoldername.por
 from parameters import exp_paths
 from parameters import diag_params
-from vme_plot_specific import plot_hall_for_shots 
+from vme_plot_specific import *
 
 exp_paths['EXP'] = 'hall'
 diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
@@ -16,14 +16,10 @@ diag_params['gen.trim'] = False
 diag_params['gen.presmooth'] = True
 diag_params['gen.prefilter'] = False
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-diag = 'hall'
-#shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
-#descript=['Open', 'Closed']
-#plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')
-shotnums = [map(str, range(430, 432)), ['430'], ['431']]
-#shotnums = ['430']
-descript=['Open', 'Closed', 'Hi']
+shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
+descript=['Open', 'Closed']
 plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')
+
 
 
 #### Plot the diagnostics for different configurations of bias fields.

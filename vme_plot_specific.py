@@ -154,7 +154,7 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
             signals_list.append(shots_bz)
             extra_signals = vme_get_sig_min_and_max(signals_list, band)
         
-        vme_plot_diagnostic(time, signal, diag,    \
+        vme_plot_diagnostic(time, signal, diag+'.b',    \
                             color=plot_diag_params['gen.color'+str(i)], extra_signals=extra_signals)       
     
     # Generate legend for the figure using plt.figlegend

@@ -77,6 +77,16 @@ plot_diag_params = {
     'hall.subplot.titles': ['Sensor Output', ' ', ' '],
     'hall.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'hall.subplot.ytitles': ['Vx', 'Vy', 'Vz'],
+    ## Subsection for plotting hall magnetic reading instead of straight hall voltage.
+    'hall.b.title': 'Magnetic Field vs Time',
+    'hall.b.xlim': [0, 20000],
+    'hall.b.ylim': [-.08, .02],
+    'hall.b.smooth_win': 50,
+    'hall.b.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
+    'hall.b.subplot.titles': ['Sensor Output', ' ', ' '],
+    'hall.b.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
+    'hall.b.subplot.ytitles': ['Bx (T)', 'By (T)', 'Bz (T)'],
+
 
     ## Default parameters.
     'gen.color': 'k',
@@ -186,6 +196,7 @@ diag_params = {
     'hall.datatype': 'vector',
     'hall.corr.threshold': 0.9,   
     'hall.sensor': 'A',         # Default hall sensor used is sensor A.
+    'hall.b.datatype': 'vector',
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000,
