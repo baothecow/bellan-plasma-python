@@ -211,41 +211,44 @@ def get_b_from_hall(signal, sensor='A'):
     ### UPdate the comment section appropriately.
     ###### Update yer comments!!!
     
+    signal - a 3xn array corresponding to the hall voltages along the
+    3 axes of the hall sensor.
+    
     """
     calibration_matrix = get_hall_calibration_matrix(sensor)
     
-    # Determine if transforming 2d 3xn matrix or a 3d ax3xn matrix
-    num_signals = np.shape(np.shape(signal))[0]  # Will be 2 if just a 3xn matrix?  Or a list of dicts.
-    
-    if num_signals == 1:  # The signal is a list of dicts.
-        ret_list = list() 
-        # Extract the dicts containing each components.
-        shots_bx_dict = signal[0]
-        shots_by_dict = signal[1]
-        shots_bz_dict = signal[2]
-        
-        for shot_num in shots_bx_dict.keys():
-            print 'hi'
-            print shot_num
-            hall_v_for_shot = [shots_bx_dict[shot_num], shots_by_dict[shot_num], shots_bz_dict[shot_num]]
-            hall_b_for_shot = np.dot(calibration_matrix, hall_v_for_shot)
-            
-            
-            # Reassign the newly calibrated values.
-            shots_bx_dict[shot_num] = hall_b_for_shot[0]
-            shots_by_dict[shot_num] = hall_b_for_shot[1]
-            shots_bz_dict[shot_num] = hall_b_for_shot[2]
-            
-        print shots_bx_dict
-            
-        ret_list.append(shots_bx_dict)
-        ret_list.append(shots_by_dict)
-        ret_list.append(shots_bz_dict)
-        
-        return ret_list
-
-    if num_signals == 2:
-        return np.dot(calibration_matrix, signal)
+#    # Determine if transforming 2d 3xn matrix or a 3d ax3xn matrix
+#    num_signals = np.shape(np.shape(signal))[0]  # Will be 2 if just a 3xn matrix?  Or a list of dicts.
+#    
+#    if num_signals == 1:  # The signal is a list of dicts.
+#        ret_list = list() 
+#        # Extract the dicts containing each components.
+#        shots_bx_dict = signal[0]
+#        shots_by_dict = signal[1]
+#        shots_bz_dict = signal[2]
+#        
+#        for shot_num in shots_bx_dict.keys():
+#            print 'hi'
+#            print shot_num
+#            hall_v_for_shot = [shots_bx_dict[shot_num], shots_by_dict[shot_num], shots_bz_dict[shot_num]]
+#            hall_b_for_shot = np.dot(calibration_matrix, hall_v_for_shot)
+#            
+#            
+#            # Reassign the newly calibrated values.
+#            shots_bx_dict[shot_num] = hall_b_for_shot[0]
+#            shots_by_dict[shot_num] = hall_b_for_shot[1]
+#            shots_bz_dict[shot_num] = hall_b_for_shot[2]
+#            
+#        print shots_bx_dict
+#            
+#        ret_list.append(shots_bx_dict)
+#        ret_list.append(shots_by_dict)
+#        ret_list.append(shots_bz_dict)
+#        
+#        return ret_list
+#
+#    if num_signals == 2:
+    return np.dot(calibration_matrix, signal)
 
         
     print 'Error in input to get_b_from_hall within vme_analyze'
