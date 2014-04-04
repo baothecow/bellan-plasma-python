@@ -17,9 +17,13 @@ diag_params['gen.presmooth'] = True
 diag_params['gen.prefilter'] = False
 diag_params['gen.filter.application'] = 'current_light_low_pass'
 diag = 'hall'
-shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
-descript=['Open', 'Closed']
-plot_hall_for_shots(shotnums, descript=descript, sensor='C')
+#shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
+#descript=['Open', 'Closed']
+#plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')
+shotnums = [map(str, range(430, 432)), ['430'], ['431']]
+#shotnums = ['430']
+descript=['Open', 'Closed', 'Hi']
+plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')
 
 
 #### Plot the diagnostics for different configurations of bias fields.

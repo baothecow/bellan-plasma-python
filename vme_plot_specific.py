@@ -7,7 +7,7 @@ from vme_plot import *
 from pylab import subplots_adjust
 from vme_analyze import vme_avg_sig, vme_get_time_from_data, \
     vme_get_signal_from_data, get_b_from_bdot, get_b_from_hall, \
-    vme_get_sig_min_and_max, vme_get_extra_from_data
+    vme_get_sig_min_and_max, vme_get_extra_from_data, vme_unflatten_list
 
 
 
@@ -81,15 +81,15 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
     plt.show()    
     
     
-def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
+def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra='', band=1):
     """ Plots the hall sensor vs time over multiple shots
 
         Input:        
         shots = A array with strings of shot num or lists of strings of shotnums
             
             Examples: 
-            ['847'] : plot diagnostic for shot 847. (single line)
-            ['847', '848', '849'] : plot diagnostic for shots 847, 848 and 849.
+            [['847']] : plot diagnostic for shot 847. (single line)
+            [['847'], ['848'], ['849']] : plot diagnostic for shots 847, 848 and 849.
             [['847', '848'], '849'] : plot the average and 847 and 848 also plot 849.
                                 
         descript - an array of strings containing additional description of
@@ -100,6 +100,7 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
                 
         sensor - The name of the sensor.  It must have a corresponding calibration
                 matrix defined in vme_analyze.
+                
     
     """
     
@@ -111,18 +112,50 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
     # Iterate through the shot numbers.
     for i in range(0, len(shots_array)):
         print shots_array[i]
-        data = vme_avg_sig(shots_array[i], diag)
-        time = vme_get_time_from_data(data, diag)
-        # Allows time shifts to match plots
-        if delay != None:
-            print delay[i]
-            time = np.add(time, delay[i])
-        signal = vme_get_signal_from_data(data, diag)
-        signal = get_b_from_hall(signal, sensor=sensor)        
-        
         plot_diag_params['gen.shotnum'] = shots_array[i]
-        vme_plot_diagnostic(time, signal, diag, 
-                            color=plot_diag_params['gen.color'+str(i)])       
+        
+        ## Unflatten the shot array by 1 level:  ['123', '124'] -> [['123], ['124']]
+        unflatten_shot_arr = vme_unflatten_list(shots_array[i])
+        
+        indiv_signal_list = list()
+        shots_bx = dict()
+        shots_by = dict()
+        shots_bz = dict()
+        
+        ## Extract data separately for each shot so that I can apply the transformation matrix individually.
+        ## The nice thing is that I've essentially created the output that I would've gotten by
+        ## Calling vme_get_extra_from_data.
+        for j in range(0, len(unflatten_shot_arr)):
+            indiv_data = vme_avg_sig(unflatten_shot_arr[j], diag, extra=extra)
+            time = vme_get_time_from_data(indiv_data, diag)
+            indiv_hall_signal = vme_get_signal_from_data(indiv_data, diag)
+            indiv_b_signal = get_b_from_hall(indiv_hall_signal, sensor=sensor)
+            indiv_signal_list.append(indiv_b_signal)
+            
+            ## Reformat the bx, by, bz information by shots to be compatible with
+            ## vme_get_sig_min_and_max which expects a list of dicts.
+            shots_bx[shots_array[i][j]] = indiv_b_signal[0]
+            shots_by[shots_array[i][j]] = indiv_b_signal[1]
+            shots_bz[shots_array[i][j]] = indiv_b_signal[2]
+            
+
+        signal = np.mean(indiv_signal_list, axis=0)
+    
+        # Label of each input.
+        plot_diag_params['gen.shotnum'] = shots_array[i]
+        
+        extra_signals = ''  # Null value of extra_signal.
+        if extra != '':
+            # Must create the list of dicts.
+            signals_list = list()
+            signals_list.append(shots_bx)
+            signals_list.append(shots_by)
+            signals_list.append(shots_bz)
+            extra_signals = vme_get_sig_min_and_max(signals_list, band)
+        
+        vme_plot_diagnostic(time, signal, diag,    \
+                            color=plot_diag_params['gen.color'+str(i)], extra_signals=extra_signals)       
+    
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})

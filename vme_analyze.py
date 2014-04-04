@@ -68,8 +68,8 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
         if (diag_params['gen.prefilter']):
             signal = vme_filter_signal(signal, diag_params['gen.filter.application'])
         
-        ## Subtract off any dc offset from the first 100 points of the signal.
-        signals[shotnum] = signal - np.mean(signal[0:100])
+        ## Subtract off any dc offset.  DC offset determined by first 2% of points.
+        signals[shotnum] = signal - np.mean(signal[0:int(diag_params[diag+'.cols']*.02)])
     
     avg_signal = np.mean(signals.values(), axis=0)
     
@@ -112,8 +112,8 @@ def vme_get_sig_min_and_max(signals_list, band):
     """ Calculates the average signal and also some interval around the average
     signal given a list of dicts of signals.
     
-        signals - a list of dict containing the various signals.  Each dict
-                corresponds to a component of a vector.  For a scalar quantity
+        signals_list - a list of dict containing the various signals.  
+                * Each dict corresponds to a component of a vector.  For a scalar quantity
                 is considered a vector with one component ie a list with a single dict.
         band - a constant which is multiplied to the appropriate interval.
     
@@ -123,9 +123,9 @@ def vme_get_sig_min_and_max(signals_list, band):
     sig_max_list = list()
     
     for signals in signals_list:
-           
+        
         sig_val_list = signals.values()
-        sig_val_arr = np.array(sig_val_list)
+        sig_val_arr = np.array(sig_val_list)  
         
         sig_avg = np.mean(sig_val_arr, axis=0)
         
@@ -208,12 +208,50 @@ def get_b_from_hall(signal, sensor='A'):
     """ Use Auna's matrix method to calculate the magnetic field 
     
     hall: list of 3 1d arrays corresponding to hall_x, hall_y, and hall_z
+    ### UPdate the comment section appropriately.
+    ###### Update yer comments!!!
     
     """
-
     calibration_matrix = get_hall_calibration_matrix(sensor)
     
-    return np.dot(calibration_matrix, signal)
+    # Determine if transforming 2d 3xn matrix or a 3d ax3xn matrix
+    num_signals = np.shape(np.shape(signal))[0]  # Will be 2 if just a 3xn matrix?  Or a list of dicts.
+    
+    if num_signals == 1:  # The signal is a list of dicts.
+        ret_list = list() 
+        # Extract the dicts containing each components.
+        shots_bx_dict = signal[0]
+        shots_by_dict = signal[1]
+        shots_bz_dict = signal[2]
+        
+        for shot_num in shots_bx_dict.keys():
+            print 'hi'
+            print shot_num
+            hall_v_for_shot = [shots_bx_dict[shot_num], shots_by_dict[shot_num], shots_bz_dict[shot_num]]
+            hall_b_for_shot = np.dot(calibration_matrix, hall_v_for_shot)
+            
+            
+            # Reassign the newly calibrated values.
+            shots_bx_dict[shot_num] = hall_b_for_shot[0]
+            shots_by_dict[shot_num] = hall_b_for_shot[1]
+            shots_bz_dict[shot_num] = hall_b_for_shot[2]
+            
+        print shots_bx_dict
+            
+        ret_list.append(shots_bx_dict)
+        ret_list.append(shots_by_dict)
+        ret_list.append(shots_bz_dict)
+        
+        return ret_list
+
+    if num_signals == 2:
+        return np.dot(calibration_matrix, signal)
+
+        
+    print 'Error in input to get_b_from_hall within vme_analyze'
+    return -9999
+    
+    
     
 def get_hall_calibration_matrix(sensor):
     if sensor == 'A': 
