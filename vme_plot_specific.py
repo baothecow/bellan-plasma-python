@@ -62,11 +62,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
         
         extra_signals = ''  # Null value of extra_signal.
         if extra != '':
-            #(sig_min, sig_max) = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
             extra_signals = vme_get_sig_min_and_max(vme_get_extra_from_data(data, diag), band)
-#            plt.fill_between(time, sig_min, sig_max, color = 'none', \
-#            facecolor = plot_diag_params['gen.color'+str(i)], alpha = 0.5)
-            #extra_signals = (sig_min, sig_max)
             
         vme_plot_diagnostic(time, signal, diag, 
                             color=plot_diag_params['gen.color'+str(i)], extra_signals=extra_signals)
@@ -108,11 +104,6 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A'):
     """
     
     diag = 'hall'
-
-#    timerange = [min(time), max(time)]/1e3
-#    vmax = max([vx, vy, vz])
-#    vmin = min([vx, vy, vz])
-#    vrange = [vmin, vmax]*1.5
     
     # Start a new figure
     plt.figure()

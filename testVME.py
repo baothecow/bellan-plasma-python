@@ -1,30 +1,86 @@
-## Testing magnus's IO library.
 
-from vme_plot import *
-from vme_plot_specific import * 
-from vme_cust_plot import *
-import numpy as np
-import matplotlib.pyplot as plt
-from vme_analyze import *
-from cookb_signalsmooth import smooth
-from parameters import exp_paths, plot_diag_params
-import scipy.signal as scisig
-from shot_dict import shot_dict
-    
-diag_params['gen.trim'] = True
+ 
+## Hall sensor -- 
+ 
+## Make sure to update foldername.pro within the hall sensor directory so that it contains the information
+## found within hallfoldername.por
+from parameters import exp_paths
+from parameters import diag_params
+from vme_plot_specific import plot_hall_for_shots 
 
-diag_params['gen.prefilter'] = True
+exp_paths['EXP'] = 'hall'
+diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
+diag_params['gen.corr.lower.ind'] = 10000                  # Set correlation index for the large VME data files for hall data.
+diag_params['gen.corr.upper.ind'] = 40000
+diag_params['gen.trim'] = False
+diag_params['gen.presmooth'] = True
+diag_params['gen.prefilter'] = False
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-diag = 'sol_mpa'
-shotnums = [map(str, range(1397, 1407)), map(str, range(1407, 1414)), \
-            map(str, range(1414, 1419)), map(str, range(1427, 1430))] 
-#shotnums = [['1397', '1398'], ['1407'], ['1414'], ['1427']]
-descript = ['First series of shots', 'Waited 1 hr', 'Waited 1 more hr', 'After some 60V shots']
-vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
-plt.xlim(0, 15)
+diag = 'hall'
+shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
+descript=['Open', 'Closed']
+plot_hall_for_shots(shotnums, descript=descript, sensor='C')
+
+
+#### Plot the diagnostics for different configurations of bias fields.
+#diag_params['gen.trim'] = True
+#diag_params['gen.presmooth'] = False
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.custom.limit.y'] =  True
+#plot_diag_params['sol_mpa.xlim'] = [0, 10]
+#plot_diag_params['sol_mpa.ylim'] = [-5, 5]
+#diag = 'sol_mpa'
+#shotnums = [map(str, range(1025, 1028)), map(str, range(1034, 1038)), map(str, range(1031, 1034)), map(str, range(1028, 1031)), map(str, range(1038, 1041))]
+#descript = ['200V/200V', '200V/100V', '200V/50V', '200V/0V', '200V/400V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+#shotnums = [map(str, range(1025, 1028)), map(str, range(1050, 1053)), map(str, range(1047, 1050)), map(str, range(1044, 1047))]
+#descript = ['200V/200V', '100V/200V', '50V/200V', '0V/200V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+#shotnums = [map(str, range(1025, 1028)), map(str, range(1028, 1031)), map(str, range(1044, 1047)), map(str, range(1041, 1044))]
+#descript = ['200V/200V', '200V/0V', '0V/200V', '0V/400V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
 
 
+
+#### Comparing the sol_mpa for different main bank voltages.
+#diag_params['gen.trim'] = True
+#diag_params['gen.presmooth'] = False
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [['1002', '1003', '1004'], ['1005', '1006', '1007'], ['1008', '1009', '1010'], \
+#['1011', '1012', '1013'], ['1014', '1015', '1016']]
+#descript = ['3kV', '3.5kV', '4kV', '4.5kV', '5kV']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+### Comparing the solar_mpa signal for shots with a spike in current trace vs no spike in current trace.
+#diag_params['gen.trim'] = True
+#
+#diag_params['gen.presmooth'] = False
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [['1399', '1407', '1411', '1416', '1417', '1419', '1421'], ['1398', '1400', '1403', '1410', '1415', '1418']]
+#descript = ['Spiky shots', 'Regular shots']
+##vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+#plot_sol_mpa_for_shots(shotnums, descript=descript)
+
+
+
+
+
+
+
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [map(str, range(1397, 1407)), map(str, range(1407, 1414)), \
+#            map(str, range(1414, 1419)), map(str, range(1427, 1430))] 
+##shotnums = [['1397', '1398'], ['1407'], ['1414'], ['1427']]
+#descript = ['First series of shots', 'Waited 1 hr', 'Waited 1 more hr', 'After some 60V shots']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
 
 

@@ -6,7 +6,6 @@
 
 ## VME plotting routines
 import matplotlib.pyplot as plt
-import numpy as np
 from cookb_signalsmooth import smooth
 
 ## User defined parameters.
