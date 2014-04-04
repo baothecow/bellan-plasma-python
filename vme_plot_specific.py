@@ -105,6 +105,7 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
     """
     
     diag = 'hall'
+    diag_params['hall.sensor'] = sensor
     
     # Start a new figure
     plt.figure()

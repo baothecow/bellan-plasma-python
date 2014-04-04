@@ -185,6 +185,7 @@ diag_params = {
     'hall.numprobes': 1,       # Set between 1-5 depending on sensors A-E used.
     'hall.datatype': 'vector',
     'hall.corr.threshold': 0.9,   
+    'hall.sensor': 'A',         # Default hall sensor used is sensor A.
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000,
