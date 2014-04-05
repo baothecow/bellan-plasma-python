@@ -86,9 +86,19 @@ plot_diag_params = {
     'hall.b.subplot.titles': ['Sensor Output', ' ', ' '],
     'hall.b.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
     'hall.b.subplot.ytitles': ['Bx (T)', 'By (T)', 'Bz (T)'],
+                               
+    ## Generic scalar diagnostic parameteres
+    'generic.name': 'Generic Diagnostic',
+    'generic.title': 'Generic Diagnostic vs Time',
+    'generic.ytitle': 'Voltage (V)',
+    'generic.xtitle': 'Time (' + '$\mu$' + 's)',
+    'generic.xlim': [0, 20000],
+    'generic.ylim': [-80, 20],
+    'generic.smooth_win': 50,
+    'generic.subplot.styles': 111,
 
 
-    ## Default parameters.
+    ## General (default) parameters.
     'gen.color': 'k',
     'gen.ls': '-',
     'gen.title': 'Generic plot title',
@@ -197,6 +207,18 @@ diag_params = {
     'hall.corr.threshold': 0.9,   
     'hall.sensor': 'A',         # Default hall sensor used is sensor A.
     'hall.b.datatype': 'vector',
+    
+    # Generic diagnostics
+    'generic.rows': 2,        # Generic is used to quickly read data from a generic scalar diagnostic.
+    'generic.cols': 65536,
+    'generic.ind': 1,
+    'generic.vme': 'generic',
+    'generic.numprobes': 1,
+    'generic.datatype' : 'scalar',
+    'generic.corr.threshold': 0.95,
+    'generic.path': '\\strap_rogowski_',
+    
+    # General traits across all diagnostics.
     'gen.probenum': 1,
     'gen.corr.lower.ind': 1450,
     'gen.corr.upper.ind': 3000,

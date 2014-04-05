@@ -281,14 +281,18 @@ def vme_get_breakdown_time(shotnum):
         shotnum = shotnum[0]
     
     # Sets start and end window (in microseconds to look for the breakdown time)
-    START_WINDOW = 10
-    END_WINDOW = 18
-    THRESHOLD = 55
-    SMOOTH_WIN = 30
+#    START_WINDOW = 10
+#    END_WINDOW = 18
+#    THRESHOLD = 55
+#    SMOOTH_WIN = 30    
+    START_WINDOW = 5000
+    END_WINDOW = 10000
+    THRESHOLD = 1e-2
+    SMOOTH_WIN = 10
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator.
-    breakdown_diag = 'tek_hv'
+    breakdown_diag = 'generic'
     filepath = vme_get_filepath(shotnum, breakdown_diag)
     data = readVME(filepath, cols=diag_params[breakdown_diag+'.cols'], 
                    rows=diag_params[breakdown_diag+'.rows'])
@@ -299,6 +303,8 @@ def vme_get_breakdown_time(shotnum):
     
     ## Get the diff for points within the window.
     diff = np.diff(smooth(data[1][start_index:end_index], SMOOTH_WIN))
+    
+    print np.max(diff)
     
     # Get locations that passes the threshold.
     max_ind_arr = np.where(diff > THRESHOLD)[0]
@@ -521,7 +527,9 @@ def vme_get_IIR_poly_for_application(application):
         
 def get_diag_constructor(shotnum, vme_extension):
     """ Construct the filename for a specific diagnostics """
-    
+
+    if vme_extension == 'generic':
+        return diag_params['generic.path'] + shotnum + '.dat'    
     if vme_extension == 'current' or vme_extension == 'tek_hv':
         return '\\vi_t2ch13_' + shotnum + '.dat'
     if vme_extension == 'iso_hv':
@@ -540,6 +548,7 @@ def get_diag_constructor(shotnum, vme_extension):
         return '\\shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
     if vme_extension == 'hall_bz':
         return '\\shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
+
 
 
 
