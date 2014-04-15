@@ -281,18 +281,18 @@ def vme_get_breakdown_time(shotnum):
         shotnum = shotnum[0]
     
     # Sets start and end window (in microseconds to look for the breakdown time)
-#    START_WINDOW = 10
-#    END_WINDOW = 18
-#    THRESHOLD = 55
-#    SMOOTH_WIN = 30    
-    START_WINDOW = 5000
-    END_WINDOW = 10000
-    THRESHOLD = 1e-2
-    SMOOTH_WIN = 10
+    START_WINDOW = 10
+    END_WINDOW = 18
+    THRESHOLD = 55
+    SMOOTH_WIN = 30    
+#    START_WINDOW = 5000
+#    END_WINDOW = 10000
+#    THRESHOLD = 1e-2
+#    SMOOTH_WIN = 10
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
-    # the tek_hv, iso_hv, or the collimator.
-    breakdown_diag = 'generic'
+    # the tek_hv, iso_hv, or the collimator, or can be generic.
+    breakdown_diag = 'tek_hv'
     filepath = vme_get_filepath(shotnum, breakdown_diag)
     data = readVME(filepath, cols=diag_params[breakdown_diag+'.cols'], 
                    rows=diag_params[breakdown_diag+'.rows'])
@@ -303,8 +303,6 @@ def vme_get_breakdown_time(shotnum):
     
     ## Get the diff for points within the window.
     diff = np.diff(smooth(data[1][start_index:end_index], SMOOTH_WIN))
-    
-    print np.max(diff)
     
     # Get locations that passes the threshold.
     max_ind_arr = np.where(diff > THRESHOLD)[0]

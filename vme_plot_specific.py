@@ -135,9 +135,9 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
             
             ## Reformat the bx, by, bz information by shots to be compatible with
             ## vme_get_sig_min_and_max which expects a list of dicts.
-            shots_bx[shots_array[i][j]] = indiv_b_signal[0]
-            shots_by[shots_array[i][j]] = indiv_b_signal[1]
-            shots_bz[shots_array[i][j]] = indiv_b_signal[2]
+            shots_bx[shots_array[i][j]] = np.multiply(indiv_b_signal[0])#, 1e4)
+            shots_by[shots_array[i][j]] = np.multiply(indiv_b_signal[1])#, 1e4)
+            shots_bz[shots_array[i][j]] = np.multiply(indiv_b_signal[2])#, 1e4)
             
 
         signal = np.mean(indiv_signal_list, axis=0)
@@ -154,7 +154,7 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
             signals_list.append(shots_bz)
             extra_signals = vme_get_sig_min_and_max(signals_list, band)
         
-        vme_plot_diagnostic(time, signal, diag+'.b',    \
+        vme_plot_diagnostic(time, np.multiply(signal, 1), diag+'.b',    \
                             color=plot_diag_params['gen.color'+str(i)], extra_signals=extra_signals)       
     
     # Generate legend for the figure using plt.figlegend

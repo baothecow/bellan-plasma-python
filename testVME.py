@@ -1,21 +1,32 @@
+
+
+
+
+
 ## Rogowski reading from hall sensors.
  
-## Make sure to update foldername.pro within the hall sensor directory so that it contains the information
-## found within hallfoldername.por
-from parameters import exp_paths
-from parameters import diag_params
-from vme_plot_specific import vme_plot_diag_for_shots
-
-exp_paths['EXP'] = 'hall'
-diag_params['generic.path'] = '\\strap_rogowski_'
-diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
-diag_params['gen.corr.lower.ind'] = 10000                  # Set correlation index for the large VME data files for hall data.
-diag_params['gen.corr.upper.ind'] = 40000
-diag_params['gen.trim'] = False
-diag_params['gen.presmooth'] = False
-diag = 'generic'
-shotnums = [['306'], ['315'], ['321'], ['327'], ['323'], ['339'], ['345'], ['351'], ['357'], ['363']]
-vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+### Make sure to update foldername.pro within the hall sensor directory so that it contains the information
+### found within hallfoldername.por
+#from parameters import exp_paths
+#from parameters import diag_params
+#from vme_plot_specific import vme_plot_diag_for_shots
+#
+#exp_paths['EXP'] = 'hall'
+#diag_params['generic.path'] = '\\strap_rogowski_'
+#diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
+#diag_params['gen.corr.lower.ind'] = 10000                  # Set correlation index for the large VME data files for hall data.
+#diag_params['gen.corr.upper.ind'] = 40000
+#diag_params['gen.trim'] = False
+#diag_params['gen.presmooth'] = False
+#diag = 'generic'
+#shotnums = [['306'], ['315'], ['321'], ['327']]
+#shotnums = [['321'], ['339'], ['345'], ['351']] 
+#shotnums = [['357'], ['363'], ['369'], ['375']]
+#shotnums = [['383'], ['389'], ['396'], ['402']]
+#shotnums = [['408'], ['414'], ['420'], ['430']]
+#shotnums = [['432'], ['438'], ['444'], ['449'], ['455']]
+#shotnums = [['303'], ['305'], ['306'], ['307'], ['309'], ['310'], ['313'], ['314'], ['315'], ['316'] ]
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
 
 
@@ -25,21 +36,21 @@ vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 # 
 ### Make sure to update foldername.pro within the hall sensor directory so that it contains the information
 ### found within hallfoldername.por
-#from parameters import exp_paths
 #from parameters import diag_params
 #from vme_plot_specific import *
 #
 #exp_paths['EXP'] = 'hall'
-#diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
+#diag_params['gen.set.breakdown.time.to.zero'] = True     # No breakdown of plasma for hall diagnostics.
 #diag_params['gen.corr.lower.ind'] = 10000                  # Set correlation index for the large VME data files for hall data.
-#diag_params['gen.corr.upper.ind'] = 40000
+#diag_params['gen.corr.upper.ind'] = 30000
 #diag_params['gen.trim'] = False
 #diag_params['gen.presmooth'] = True
 #diag_params['gen.prefilter'] = False
 #diag_params['gen.filter.application'] = 'current_light_low_pass'
-#shotnums = [map(str, range(430, 432)), map(str, range(420, 422))]
-#descript=['Open', 'Closed']
-#plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')
+#shotnums = [map(str, range(357, 359)), map(str, range(396, 398))]
+#descript=['With Plates', 'Without Plates']
+#plot_hall_for_shots(shotnums, descript=descript, sensor='C', extra='indiv_signals')xp_paths
+
 
 
 

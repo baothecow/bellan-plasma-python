@@ -79,13 +79,13 @@ plot_diag_params = {
     'hall.subplot.ytitles': ['Vx', 'Vy', 'Vz'],
     ## Subsection for plotting hall magnetic reading instead of straight hall voltage.
     'hall.b.title': 'Magnetic Field vs Time',
-    'hall.b.xlim': [0, 20000],
+    'hall.b.xlim': [-5000, 15000],
     'hall.b.ylim': [-.08, .02],
     'hall.b.smooth_win': 50,
     'hall.b.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
     'hall.b.subplot.titles': ['Sensor Output', ' ', ' '],
     'hall.b.subplot.xtitles': [' ', ' ', 'Time (' + '$\mu$' + 's)'],
-    'hall.b.subplot.ytitles': ['Bx (T)', 'By (T)', 'Bz (T)'],
+    'hall.b.subplot.ytitles': ['Bx (G)', 'By (G)', 'Bz (G)'],
                                
     ## Generic scalar diagnostic parameteres
     'generic.name': 'Generic Diagnostic',
