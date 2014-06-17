@@ -1,6 +1,200 @@
+## Sol_MPa readings
+# Code for plotting different strapping field values
+from vme_plot_specific import vme_plot_diag_for_shots, plot_sol_mpa_for_shots
+from parameters import diag_params
+from vme_analyze import vme_unflatten_list
+
+diag_params['gen.prefilter'] = True
+diag_params['gen.filter.application'] = 'current_light_low_pass'
+diag = 'iso_hv'
+shotnums = vme_unflatten_list(map(str, range(1963, 1969)))
+#shotnums = vme_unflatten_list(['1755', '1761'])
+            
+#descript = ['15V', '30V', '40V', '50V', '60V', '70V', '80V']
+vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+#plot_sol_mpa_for_shots(shotnums)
 
 
 
+### Sol_MPa readings
+## Code for plotting different strapping field values
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_heavy_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [['1635'], ['1633'], ['1654'], ['1653'], ['1652'], ['1651'], ['1650']]
+#            
+#descript = ['15V', '30V', '40V', '50V', '60V', '70V', '80V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+## Code for plotting different strapping field values
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_heavy_low_pass'
+#diag = 'iso_hv'
+#shotnums = [map(str, range(1588, 1590)), map(str, range(1574, 1579)) + ['1579', '1580'], \
+#            map(str, range(1590, 1592)), map(str, range(1582, 1586)), \
+#            map(str, range(1620, 1622)), map(str, range(1605, 1618)), \
+#            map(str, range(1618, 1620))]
+#            
+#descript = ['-90V', '-60V', '-30V', 'No strap', '30V', '60V', '90V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+## Set of code used for comparing individual shots to check for consistency!
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#from vme_analyze import vme_unflatten_list
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+#flat_list_shotnums = ['1555', '1583', '1601']
+#shotnums = vme_unflatten_list(flat_list_shotnums)
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+
+
+
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_heavy_low_pass'
+#diag = 'current'
+#shotnums = [map(str, range(1588, 1590)), map(str, range(1574, 1581)), \
+#            map(str, range(1590, 1592)), map(str, range(1581, 1587)), \
+#            map(str, range(1620, 1622)), map(str, range(1604, 1618)), \
+#            map(str, range(1618, 1620))]
+#            
+#descript = ['-90V', '-60V', '-30V', 'No strap', '30V', '60V', '90V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+### Check for reproducibility of experiments.
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'tek_hv_low_pass'
+#diag_params['gen.presmoooth'] = False
+#diag = 'current'
+#shotnums = [map(str, range(1430, 1433)), ['1445'], map(str, range(1461, 1464)), ['1473'], \
+#            map(str, range(1474, 1477)), map(str, range(1486, 1488))]
+#descript = ['Start of day', 'After bias A', 'After bias', 'After strap field', 'After switch pol', 'End of day']
+##shotnums = [map(str, range(1474, 1477)) + map(str, range(1486, 1488)), map(str, range(1530, 1539))]
+##descript = ['4/09/14', '5/06/14']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+#
+
+
+
+### Vary the strapping field for data take on 4/09/14.  Negative voltage correspond to anti-strap.
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [map(str, range(1470, 1473)), map(str, range(1467, 1470)), map(str, range(1464, 1467)), \
+#            map(str, range(1461, 1464)), \
+#            map(str, range(1477, 1480)), map(str, range(1480, 1483)), map(str, range(1483, 1486))]
+#descript = ['90V', '60V', '30V', 'No strap', '-30V', '-60V', '-90V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+
+
+### Code for analyzing the different current traces for different set-up for inductance.
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'sol_mpa'
+#shotnums = [map(str, range(1530, 1539)), map(str, range(1520, 1526) + range(1527, 1530)), \
+#            map(str, range(1508, 1520)), map(str, range(1495, 1508)), map(str, range(1488, 1495))]
+##shotnums = [['1530'], ['1520'], ['1508'], ['1495'], ['1488']]
+#descript = ['No extra inductance', 'Small extra', 'Med extra', 'Large extra', 'Maximum extra']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+
+
+
+
+#import matplotlib.pyplot as plt
+#from vme_analyze import vme_avg_scalar_sig
+#from parameters import diag_params
+#
+#diag_params['gen.presmooth'] = True
+#diag_params['gen.presmooth.const'] = 50
+#
+#plt.figure()
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#shotnums1 = map(str, range(1488, 1495))
+#shotnums2 = map(str, range(1495, 1508))
+#shotnums3 = map(str, range(1508, 1520))
+#shotnums4 = map(str, range(1520, 1526) + range(1527, 1530))
+#shotnums5 = map(str, range(1530, 1539))
+#diag = 'current'
+#current_data1 = vme_avg_scalar_sig(shotnums1, diag, extra='indiv_signals')
+#current_data2 = vme_avg_scalar_sig(shotnums2, diag, extra='indiv_signals')
+#current_data3 = vme_avg_scalar_sig(shotnums3, diag, extra='indiv_signals')
+#current_data4 = vme_avg_scalar_sig(shotnums4, diag, extra='indiv_signals')
+#current_data5 = vme_avg_scalar_sig(shotnums5, diag, extra='indiv_signals')
+#time1 = current_data1[0]
+#time2 = current_data2[0]
+#time3 = current_data3[0]
+#time4 = current_data4[0]
+#time5 = current_data5[0]
+#
+#diag_params['gen.prefilter'] = False
+#diag = 'tek_hv'
+#voltage_data1 = vme_avg_scalar_sig(shotnums1, diag, extra='indiv_signals')
+#voltage_data2 = vme_avg_scalar_sig(shotnums2, diag, extra='indiv_signals')
+#voltage_data3 = vme_avg_scalar_sig(shotnums3, diag, extra='indiv_signals')
+#voltage_data4 = vme_avg_scalar_sig(shotnums4, diag, extra='indiv_signals')
+#voltage_data5 = vme_avg_scalar_sig(shotnums5, diag, extra='indiv_signals')
+#
+#plt.plot(time5, (voltage_data5[1]*current_data5[1]*1e3)/1e6, label = 'No add inductance')
+#plt.plot(time4, (voltage_data4[1]*current_data4[1]*1e3)/1e6, label = 'Small Inductance')
+#plt.plot(time3, (voltage_data3[1]*current_data3[1]*1e3)/1e6, label = 'Medium Inductance')
+#plt.plot(time2, (voltage_data2[1]*current_data2[1]*1e3)/1e6, label = 'Large Inductance')
+#plt.plot(time1, (voltage_data1[1]*current_data1[1]*1e3)/1e6, label = 'Max Inductance')
+#
+#
+#plt.legend()
+#
+#
+#plt.title('Power vs Time')
+#
+#plt.xlim(0, 65)
+#plt.ylabel('Power (MW)')
+#plt.xlabel('Time (us)')
+#plt.show()
+
+
+
+
+
+
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+#shotnums = [map(str, range(1530, 1539)), map(str, range(1520, 1526) + range(1527, 1530)), \
+#            map(str, range(1508, 1520)), map(str, range(1495, 1508)), map(str, range(1488, 1495))]
+#descript = ['No extra inductance', 'Small extra', 'Med extra', 'Large extra', 'Maximum extra']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
 
 ## Rogowski reading from hall sensors.

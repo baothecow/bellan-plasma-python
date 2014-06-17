@@ -159,7 +159,7 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
     
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
-    legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+    #legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
         plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
