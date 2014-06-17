@@ -72,16 +72,10 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     if plot_diag_params['gen.shotnum_legend']:
-        legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+        plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
-    
-    # Creation of new legend removes legend1 so add legend1 as separate artist unless explicitly told not to.
-    if plot_diag_params['gen.shotnum_legend']:
-        print 'hi'
-        plt.gca().add_artist(legend1)
-        
+        plt.legend(handles, descript, loc=4)#, prop={'size':10})    
     plt.show()    
     
     
@@ -164,15 +158,11 @@ def plot_hall_for_shots(shots_array, descript="", delay=None, sensor='A', extra=
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     if plot_diag_params['gen.shotnum_legend']:
-        legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+        plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
-    
-    # Creation of new legend removes legend1 so add legend1 as separate artist unless explicitly told not to.
-    if plot_diag_params['gen.shotnum_legend']:
-        print 'hi'
-        plt.gca().add_artist(legend1)
+        plt.legend(handles, descript, loc=4)#, prop={'size':10})    
+    plt.show()  
         
     plt.show()
     
@@ -227,15 +217,11 @@ def plot_sol_mpa_for_shots(shots_array, descript="", delay=0, num_probe=4):
     # Generate legend for the figure using plt.figlegend
     handles, labels = plt.gca().get_legend_handles_labels()
     if plot_diag_params['gen.shotnum_legend']:
-        legend1 = plt.figlegend(handles, labels, loc=1, prop={'size':10})
+        plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.figlegend(handles, descript, loc=4)#, prop={'size':10})
-    
-    # Creation of new legend removes legend1 so add legend1 as separate artist unless explicitly told not to.
-    if plot_diag_params['gen.shotnum_legend']:
-        print 'hi'
-        plt.gca().add_artist(legend1)
+        plt.legend(handles, descript, loc=4)#, prop={'size':10})    
+    plt.show()  
         
     plt.show()    
     

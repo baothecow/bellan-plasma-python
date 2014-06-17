@@ -6,8 +6,8 @@ from vme_analyze import vme_unflatten_list
 
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-plot_diag_params['gen.shotnum_legend'] = False
-diag = 'iso_hv'
+plot_diag_params['gen.shotnum_legend'] = True
+diag = 'current'
 shotnums = vme_unflatten_list(map(str, range(1963, 1965)))
 #shotnums = vme_unflatten_list(['1755', '1761'])
             
