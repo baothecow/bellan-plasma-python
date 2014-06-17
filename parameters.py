@@ -123,6 +123,7 @@ plot_diag_params = {
     'gen.tick.off': False,
     'gen.custom.limit.x': True,     # If set to True, plotting will use user limits.
     'gen.custom.limit.y': False,
+    'gen.shotnum_legend': True,     # Set to false if you don't want to see the legend containing shot numbers.
 
     ## Default colors  (Use of brewer colors -- colorbrew2.org) 
     'gen.color0': '#1f78b4',

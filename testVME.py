@@ -1,17 +1,19 @@
 ## Sol_MPa readings
 # Code for plotting different strapping field values
 from vme_plot_specific import vme_plot_diag_for_shots, plot_sol_mpa_for_shots
-from parameters import diag_params
+from parameters import diag_params, plot_diag_params
 from vme_analyze import vme_unflatten_list
 
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
+plot_diag_params['gen.shotnum_legend'] = False
 diag = 'iso_hv'
-shotnums = vme_unflatten_list(map(str, range(1963, 1969)))
+shotnums = vme_unflatten_list(map(str, range(1963, 1965)))
 #shotnums = vme_unflatten_list(['1755', '1761'])
             
 #descript = ['15V', '30V', '40V', '50V', '60V', '70V', '80V']
-vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+descript = ['1963', '1964']
+vme_plot_diag_for_shots(shotnums, diag, descript = descript, extra='indiv_signals')
 #plot_sol_mpa_for_shots(shotnums)
 
 
