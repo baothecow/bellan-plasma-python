@@ -60,7 +60,7 @@ plot_diag_params = {
     'sol_mpa.int.title': '',
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.int.xlim': [0, 15],
+    'sol_mpa.int.xlim': [0, 25],
     'sol_mpa.int.ylim': [-500, 1000],
     'sol_mpa.int.smooth_win': 50,
     'sol_mpa.int.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
@@ -123,6 +123,7 @@ plot_diag_params = {
     'gen.tick.off': False,
     'gen.custom.limit.x': True,     # If set to True, plotting will use user limits.
     'gen.custom.limit.y': False,
+    'gen.shotnum_legend': True,     # Set to false if you don't want to see the legend containing shot numbers.
 
     ## Default colors  (Use of brewer colors -- colorbrew2.org) 
     'gen.color0': '#1f78b4',

@@ -129,16 +129,16 @@ def vme_get_sig_min_and_max(signals_list, band):
         
         sig_avg = np.mean(sig_val_arr, axis=0)
         
-#        # Uncomment if want to use the standard deviation.
-#        sig_std = np.std(sig_val_arr, axis=0)
-#        sig_max = np.add(sig_avg, np.multiply(sig_std, band))
-#        sig_min = np.subtract(sig_avg, np.multiply(sig_std, band))
+        # Uncomment if want to use the standard deviation.
+        sig_std = np.std(sig_val_arr, axis=0)
+        sig_max = np.add(sig_avg, np.multiply(sig_std, band))
+        sig_min = np.subtract(sig_avg, np.multiply(sig_std, band))
     
-        # Uncomment if want to use min/max of signals.
-        sig_max = np.max(sig_val_arr, axis=0)
-        sig_min = np.min(sig_val_arr, axis=0)
-        sig_max = np.add(np.multiply(np.subtract(sig_max, sig_avg), band), sig_avg)
-        sig_min = np.add(np.multiply(np.subtract(sig_min, sig_avg), band), sig_avg)
+#        # Uncomment if want to use min/max of signals.
+#        sig_max = np.max(sig_val_arr, axis=0)
+#        sig_min = np.min(sig_val_arr, axis=0)
+#        sig_max = np.add(np.multiply(np.subtract(sig_max, sig_avg), band), sig_avg)
+#        sig_min = np.add(np.multiply(np.subtract(sig_min, sig_avg), band), sig_avg)
       
         sig_min_list.append(sig_min)
         sig_max_list.append(sig_max)

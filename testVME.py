@@ -1,7 +1,3 @@
-from parameters import diag_params, plot_diag_params
-from vme_plot_specific import vme_plot_diag_for_shots
-from vme_analyze import vme_unflatten_list
-
 
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
@@ -97,6 +93,18 @@ vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals'
 #shotnums = [map(str, range(1489, 1495)), map(str, range(1495, 1508)), map(str, range(1508, 1517))]
 #vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
+
+
+#from vme_plot_specific import vme_plot_diag_for_shots
+#from parameters import diag_params
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+#shotnums = [map(str, range(1530, 1539)), map(str, range(1520, 1526) + range(1527, 1530)), \
+#            map(str, range(1508, 1520)), map(str, range(1495, 1508)), map(str, range(1488, 1495))]
+#descript = ['No extra inductance', 'Small extra', 'Med extra', 'Large extra', 'Maximum extra']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
 
 ## Rogowski reading from hall sensors.
