@@ -48,7 +48,7 @@ plot_diag_params = {
     'sol_mpa.title': 'Bdot vs time',
     'sol_mpa.ytitle': 'Bdot (V)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.xlim': [0, 10],
+    'sol_mpa.xlim': [0, 25],
     'sol_mpa.ylim': [-5, 5],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),

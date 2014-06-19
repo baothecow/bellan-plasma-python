@@ -1,21 +1,117 @@
+from parameters import diag_params, plot_diag_params
+from vme_plot_specific import vme_plot_diag_for_shots
+from vme_analyze import vme_unflatten_list
 
 
+diag_params['gen.prefilter'] = True
+diag_params['gen.filter.application'] = 'current_light_low_pass'
+plot_diag_params['gen.shotnum_legend'] = False
+diag = 'current'
+shotnums = [map(str, range(1371, 1376) + range(1377, 1389)), map(str, range(1389, 1396))]
+descript = ['0V', '60V']
+vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+#shotnums = vme_unflatten_list(map(str, range(1376, 1388)))
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+
+
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+#shot_arr = [map(str, range(1530, 1538)), map(str, range(1928, 1937))]
+##shot_arr = ['1957', '1958', '1959', '1960']
+##shotnums = [map(str, range(1530, 1538)), map(str, range(1928, 1937)), map(str, range(1553, 1559))]
+#shotnums = [map(str, range(1530, 1538)), map(str, range(1543, 1549))]
+##shotnums = vme_unflatten_list(shot_arr)
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+
+
+
+## Code for comparing two different diagnostics.
+#from parameters import diag_params
+#from vme_analyze import vme_avg_scalar_sig
+#from cookb_signalsmooth import smooth
+#import numpy as np
+#
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+##shotnums = map(str, range(1530, 1539))
+#shotnums = ['1572']
+#data = vme_avg_scalar_sig(shotnums, diag, extra='indiv_signals')
+#(time, current1) = (data[0], data[1])
+#diag = 'current'
+#shotnums = map(str, range(1543, 1550))
+#shotnums = ['1573']
+#data2 = vme_avg_scalar_sig(shotnums, diag, extra='indiv_signals')
+#(time2, current2) = (data2[0], data2[1])
+#
+#
+#smoo_cur1 = smooth(current1, 100)
+#smoo_cur2 = smooth(current2, 100)
+#
+#
+#plt.figure()
+#plt.plot(time, smoo_cur1)
+#plt.plot(time, smoo_cur2)
+#plt.xlim(-5, 15)
+#plt.title('Current vs Time')
+#
+#print np.max(smoo_cur2)/np.max(smoo_cur1)
+
+
+
+
+## For comparing voltage data.
+#from parameters import diag_params
+#from vme_analyze import vme_avg_scalar_sig
+#
+#
+#diag_params['gen.prefilter'] = False
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'tek_hv'
+#shotnums = ['1397']
+#data = vme_avg_scalar_sig(shotnums, diag, extra='indiv_signals')
+#(time, volt1) = (data[0], data[1])
+#diag = 'iso_hv'
+#shotnums = ['1397']
+#data2 = vme_avg_scalar_sig(shotnums, diag, extra='indiv_signals')
+#(time, volt2) = (data2[0], data2[1])
+#
+#plt.figure()
+#plt.plot(time, volt1)
+#plt.plot(time, volt2)
+#plt.xlim(-5, 15)
+#plt.ylim(-3000, 500)
+
+
+#from parameters import diag_params
+#from vme_plot_specific import vme_plot_diag_for_shots
+#
+#
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag = 'current'
+#shotnums = [map(str, range(1489, 1495)), map(str, range(1495, 1508)), map(str, range(1508, 1517))]
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
 
 
 ## Rogowski reading from hall sensors.
  
 ### Make sure to update foldername.pro within the hall sensor directory so that it contains the information
-### found within hallfoldername.por
+### found within hallfoldernamcaitilnduncan125@gmail.come.por
 #from parameters import exp_paths
-#from parameters import diag_params
+#from parameters import diag_paracaitilnduncan125@gmail.comms
 #from vme_plot_specific import vme_plot_diag_for_shots
 #
 #exp_paths['EXP'] = 'hall'
 #diag_params['generic.path'] = '\\strap_rogowski_'
 #diag_params['gen.set.breakdown.time.to.zero'] = False     # No breakdown of plasma for hall diagnostics.
 #diag_params['gen.corr.lower.ind'] = 10000                  # Set correlation index for the large VME data files for hall data.
-#diag_params['gen.corr.upper.ind'] = 40000
+#diag_params['gen.corr.upper.ind'] = 40000caitilnduncan125@gmail.com
 #diag_params['gen.trim'] = False
 #diag_params['gen.presmooth'] = False
 #diag = 'generic'
