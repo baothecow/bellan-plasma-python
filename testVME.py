@@ -1,14 +1,20 @@
+from vme_plot_specific import vme_plot_diag_for_shots
+from parameters import diag_params, plot_diag_params
+from vme_analyze import vme_unflatten_list
+
 
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
+diag_params['gen.minmaxtechnique'] = 'minmax'
 plot_diag_params['gen.shotnum_legend'] = False
 diag = 'current'
-shotnums = [map(str, range(1371, 1376) + range(1377, 1389)), map(str, range(1389, 1396))]
-descript = ['0V', '60V']
-vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+#shotnums = [map(str, range(1397, 1422) + range(1427, 1430)), map(str, range(1422, 1427))]
+#descript = ['0V', '60V']
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
-#shotnums = vme_unflatten_list(map(str, range(1376, 1388)))
-#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+plot_diag_params['gen.shotnum_legend'] = True
+shotnums = vme_unflatten_list(map(str, range(1397, 1407)))
+vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
 
 #
