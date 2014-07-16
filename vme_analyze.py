@@ -68,8 +68,8 @@ def vme_avg_scalar_sig(shotnums, diag, extra=''):
         if (diag_params['gen.prefilter']):
             signal = vme_filter_signal(signal, diag_params['gen.filter.application'])
         
-        ## Subtract off any dc offset.  DC offset determined by first 2% of points.
-        signals[shotnum] = signal - np.mean(signal[0:int(diag_params[diag+'.cols']*.02)])
+        ## Subtract off any dc offset.  DC offset determined by the first 2%-4% of points.
+        signals[shotnum] = signal - np.mean(signal[int(diag_params[diag+'.cols']*.02):int(diag_params[diag+'.cols']*.04)])
     
     avg_signal = np.mean(signals.values(), axis=0)
     
@@ -283,7 +283,7 @@ def vme_get_breakdown_time(shotnum):
     # Sets start and end window (in microseconds to look for the breakdown time)
     START_WINDOW = 10
     END_WINDOW = 18
-    THRESHOLD = 30
+    THRESHOLD = 10
     SMOOTH_WIN = 30    
 #    START_WINDOW = 5000
 #    END_WINDOW = 10000
