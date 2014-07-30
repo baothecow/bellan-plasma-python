@@ -1,20 +1,86 @@
-from vme_plot_specific import vme_plot_diag_for_shots
+from vme_plot_specific import vme_plot_diag_for_shots, plot_sol_mpa_for_shots
 from parameters import diag_params, plot_diag_params
 from vme_analyze import vme_unflatten_list
 
 
+## Current trace while varying the amount of gas injected into chamber.
+diag = 'current'
 diag_params['gen.prefilter'] = True
 diag_params['gen.filter.application'] = 'current_light_low_pass'
-diag_params['gen.minmaxtechnique'] = 'minmax'
 plot_diag_params['gen.shotnum_legend'] = False
-diag = 'current'
-#shotnums = [map(str, range(1397, 1422) + range(1427, 1430)), map(str, range(1422, 1427))]
-#descript = ['0V', '60V']
+shotnums = [['2065'], ['2094'], ['2124'], ['2074'], ['2104'], ['2084'], ['2114']]
+descript = ['0', '30V', '45V', '60V', '75V', '90V', '105V']
+vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
+plt.xlim(0, )
+
+### Current trace while varying the amount of gas injected into chamber.
+#diag = 'current'
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = False
+#shotnums = [map(str, range(510, 516)), map(str, range(504, 510)), map(str, range(516, 522)), \
+#            map(str, range(522, 528)), map(str, range(528, 534))]
+#descript = ['Gas: 450V', 'Gas: 500V', 'Gas: 550V', 'Gas: 600V', 'Gas: 650V']
+#vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
+#plt.xlim(0, )
+
+
+### Vary bias fields on Apr 2014
+###
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = True
+#diag = 'current'
+#shotnums = [map(str, range(1430, 1433)), map(str, range(1433, 1436)), map(str, range(1436, 1439)), \
+#            map(str, range(1439, 1442)), map(str, range(1442, 1445))]
+#descript = ['200/200', '100/200', '50/200', '25/200', '0/200']
+#
+##shotnums = [map(str, [1445]), map(str, range(1446, 1449)), map(str, range(1449, 1452)), \
+##            map(str, range(1452, 1455)), map(str, range(1455, 1458))]
+##descript = ['200/200', '200/100', '200/50', '200/25', '200/0']
+#
+##plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=4)
+#
 #vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
 
-plot_diag_params['gen.shotnum_legend'] = True
-shotnums = vme_unflatten_list(map(str, range(1397, 1407)))
-vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
+
+
+### Correlation between sol_mpa and main bank charging voltage
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = True
+#diag = 'current'
+#shotnums = [map(str, range(1002, 1005)), map(str, range(1005, 1008)), map(str, range(1008, 1011)), map(str, range(1011, 1014)), map(str, range(1014, 1017))]
+#descript = ['3kV', '3.5kV', '4kV', '4.5kV', '5kV']
+##plot_sol_mpa_for_shots(shotnums, descript=descript, num_probe=4)
+
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+## Comparing different stuffing fluxes.
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#diag_params['gen.minmaxtechnique'] = 'std'
+#plot_diag_params['gen.shotnum_legend'] = False
+#diag = 'current'
+#shotnums = [map(str, range(1053, 1060)), map(str, range(1017, 1025))]
+#descript = ['Top:100V\nBot:200V', 'Top:200V\nBot:200V']
+#shotnums = [map(str, range(1044, 1047)), map(str, range(1050, 1053)), map(str, range(1025, 1028))]
+#descript = ['Top:0V\nBot:200V', 'Top:100V\nBot:200V', 'Top:200V\nBot:200V']
+#shotnums = [map(str, range(1044, 1047)), map(str, range(1047, 1050)), map(str, range(1050, 1053)), map(str, range(1025, 1028))]
+#descript = ['Top:0V\nBot:200V', 'Top:50V\nBot:200V', 'Top:100V\nBot:200V', 'Top:200V\nBot:200V']
+#
+#shotnums = [map(str, range(937, 939)), map(str, range(939, 941))]
+#descript = ['0/200', '100/200']
+#
+#shotnums = [map(str, range(1050, 1053)), map(str, range(939, 941))]
+#descript = ['100/200', '100/200']
+#
+#
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+#plot_diag_params['gen.shotnum_legend'] = True
+#shotnums = vme_unflatten_list(map(str, range(1397, 1407)))
+#vme_plot_diag_for_shots(shotnums, diag, extra='indiv_signals')
 
 
 #

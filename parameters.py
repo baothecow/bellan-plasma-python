@@ -48,7 +48,7 @@ plot_diag_params = {
     'sol_mpa.title': 'Bdot vs time',
     'sol_mpa.ytitle': 'Bdot (V)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.xlim': [0, 25],
+    'sol_mpa.xlim': [0, 15],
     'sol_mpa.ylim': [-5, 5],
     'sol_mpa.smooth_win': 50,
     'sol_mpa.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
@@ -60,7 +60,7 @@ plot_diag_params = {
     'sol_mpa.int.title': '',
     'sol_mpa.int.ytitle': 'B (Gauss)',
     'sol_mpa.xtitle': 'Time (' + '$\mu$' + 's)',
-    'sol_mpa.int.xlim': [0, 25],
+    'sol_mpa.int.xlim': [0, 15],
     'sol_mpa.int.ylim': [-500, 1000],
     'sol_mpa.int.smooth_win': 50,
     'sol_mpa.int.subplot.styles': ((3, 1, 1), (3, 1, 2), (3, 1, 3)),
@@ -124,7 +124,6 @@ plot_diag_params = {
     'gen.custom.limit.x': True,     # If set to True, plotting will use user limits.
     'gen.custom.limit.y': False,
     'gen.shotnum_legend': True,     # Set to false if you don't want to see the legend containing shot numbers.
-    'gen.minmaxtechnique': 'std',   # Can be 'std' or 'minmax'
 
     ## Default colors  (Use of brewer colors -- colorbrew2.org) 
     'gen.color0': '#1f78b4',
@@ -231,7 +230,8 @@ diag_params = {
     'gen.set.breakdown.time.to.zero': True,
     'gen.trim': False,              # If ncessary, trim the data to within a certain time interval.
     'gen.trim.low.limit': -10,      # lower limit in microseconds.
-    'gen.trim.range': 7000          # Number of points to look after the lower limit.
+    'gen.trim.range': 7000,          # Number of points to look after the lower limit.
+    'gen.minmaxtechnique': 'std',   # Can be 'std' or 'minmax'
 }
 
 

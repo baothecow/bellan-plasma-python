@@ -282,8 +282,8 @@ def vme_get_breakdown_time(shotnum):
     
     # Sets start and end window (in microseconds to look for the breakdown time)
     START_WINDOW = 10
-    END_WINDOW = 18
-    THRESHOLD = 10
+    END_WINDOW = 20
+    THRESHOLD = 20
     SMOOTH_WIN = 30    
 #    START_WINDOW = 5000
 #    END_WINDOW = 10000
