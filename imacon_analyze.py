@@ -14,8 +14,8 @@ import numpy as np
 import PIL.Image as Image
 import Tkinter, tkFileDialog
 
-#INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
-INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
+INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
+#INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
 OUTPUT_DIR = ''
 
 
@@ -81,4 +81,9 @@ def imacon_generate_new_output_path(imagepath, extra='_extra'):
     return "".join(prefix + extra + '.' + patharr[-1])
 
 
-
+def make_movie_from_reduced_png(image, FRAMES=(0, 14)):
+    """ Takes in a reduced Imacon png file and makes a movie from the frames.
+        If the user desires, they may 
+    """
+    print 'hi'
+    
