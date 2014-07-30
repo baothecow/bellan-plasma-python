@@ -13,6 +13,8 @@ get_imacon_data --
 import numpy as np
 import PIL.Image as Image
 import Tkinter, tkFileDialog
+import matplotlib.pyplot as plt
+import struct
 
 INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
 #INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
@@ -81,9 +83,91 @@ def imacon_generate_new_output_path(imagepath, extra='_extra'):
     return "".join(prefix + extra + '.' + patharr[-1])
 
 
-def make_movie_from_reduced_png(image, FRAMES=(0, 14)):
-    """ Takes in a reduced Imacon png file and makes a movie from the frames.
-        If the user desires, they may 
-    """
-    print 'hi'
+def make_image_list_from_large_image_array(img_arr, subdivision=(4, 4), frames=(1, 14)):
+    """ Takes in a numpy array that is representative of a picture containing
+    embedded pictures of the same size and recreates it as a 3d array.
     
+    Returns a lists of the individual frames within the array.
+    """
+    
+    im_list = list()    
+    
+    (height, width) = np.shape(img_arr)
+    
+    sub_im_height = height/subdivision[0]
+    sub_im_width = width/subdivision[1]
+    
+    # Note.  The array starts from the upper right hand corner of png images.
+    for frame in range(frames[0]-1, frames[1]):
+        print (frame // 4) % 4, frame % 4
+        im_list.append(img_arr[sub_im_height*((frame // 4) % 4): sub_im_height*((frame // 4) % 4 + 1),  \
+                               sub_im_width*(frame % 4): sub_im_width*(frame % 4 + 1)])
+                       
+    
+    #plt.imshow(img_arr[0*height/4: 3*height/4, 0: 3*width/4], cmap='hot')
+    
+    
+    return im_list
+    
+    
+###Magnus' port of Bao's idl code: extract_imacon_times_from_footer.pro
+def imacon_times(path, TIME_CONVERSION=1e3):
+
+    def lindgen(n):
+        return np.arange(0,n)
+    #-------------------- User Adjustable  constants ---------------------------------------
+    #TIME_CONVERSION = 1e3		    # Set at 1 for ns, 1e3 for microsecond, 1e6 for ms.
+    #---------------------------------------------------------------------------------------
+
+    #-------------------- Relevant  constants ----------------------------------------------
+
+    BYTE_FOOTER_PACKET_SIZE = 11016	    # Number of bytes / info packet in footer for each CCD.
+    BYTE_CCD1_START_TIME = 37651208	    # Byte location of Start time of first frame in ns.
+    BYTE_CCD1_EXPOSURE_1 = 37651344
+    BYTE_CCD1_EXPOSURE_2 = 37651352
+    BYTE_CCD1_DELAY = 37651600
+    FRAMES = 14			    # Number of working imacon frames (ie # working CCDs * 2)
+
+    #---------------------------------------------------------------------------------------
+
+    # Create appropriate arrays.
+    byte_start_time_1_array = BYTE_CCD1_START_TIME + BYTE_FOOTER_PACKET_SIZE*lindgen(FRAMES/2)
+    byte_exposure_1_array   = BYTE_CCD1_EXPOSURE_1 + BYTE_FOOTER_PACKET_SIZE*lindgen(FRAMES/2)
+    byte_exposure_2_array   = BYTE_CCD1_EXPOSURE_2 + BYTE_FOOTER_PACKET_SIZE*lindgen(FRAMES/2)
+    byte_delay_array        = BYTE_CCD1_DELAY      + BYTE_FOOTER_PACKET_SIZE*lindgen(FRAMES/2)
+
+
+    # Read in the data associated with the tiff.
+    fin=open(path,"rb")
+    tiffdata= fin.read()
+
+    # Note that imacon tiffs are set in a little-endian style.  Read up about that to understand the following commands.
+    # ** I am accessing the data array at the index location denoted by the byte_start_time_array.
+    # ** Know that the format is a long thus will need to read in 4 bytes to get the true value.
+
+    start = np.zeros(FRAMES)
+    exp1   = np.zeros(FRAMES/2)
+    exp2   = np.zeros(FRAMES/2)
+    delay  = np.zeros(FRAMES/2)
+
+    for pos in range(0,FRAMES/2):
+        i1 = byte_start_time_1_array[pos]
+        i2 = byte_exposure_1_array[pos]
+        i3 = byte_exposure_2_array[pos]
+        i4 = byte_delay_array[pos]
+
+        val = struct.unpack("<L", tiffdata[i1:i1 +4])[0]/TIME_CONVERSION
+        start[pos] = val
+
+        val2 = struct.unpack("<L", tiffdata[i2:i2 +4])[0]/TIME_CONVERSION
+        exp1[pos] = val2
+
+        val3 = struct.unpack("<L", tiffdata[i3:i3 +4])[0]/TIME_CONVERSION
+        exp2[pos] = val3
+
+        val4 = struct.unpack("<L", tiffdata[i4:i4 +4])[0]/TIME_CONVERSION
+        delay[pos] = val4
+
+    start[FRAMES/2:] = start[0:FRAMES/2] + exp1 + delay
+
+    return start,np.append(exp1,exp2)

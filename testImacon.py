@@ -9,7 +9,23 @@ Created on Mon Jan 06 23:20:57 2014
 
 
 # Script to make movie from reduced imacon file.
-from imacon_analyze import make_movie_from_reduced_png
+from imacon_analyze import make_image_list_from_large_image_array, get_imacon_data
+from parameters import exp_paths
+
+## PNG images are 16 bit.
+lb_dynamic_range = 0
+ub_dynamic_range = 2**16-1
+
+reduced_path = exp_paths['singleloop.REDUCED_PATH']
+path = reduced_path + '2014.07.10\\Reduced_solimc02058.png'
+
+img_arr = get_imacon_data(path, resize_factor=1)
+
+movie = make_image_list_from_large_image_array(img_arr)
+
+plt.imshow(movie[5], cmap="hot", vmin=0, vmax=2**14-1)
+
+
 
 
 

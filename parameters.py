@@ -253,5 +253,7 @@ exp_paths = {
     'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\',
     # Hall parameters
     'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project\\',
-    'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
+    'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\',
+    # Imacon parameters
+    'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\'
 }    
