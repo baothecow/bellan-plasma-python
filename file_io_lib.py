@@ -3,6 +3,7 @@
 import array as ar
 import numpy as np
 import os
+import cPickle as pickle
 
 def write_latex(mylist, fname):
     delim = '&'
@@ -57,5 +58,15 @@ def fixfile(f0):
     fout.write(f)
     fout.close()
     print "fixed"
+    
+def pickle_dump(obj, filename, path):
+    """ Program that pickles an object into a file on the specified path """
+    pickle.dump(obj, open(path + filename, "wb"))
+    
+def pickle_read(path):
+    """ Program that unpickles the object given a path to the object """
+    return pickle.load(open(path, "rb"))
+    
+    
         
         
