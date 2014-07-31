@@ -255,5 +255,6 @@ exp_paths = {
     'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project\\',
     'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\',
     # Imacon parameters
-    'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\'
+    'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\',
+    'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\'
 }    
