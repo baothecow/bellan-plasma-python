@@ -14,11 +14,11 @@
 
 """
 
-
+import os
 import idl_support as idlsup
 import numpy as np
-from parameters import diag_params
-from file_io_lib import readVME
+from parameters import diag_params, exp_paths
+from file_io_lib import readVME, pickle_dump, pickle_read
 from cookb_signalsmooth import smooth
 import scipy.signal as scisig
 
@@ -375,7 +375,16 @@ def vme_get_filepath(shotnum, diag):
     
     root = idlsup.get_idl_vme_path()
     constructor = get_diag_constructor(shotnum, diag_params[diag+'.vme'])
-    return root + idlsup.get_shot_date(shotnum) + constructor    
+    
+    # Get date from the pickle file if it exists.
+    date_pickle_path = exp_paths['singleloop.METADATA']+'date\\'+str(shotnum)+'_date.pickle'
+    if os.path.exists(date_pickle_path):
+        date = pickle_read(date_pickle_path)
+    else:  # Run foldername.pro to obtain the date.
+        date = idlsup.get_shot_date(shotnum)
+        
+    
+    return root + date + constructor    
 
     
 def vme_get_time_from_data(data, diag):

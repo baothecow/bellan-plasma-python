@@ -246,8 +246,9 @@ exp_paths = {
     'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
     'gen.PY_LIB_PATH': 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\',
     # Singleloop parameters
-    'singleloop.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\',
-    'singleloop.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\data\\',
+    'singleloop.IDL_LIB_PATH': 'Y:\\programs\\idl\\singleloop_lib\\',
+    'singleloop.IDL_VME_PATH': 'Y:\\data\\singleloop\\singleloop_VME\\data\\',
+    'singleloop.METADATA': 'Y:\\data\\singleloop\\singleloop_metadata\\',
     # Solar parameters
     'solar.IDL_LIB_PATH': 'E:\\programs\\idl\\solar_lib\\',
     'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\',
@@ -255,6 +256,8 @@ exp_paths = {
     'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project\\',
     'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\',
     # Imacon parameters
-    'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\',
+    'singleloop.REDUCED_PATH': 'Y:\\data\\singleloop\\singleloop_imacon\\reduced\\',
     'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\'
 }    
+
+

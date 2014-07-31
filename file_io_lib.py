@@ -4,6 +4,7 @@ import array as ar
 import numpy as np
 import os
 import cPickle as pickle
+from parameters import exp_paths
 
 def write_latex(mylist, fname):
     delim = '&'
@@ -67,6 +68,13 @@ def pickle_read(path):
     """ Program that unpickles the object given a path to the object """
     return pickle.load(open(path, "rb"))
     
-    
+def get_all_file_paths_in_folder_and_subfolder(root=exp_paths['singleloop.IMACON_PATH']):
+    """ Function will check a root folder and return a list containing paths to all the
+    files in that folder """
+    path_list = list()
+    for path, subdirs, files in os.walk(root):
+        for name in files:
+            path_list.append(os.path.join(path, name))
+    return path_list
         
         

@@ -15,6 +15,9 @@ import PIL.Image as Image
 import Tkinter, tkFileDialog
 import matplotlib.pyplot as plt
 import struct
+from file_io_lib import pickle_read
+from parameters import exp_paths
+
 
 INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
 #INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
@@ -108,6 +111,17 @@ def make_image_list_from_large_image_array(img_arr, subdivision=(4, 4), frames=(
     
     
     return im_list
+    
+    
+def get_imacon_timing_from_pickled_shot(shotnum):
+    """ Return the imacon timing for a specific shot.
+    Input: a shotnumber.
+    Returns: a tuple whose first element is an array of shot times and whose
+    second element is a list of exposure times.
+    """
+    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing\\'
+    path = folderpath + 'meta_solimc' + "%05d" % shotnum + '.pickle'
+    return pickle_read(path)
     
     
 ###Magnus' port of Bao's idl code: extract_imacon_times_from_footer.pro
