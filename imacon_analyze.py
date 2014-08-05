@@ -158,7 +158,20 @@ def get_reduced_imacon_path(shotnum):
     constructor = '\\Reduced_solimc' + "%05d" % shotnum + '.png'
 
     return root + date + constructor
-    
+
+def get_shotnum_from_path(path):
+    """ This program takes a path, extracts the basename, removes the extension, and then takes the last 5 characters and
+    converts that to a number """
+    filebasename = os.path.basename(path)
+    filename = os.path.splitext(filebasename)[0]
+    shotnum = filename[-5:]
+    try:
+        shotnum = int(shotnum)
+    except:
+        print 'Oops!  get_shotnum_from_path in imacon_analyze expected the last 5 digits of the filename to be the shotnum.  Setting to 1000'
+        shotnum = 1000
+
+    return shotnum
     
     
 ###Magnus' port of Bao's idl code: extract_imacon_times_from_footer.pro
