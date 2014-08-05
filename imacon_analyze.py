@@ -13,10 +13,11 @@ get_imacon_data --
 import numpy as np
 import PIL.Image as Image
 import Tkinter, tkFileDialog
-import matplotlib.pyplot as plt
 import struct
 from file_io_lib import pickle_read
 from parameters import exp_paths
+import os
+import idl_support as idlsup
 
 
 INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
@@ -37,16 +38,22 @@ def rebin(a, shape):
 def get_imacon_data(path, resize_factor=2, verbose=True):
     ## Open the image and get data
     image = Image.open(path)
-    # The [::-1] reverses the "size" list eg. (3920,4800) instead of (4800,3920)
-    image_shape = image.size[::-1]
     if verbose:
         print "Reading from " + path
+    return resize_imacon_image(image, resize_factor=resize_factor, verbose=verbose)
+
+    
+def resize_imacon_image(image, resize_factor=2):
+    """ Routine which reads and resizes an imacon image """
+    # The [::-1] reverses the "size" list eg. (3920,4800) instead of (4800,3920)
+    image_shape = image.size[::-1]
     im = np.array(image.getdata())
     ## By default the array option gives a 1D array.  Converts back to 2d array.
     im = np.reshape(im, image_shape)
     ## Use shape() to get shape of image and then use rebin to resize it.
     resized_img = rebin(im, np.divide(image_shape, resize_factor).tolist())
     return resized_img
+    
     
 def get_file_paths(folderpath=INITIAL_DIR):
     """ Asks the user to choose some files and returns a list of paths for those files """
@@ -86,31 +93,43 @@ def imacon_generate_new_output_path(imagepath, extra='_extra'):
     return "".join(prefix + extra + '.' + patharr[-1])
 
 
+def make_image_list_from_large_image(large_image, subdivision=(4, 4), frames=(1, 14), resize_factor=2):
+    img_list = list()    
+    
+    resized_image = resize_imacon_image(large_image, resize_factor=resize_factor)
+    list_img_arr = make_image_list_from_large_image_array(resized_image, subdivision=subdivision, frames=frames)
+    
+    for img_arr in list_img_arr:
+        img_list.append(Image.fromarray(img_arr))
+    return img_list
+        
+
+
 def make_image_list_from_large_image_array(img_arr, subdivision=(4, 4), frames=(1, 14)):
     """ Takes in a numpy array that is representative of a picture containing
     embedded pictures of the same size and recreates it as a 3d array.
     
-    Returns a lists of the individual frames within the array.
+    Format of subdivision is in (factor to divide the width, factor to divide the height)
+    
+    Returns a lists of numpy arrays whose elements are the frames within the image.
     """
     
-    im_list = list()    
+    list_img_arr = list()    
     
     (height, width) = np.shape(img_arr)
     
-    sub_im_height = height/subdivision[0]
-    sub_im_width = width/subdivision[1]
+    sub_im_height = height/subdivision[1]
+    sub_im_width = width/subdivision[0]
     
     # Note.  The array starts from the upper right hand corner of png images.
     for frame in range(frames[0]-1, frames[1]):
-        print (frame // 4) % 4, frame % 4
-        im_list.append(img_arr[sub_im_height*((frame // 4) % 4): sub_im_height*((frame // 4) % 4 + 1),  \
+        #print (frame // 4) % 4, frame % 4
+        list_img_arr.append(img_arr[sub_im_height*((frame // 4) % 4): sub_im_height*((frame // 4) % 4 + 1),  \
                                sub_im_width*(frame % 4): sub_im_width*(frame % 4 + 1)])
                        
     
-    #plt.imshow(img_arr[0*height/4: 3*height/4, 0: 3*width/4], cmap='hot')
     
-    
-    return im_list
+    return list_img_arr
     
     
 def get_imacon_timing_from_pickled_shot(shotnum):
@@ -122,6 +141,24 @@ def get_imacon_timing_from_pickled_shot(shotnum):
     folderpath = exp_paths['singleloop.METADATA']+'imacon_timing\\'
     path = folderpath + 'meta_solimc' + "%05d" % shotnum + '.pickle'
     return pickle_read(path)
+    
+def get_reduced_imacon_path(shotnum):
+    """ Returns the path to the reduced imacon file """
+    
+    root = exp_paths['singleloop.REDUCED_PATH']
+
+    # Get date from the pickle file if it exists.
+    date_pickle_path = exp_paths['singleloop.METADATA']+'date\\'+str(shotnum)+'_date.pickle'
+    print date_pickle_path
+    if os.path.exists(date_pickle_path):
+        date = pickle_read(date_pickle_path)
+    else:  # Run foldername.pro to obtain the date.
+        date = idlsup.get_shot_date(shotnum)    
+        
+    constructor = '\\Reduced_solimc' + "%05d" % shotnum + '.png'
+
+    return root + date + constructor
+    
     
     
 ###Magnus' port of Bao's idl code: extract_imacon_times_from_footer.pro
