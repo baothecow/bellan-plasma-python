@@ -193,7 +193,7 @@ def get_all_imacon_shotnumbers_in_folder(target_folder):
                     #print name + ' not a standard reduced file.'
                     pass   # Ignore what's happening.
                 
-    return shot_list.sort()
+    return shot_list
         
     
     
