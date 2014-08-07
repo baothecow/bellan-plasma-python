@@ -178,6 +178,27 @@ def get_shotnum_from_path(path):
     return shotnum
     
     
+       
+def get_all_imacon_shotnumbers_in_folder(target_folder):
+    ## Get a list of all existing shotnumbers for path.
+    shot_list = list()
+    for path, subdirs, files in os.walk(target_folder):
+        for name in files:
+            filename, extension = os.path.splitext(name)
+            if extension == '.png' or extension == '.TIF':
+                try:
+                    # Attempt to extract the shotnumber from the filename string.
+                    shotnum = int(filename[-5:])
+                    shot_list.append(shotnum)
+                except:
+                    #print name + ' not a standard reduced file.'
+                    pass   # Ignore what's happening.
+                
+    return shot_list
+        
+    
+    
+    
 ###Magnus' port of Bao's idl code: extract_imacon_times_from_footer.pro
 def imacon_times(path, TIME_CONVERSION=1e3):
 
