@@ -131,6 +131,10 @@ def make_image_list_from_large_image_array(img_arr, subdivision=(4, 4), frames=(
     
     return list_img_arr
     
+def check_existence_of_timing_file(shotnum):
+    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing\\'
+    path = folderpath + 'meta_solimc' + "%05d" % shotnum + '.pickle'
+    return os.path.exists(path)
     
 def get_imacon_timing_from_pickled_shot(shotnum):
     """ Return the imacon timing for a specific shot.
@@ -149,7 +153,7 @@ def get_reduced_imacon_path(shotnum):
 
     # Get date from the pickle file if it exists.
     date_pickle_path = exp_paths['singleloop.METADATA']+'date\\'+str(shotnum)+'_date.pickle'
-    print date_pickle_path
+    #print date_pickle_path
     if os.path.exists(date_pickle_path):
         date = pickle_read(date_pickle_path)
     else:  # Run foldername.pro to obtain the date.
