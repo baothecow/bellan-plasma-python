@@ -177,7 +177,6 @@ def get_shotnum_from_path(path):
 
     return shotnum
     
-    
        
 def get_all_imacon_shotnumbers_in_folder(target_folder):
     ## Get a list of all existing shotnumbers for path.
@@ -194,7 +193,7 @@ def get_all_imacon_shotnumbers_in_folder(target_folder):
                     #print name + ' not a standard reduced file.'
                     pass   # Ignore what's happening.
                 
-    return shot_list
+    return shot_list.sort()
         
     
     
