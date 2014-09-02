@@ -100,7 +100,7 @@ def make_image_list_from_large_image(large_image, subdivision=(4, 4), frames=(1,
     list_img_arr = make_image_list_from_large_image_array(resized_image, subdivision=subdivision, frames=frames)
     
     for img_arr in list_img_arr:
-        img_list.append(Image.fromarray(img_arr))
+        img_list.append(Image.fromarray(np.int16(img_arr)))
     return img_list
         
 
