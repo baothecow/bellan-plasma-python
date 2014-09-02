@@ -1,6 +1,6 @@
 """ Container of all the different variables """
 
-
+import os as os
 
 plot_diag_params = {
     ## Rogowski current parameteres
@@ -217,7 +217,7 @@ diag_params = {
     'generic.numprobes': 1,
     'generic.datatype' : 'scalar',
     'generic.corr.threshold': 0.95,
-    'generic.path': '\\strap_rogowski_',
+    'generic.path': os.sep + 'strap_rogowski_',
     
     # General traits across all diagnostics.
     'gen.probenum': 1,
@@ -239,7 +239,30 @@ diag_params = {
 ## Dict containing various path variables associated with solar singleloop
 # experiments.
 
-exp_paths = {
+if os.sep == '/':
+    exp_paths = {
+    # Experiment
+    'EXP':'NOTSET',
+
+    # General parameters
+    'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
+    'gen.PY_LIB_PATH': '/home/bao/GitHub/bellan-plasma-python/',
+    # Singleloop parameters
+    'singleloop.IDL_LIB_PATH': '/E/programs/idl/singleloop_lib\\',
+    'singleloop.IDL_VME_PATH': '/E/data/singleloop/singleloop_VME/data/',
+    'singleloop.METADATA': '/E/data/singleloop/singleloop_metadata/',
+    # Solar parameters
+    'solar.IDL_LIB_PATH': '/E/programs/idl/solar_lib/',
+    'solar.IDL_VME_PATH': '/E/data/solar/solar_accretion/data/',
+    # Hall parameters
+    'hall.IDL_LIB_PATH': '/E/programs/idl/singleloop_lib/hall_project/',
+    'hall.IDL_VME_PATH': '/E/data/singleloop/singleloop_VME/hall/',
+    # Imacon parameters
+    'singleloop.REDUCED_PATH': '/E/data/singleloop/singleloop_imacon/reduced/',
+    'singleloop.IMACON_PATH': '/F/data/singleloop_imacon/data/'
+    }
+elif os.sep == '\\':
+    exp_paths = {
     # Experiment
     'EXP':'NOTSET',
     # General parameters
@@ -258,6 +281,51 @@ exp_paths = {
     # Imacon parameters
     'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\',
     'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\'
-}    
+    }    
 
+    
+
+#exp_paths = {
+#    # Experiment
+#    'EXP':'NOTSET',
+#    # General parameters
+#    'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
+#    'gen.PY_LIB_PATH': 'C:\\Users\\Bao\\Documents\\GitHub\\bellan-plasma-python\\',
+#    # Singleloop parameters
+#    'singleloop.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\',
+#    'singleloop.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\data\\',
+#    'singleloop.METADATA': 'E:\\data\\singleloop\\singleloop_metadata\\',
+#    # Solar parameters
+#    'solar.IDL_LIB_PATH': 'E:\\programs\\idl\\solar_lib\\',
+#    'solar.IDL_VME_PATH': 'E:\\data\\solar\\solar_accretion\\data\\',
+#    # Hall parameters
+#    'hall.IDL_LIB_PATH': 'E:\\programs\\idl\\singleloop_lib\\hall_project\\',
+#    'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\',
+#    # Imacon parameters
+#    'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\',
+#    'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\'
+#}    
+
+
+#exp_paths = {
+#    # Experiment
+#    'EXP':'NOTSET',
+#
+#    # General parameters
+#    'gen.ENVIR': 'C:\\Program Files\\ITT\\IDL\\IDL81\\bin\\bin.x86_64\\',
+#    'gen.PY_LIB_PATH': '/home/bao/GitHub/bellan-plasma-python/',
+#    # Singleloop parameters
+#    'singleloop.IDL_LIB_PATH': '/E/programs/idl/singleloop_lib\\',
+#    'singleloop.IDL_VME_PATH': '/E/data/singleloop/singleloop_VME/data/',
+#    'singleloop.METADATA': '/E/data/singleloop/singleloop_metadata/',
+#    # Solar parameters
+#    'solar.IDL_LIB_PATH': '/E/programs/idl/solar_lib/',
+#    'solar.IDL_VME_PATH': '/E/data/solar/solar_accretion/data/',
+#    # Hall parameters
+#    'hall.IDL_LIB_PATH': '/E/programs/idl/singleloop_lib/hall_project/',
+#    'hall.IDL_VME_PATH': '/E/data/singleloop/singleloop_VME/hall/',
+#    # Imacon parameters
+#    'singleloop.REDUCED_PATH': '/E/data/singleloop/singleloop_imacon/reduced/',
+#    'singleloop.IMACON_PATH': '/F/data/singleloop_imacon/data/'
+#}
 

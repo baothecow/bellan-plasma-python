@@ -20,8 +20,8 @@ import os
 import idl_support as idlsup
 
 
-INITIAL_DIR = 'E:\\data\\singleloop\\singleloop_imacon\\fast_view'
-#INITIAL_DIR = 'D:\\Dropbox\\Research Summaries Files\\201401\\he_h_imacon_variation\\1009_1010_1111'
+INITIAL_DIR = 'E:' + os.sep + 'data' + os.sep + 'singleloop' + os.sep + 'singleloop_imacon' + os.sep + 'fast_view'
+#INITIAL_DIR = 'D:' + os.sep + 'Dropbox' + os.sep + 'Research Summaries Files' + os.sep + '201401\\he_h_imacon_variation' + os.sep + '1009_1010_1111'
 OUTPUT_DIR = ''
 
 
@@ -132,7 +132,7 @@ def make_image_list_from_large_image_array(img_arr, subdivision=(4, 4), frames=(
     return list_img_arr
     
 def check_existence_of_timing_file(shotnum):
-    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing\\'
+    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing' + os.sep
     path = folderpath + 'meta_solimc' + "%05d" % shotnum + '.pickle'
     return os.path.exists(path)
     
@@ -142,7 +142,7 @@ def get_imacon_timing_from_pickled_shot(shotnum):
     Returns: a tuple whose first element is an array of shot times and whose
     second element is a list of exposure times.
     """
-    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing\\'
+    folderpath = exp_paths['singleloop.METADATA']+'imacon_timing' + os.sep
     path = folderpath + 'meta_solimc' + "%05d" % shotnum + '.pickle'
     return pickle_read(path)
     
@@ -152,14 +152,14 @@ def get_reduced_imacon_path(shotnum):
     root = exp_paths['singleloop.REDUCED_PATH']
 
     # Get date from the pickle file if it exists.
-    date_pickle_path = exp_paths['singleloop.METADATA']+'date\\'+str(shotnum)+'_date.pickle'
+    date_pickle_path = exp_paths['singleloop.METADATA']+'date' + os.sep+str(shotnum)+'_date.pickle'
     #print date_pickle_path
     if os.path.exists(date_pickle_path):
         date = pickle_read(date_pickle_path)
     else:  # Run foldername.pro to obtain the date.
         date = idlsup.get_shot_date(shotnum)    
         
-    constructor = '\\Reduced_solimc' + "%05d" % shotnum + '.png'
+    constructor = os.sep + 'Reduced_solimc' + "%05d" % shotnum + '.png'
 
     return root + date + constructor
 

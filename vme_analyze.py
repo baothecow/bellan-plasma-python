@@ -377,7 +377,7 @@ def vme_get_filepath(shotnum, diag):
     constructor = get_diag_constructor(shotnum, diag_params[diag+'.vme'])
     
     # Get date from the pickle file if it exists.
-    date_pickle_path = exp_paths['singleloop.METADATA']+'date\\'+str(shotnum)+'_date.pickle'
+    date_pickle_path = exp_paths['singleloop.METADATA']+'date'+os.sep+str(shotnum)+'_date.pickle'
     if os.path.exists(date_pickle_path):
         date = pickle_read(date_pickle_path)
     else:  # Run foldername.pro to obtain the date.
@@ -538,23 +538,23 @@ def get_diag_constructor(shotnum, vme_extension):
     if vme_extension == 'generic':
         return diag_params['generic.path'] + shotnum + '.dat'    
     if vme_extension == 'current' or vme_extension == 'tek_hv':
-        return '\\vi_t2ch13_' + shotnum + '.dat'
+        return os.sep + 'vi_t2ch13_' + shotnum + '.dat'
     if vme_extension == 'iso_hv':
-        return '\\HV_' + shotnum + '.dat'
+        return os.sep + 'HV_' + shotnum + '.dat'
     if vme_extension == 'sol_mpa_bx':
-        return '\\bx_4x16384_' + shotnum + '.dat'
+        return os.sep + 'bx_4x16384_' + shotnum + '.dat'
     if vme_extension == 'sol_mpa_by':
-        return '\\by_4x16384_' + shotnum + '.dat'
+        return os.sep + 'by_4x16384_' + shotnum + '.dat'
     if vme_extension == 'sol_mpa_bz':
-        return '\\bz_4x16384_' + shotnum + '.dat'
+        return os.sep + 'bz_4x16384_' + shotnum + '.dat'
     if vme_extension == 'optical_trigger':
-        return '\\optical_trigger_t1ch13_' + shotnum + '.dat'    
+        return os.sep + 'optical_trigger_t1ch13_' + shotnum + '.dat'    
     if vme_extension == 'hall_bx':
-        return '\\shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
+        return os.sep + 'shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
     if vme_extension == 'hall_by':
-        return '\\shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
+        return os.sep + 'shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
     if vme_extension == 'hall_bz':
-        return '\\shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
+        return os.sep + 'shot' + shotnum + 'sensor'+ diag_params['hall.sensor'] + '_t3ch_n16.dat'
 
 
 
