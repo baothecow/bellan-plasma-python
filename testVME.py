@@ -1,20 +1,35 @@
 from vme_plot_specific import vme_plot_diag_for_shots, plot_sol_mpa_for_shots
-from parameters import diag_params, plot_diag_params
-from vme_analyze import vme_unflatten_list
+from parameters import diag_params, plot_diag_params, exp_paths
+from vme_analyze import vme_unflatten_list, vme_get_breakdown_time
+from DictOfBreakdowns import DictOfBreakdowns
 
 
-## Current trace while varying the amount of gas injected into chamber.
-diag = 'current'
-diag_params['gen.prefilter'] = True
-diag_params['gen.filter.application'] = 'current_light_low_pass'
-plot_diag_params['gen.shotnum_legend'] = False
-shotnums = [['2065'], ['2094'], ['2124'], ['2074'], ['2104'], ['2084'], ['2114']]
-descript = ['0', '30V', '45V', '60V', '75V', '90V', '105V']
-vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
-plt.xlim(0, )
+## Adding and removing times from breakdown time
+
+root_path = exp_paths['singleloop.METADATA']
+myDictOfBreakdowns = DictOfBreakdowns(root_path)
+for shotnum in range(389, 2029):
+    breakdown_time = vme_get_breakdown_time(str(shotnum))    
+    myDictOfBreakdowns.set_breakdown_time(shotnum, breakdown_time)
+    print (shotnum, myDictOfBreakdowns.get_breakdown_time_date(shotnum))
+myDictOfBreakdowns.pickle_dump()
+#
+#myDictOfBreakdowns = DictOfBreakdowns(root_path)
+#myDictOfBreakdowns.print_all_keys()
+
 
 ### Current trace while varying the amount of gas injected into chamber.
 #diag = 'current'
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = False
+#shotnums = [['2065'], ['2094'], ['2124'], ['2074'], ['2104'], ['2084'], ['2114']]
+#descript = ['0', '30V', '45V', '60V', '75V', '90V', '105V']
+#vme_plot_diag_for_shots(shotnums, diag, descript, extra='indiv_signals')
+#plt.xlim(0, )
+
+### Current trace while varying the amount of gas injected into chamber.
+#diag = 'current200'
 #diag_params['gen.prefilter'] = True
 #diag_params['gen.filter.application'] = 'current_light_low_pass'
 #plot_diag_params['gen.shotnum_legend'] = False
