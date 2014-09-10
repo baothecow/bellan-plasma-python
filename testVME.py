@@ -4,15 +4,28 @@ from vme_analyze import vme_unflatten_list, vme_get_breakdown_time
 from DictOfBreakdowns import DictOfBreakdowns
 
 
-## Adding and removing times from breakdown time
 
-root_path = exp_paths['singleloop.METADATA']
-myDictOfBreakdowns = DictOfBreakdowns(root_path)
-for shotnum in range(389, 2029):
-    breakdown_time = vme_get_breakdown_time(str(shotnum))    
-    myDictOfBreakdowns.set_breakdown_time(shotnum, breakdown_time)
-    print (shotnum, myDictOfBreakdowns.get_breakdown_time_date(shotnum))
-myDictOfBreakdowns.pickle_dump()
+## Current trace while varying the amount of gas injected into chamber.
+diag = 'current'
+diag_params['gen.prefilter'] = True
+diag_params['gen.filter.application'] = 'current_light_low_pass'
+plot_diag_params['gen.shotnum_legend'] = True
+shotnums = vme_unflatten_list(map(str, range(1569, 1573)+range(1592, 1596)))
+vme_plot_diag_for_shots(shotnums, diag)
+
+
+
+
+
+### Adding and removing times from breakdown time
+#
+#root_path = exp_paths['singleloop.METADATA']
+#myDictOfBreakdowns = DictOfBreakdowns(root_path)
+#for shotnum in range(389, 2029):
+#    breakdown_time = vme_get_breakdown_time(str(shotnum))    
+#    myDictOfBreakdowns.set_breakdown_time(shotnum, breakdown_time)
+#    print (shotnum, myDictOfBreakdowns.get_breakdown_time_date(shotnum))
+#myDictOfBreakdowns.pickle_dump()
 #
 #myDictOfBreakdowns = DictOfBreakdowns(root_path)
 #myDictOfBreakdowns.print_all_keys()

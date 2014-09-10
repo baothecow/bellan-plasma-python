@@ -41,7 +41,11 @@ class DictOfBreakdowns:
     ### INTERACTIVE FUNCTIONS
         
     def get_breakdown_time(self, shotnum):
-        return self.breakdowns[str(shotnum)][0]
+        if self.breakdowns.has_key(str(shotnum)):
+            return self.breakdowns[str(shotnum)][0]
+        else:
+            print 'No key found for shot: ' + str(shotnum)
+            return 0
         
     def set_breakdown_time(self, shotnum, time):
         self.breakdowns[str(shotnum)] = (time, self.get_date(shotnum))

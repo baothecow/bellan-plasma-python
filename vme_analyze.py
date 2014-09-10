@@ -21,6 +21,10 @@ from parameters import diag_params, exp_paths
 from file_io_lib import readVME, pickle_dump, pickle_read
 from cookb_signalsmooth import smooth
 import scipy.signal as scisig
+from DictOfBreakdowns import DictOfBreakdowns
+
+
+myDictOfBreakdowns = DictOfBreakdowns(exp_paths['singleloop.METADATA'])
 
 def vme_avg_scalar_sig(shotnums, diag, extra=''):
     """ Averages the VME data associated with several shots 
@@ -259,9 +263,12 @@ def vme_get_breakdown_times(shotnums):
         elif isinstance(shotnum, str):
             a = a + [vme_get_breakdown_time(shotnum)]   
     return a
-        
-
+    
 def vme_get_breakdown_time(shotnum):
+    """ Returns the breakdown time """
+    return myDictOfBreakdowns.get_breakdown_time(shotnum)
+
+def vme_calculate_breakdown_time(shotnum):
     """ Extracts breakdown time (in us) from optical trigger data. """
 
     ## Make sure that the vme is not subtracting the breakdown time.
@@ -292,7 +299,7 @@ def vme_get_breakdown_time(shotnum):
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator, or can be generic.
-    breakdown_diag = 'tek_hv'
+    breakdown_diag = 'iso_hv'
     filepath = vme_get_filepath(shotnum, breakdown_diag)
     data = readVME(filepath, cols=diag_params[breakdown_diag+'.cols'], 
                    rows=diag_params[breakdown_diag+'.rows'])
