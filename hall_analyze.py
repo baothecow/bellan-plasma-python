@@ -9,6 +9,7 @@ import array as ar
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from file_io_lib import pickle_read, pickle_dump
 from cookb_signalsmooth import smooth
 
 
@@ -50,7 +51,6 @@ def read_hall_file(filepath):
     
     See read_hall_position and read_hall_data for appropriate usage examples.
     """
-    
     n = 16
     points = 2**n
     num_channel = 4
@@ -113,6 +113,34 @@ def trim_hall_data(data, ntrim=5):
     # Applys the appropriate smoothing and return every other 2**ntrim points of the array column.
     return np.apply_along_axis(my_smooth, 1, data)[:, 1::2**ntrim]
     
+
+    
+def get_calibration_matrix(sensor):
+    """ Returns a calibration matrix """
+    if sensor == 'A':
+        return [[0.0780625, -0.00390558, 0.00189126], [-0.000338635, 0.0876258, -0.000521402], [0.00361111, 0.00381362, 0.0860203]] # sensor/board: A/A
+    elif sensor == 'B':
+        return [[0.0829776, -0.00337371, 0.00172883], [0.00353229, 0.0868474, -0.00203384], [0.00109795, 0.00886673, 0.0836279]] # sensor/board: B/B
+    elif sensor == 'C':
+        return [[0.0835019, 0.00166185, 0.00697365], [-0.00151638, 0.0906578, -0.00237361], [0.00210450, 0.00484992, 0.0845391]] # sensor/board: C/C
+    elif sensor == 'D':
+        return [[0.0834475, -0.00148635, -0.00390268], [0.00917581, 0.0783704, -0.505646e-005], [0.0170444, -0.000291056, 0.0821908]] # sensor/board: D/D
+    elif sensor == 'E':
+        return [[0.0896002, -0.00723647, -0.00446408], [0.00451907, 0.0859051, 0.00257616], [0.00530865, 0.00425686, 0.0846567]] # sensor/board: E/E
+    elif sensor == 'F':
+        return [[0.0855627, 0.000342191, -0.000336037], [0.00682840, 0.0817025, 0.000688643], [0.00186146, 0.00246870, 0.0822300]] # sensor/board: F/F
+    else:
+        print 'Uncalibrated sensor or sensor does not exist!'
+        return [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        
+def get_polarity_matrix(x, y, z):
+    """
+    Input: a -1 or 1 for x, y, and z which corresponds to whether the setup's x, y, or z axis aligns with or is anti-parallel to the sensor axis.
+    Output: A 3x3 calibration matrix that corrects for polarity.
+    """
+    return [[x, 0, 0], [0, y, 0], [0, 0, z]]
+        
+    
     
     
     
@@ -122,17 +150,29 @@ shot_range = range(303, 463)  # Takes 14 seconds to run.  I should save output t
 #shot_range = range(303, 307)
 sensor = 'A'
 
-shot = 303
+shot = 320
 
+location = read_hall_position(generate_hall_filepath(shot, sensor))
 foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
-bar = read_hall_data(generate_hall_filepath(shot, sensor))
 
-print np.shape(foo)
-print np.shape(bar)
+cal_matrix = get_calibration_matrix(sensor)
+pol_matrix = get_polarity_matrix(-1, -1, -1)
 
-plt.plot(bar[0], bar[1])
-plt.plot(foo[0], foo[1])
+bar = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
 
+
+print location
+
+
+
+#plt.plot(foo[0], foo[1], 'g')  #x 
+#plt.plot(foo[0], foo[2], 'b')  #y
+#plt.plot(foo[0], foo[3], 'r')  #z
+
+
+plt.plot(foo[0], bar[0], 'g')  #x 
+plt.plot(foo[0], bar[1], 'b')  #y
+plt.plot(foo[0], bar[2], 'r')  #z
 
 #for shot in shot_range:
 #    sensor_locations.append(read_hall_position(generate_hall_filepath(shot, sensor)))
