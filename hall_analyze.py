@@ -139,29 +139,78 @@ def get_polarity_matrix(x, y, z):
     Output: A 3x3 calibration matrix that corrects for polarity.
     """
     return [[x, 0, 0], [0, y, 0], [0, 0, z]]
+    
+    
+    
+def save_hall_for_shots_to_file(shotnums, sensor):
+    """ A range of shotnumbers to save to file """
+    
+    path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
+    filename = 'location.pickle'
+    datafn = 'data.pickle'
+    
+    location_list = list()
+    data_list = list()
+    
+    for shot in shotnums:
+        location_list.append(read_hall_position(generate_hall_filepath(shot, sensor)))
+        foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
+        cal_matrix = get_calibration_matrix(sensor)
+        pol_matrix = get_polarity_matrix(-1, -1, -1)
+        B = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
+        data_list.append(np.concatenate((foo[0:1], B[0:3]), axis=0))
+    
+    pickle_dump(location_list, filename, path)
+    pickle_dump(data_list, datafn, path)
+    
+def read_hall_for_shots_from_file(path):
+    
+    
+    location = pickle_read(path + 'location.pickle')
+    data_list = pickle_read(path + 'data.pickle')
+    
+    return (location, data_list)
         
     
-    
-    
-    
-sensor_locations = list()
-    
-shot_range = range(303, 463)  # Takes 14 seconds to run.  I should save output to fiele.
-#shot_range = range(303, 307)
+
 sensor = 'A'
-
-shot = 320
-
-location = read_hall_position(generate_hall_filepath(shot, sensor))
-foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
-
-cal_matrix = get_calibration_matrix(sensor)
-pol_matrix = get_polarity_matrix(-1, -1, -1)
-
-bar = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
+shot_range = range(303, 308)
 
 
-print location
+
+#save_hall_for_shots_to_file(shot_range, sensor)
+
+path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
+(location_list, data_list) = read_hall_for_shots_from_file(path)
+
+for data in data_list:
+    plt.plot(data[0], data[1], 'g')
+    plt.plot(data[0], data[2], 'b')
+    plt.plot(data[0], data[3], 'r')
+
+    
+    
+#sensor_locations = list()
+#    
+#shot_range = range(303, 463)  # Takes 14 seconds to run.  I should save output to fiele.
+##shot_range = range(303, 307)
+#sensor = 'A'
+#
+#shot = 320
+#
+#location = read_hall_position(generate_hall_filepath(shot, sensor))
+#foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
+#
+#cal_matrix = get_calibration_matrix(sensor)
+#pol_matrix = get_polarity_matrix(-1, -1, -1)
+#
+#bar = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
+#
+#
+#print location
+
+
+
 
 
 
@@ -170,9 +219,11 @@ print location
 #plt.plot(foo[0], foo[3], 'r')  #z
 
 
-plt.plot(foo[0], bar[0], 'g')  #x 
-plt.plot(foo[0], bar[1], 'b')  #y
-plt.plot(foo[0], bar[2], 'r')  #z
+#plt.plot(foo[0], bar[0], 'g')  #x 
+#plt.plot(foo[0], bar[1], 'b')  #y
+#plt.plot(foo[0], bar[2], 'r')  #z
+
+
 
 #for shot in shot_range:
 #    sensor_locations.append(read_hall_position(generate_hall_filepath(shot, sensor)))
