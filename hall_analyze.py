@@ -85,34 +85,24 @@ def read_hall_file(filepath, n=16):
     representation location data.
     """
     
-    #n=16
     num_channel = 4
     
     fin = open(filepath,'rb')    
     
-    # Have to use this roundable method to get the first 3 points.
-    location = ar.array('f')
-    location.fromfile(fin, 3)
+    if n==16:
+        # Have to use this roundable method to get the first 3 points.
+        location = ar.array('f')
+        location.fromfile(fin, 3)
 
     # Read in the regular data.
     data = np.reshape(np.fromfile(fin, dtype=np.float32), (num_channel, -1))
     
     fin.close()
     
-    return (location, data)
-    
-    #return (location, data)
-    
-def read_reduced_hall_file(filepath):
-    """
-    Input: a filepath str to a binary file whose output was created by numpy.ndarray.tofile
-    """
-    
-    fin = open(filepath,'rb')
-    data = np.fromfile()
-    
-    
-    return data
+    if n==16:
+        return (location, data)
+    else:
+        return data
         
     
 def read_hall_position(filepath):
@@ -156,14 +146,10 @@ def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop
         if filename[0:4] == 'shot':
             
             (location, data) = read_hall_file(path)
-            trimmed_data = trim_hall_data(data, ntrim=ntrim)
+            trimmed_data = np.array(trim_hall_data(data, ntrim=ntrim), dtype=np.float32)
             
             new_filename = filename[0:-3] + 'n' + str(16-ntrim) # Generate new filename.            
-            fout = open(output_path + new_filename + '.dat', 'wb')
-            trimmed_data.tofile(fout)
-            fout.close()
-    
-        
+            trimmed_data.tofile(output_path + new_filename + '.dat')
     
     
     
