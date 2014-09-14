@@ -22,6 +22,25 @@ import os
 from file_io_lib import pickle_read, pickle_dump
 from cookb_signalsmooth import smooth
 from vme_analyze import get_hall_calibration_matrix
+from datetime import datetime
+
+
+def get_all_file_paths_in_folder_and_subfolder(folderpath):
+    """ 
+    Function will check a root folder and return a list containing paths to all the
+    files in that folder 
+    
+    >>> folderpath = 'E:\\'
+    >>> get_all_file_paths_in_folder_and_subfolder(folderpath)
+    
+    Output: a list of paths to every file in the folder and its subfolders.
+    
+    """
+    path_list = list()
+    for path, subdirs, files in os.walk(folderpath):
+        for name in files:
+            path_list.append(os.path.join(path, name))
+    return path_list
 
 
 def get_hall_date(shotnum):
@@ -55,29 +74,46 @@ def generate_hall_filepath(shotnum, sensor, basepath=''):
     return basepath +get_hall_date(shotnum) + os.sep + 'shot' + str(shotnum) + 'sensor' +  sensor + '_t3ch_n16.dat'
 
 
-def read_hall_file(filepath):
+def read_hall_file(filepath, n=16):
     """
     Input: path to hall sensor file.
     Output: struct of the location of the sensor and the data captured by that sensor.
     
     See read_hall_position and read_hall_data for appropriate usage examples.
+    
+    Note: If n=16, the assumption is that this is the IDL hall file which has 3 numbers
+    representation location data.
     """
-    n = 16
-    points = 2**n
+    
+    #n=16
     num_channel = 4
     
-    fin = open(filepath,'rb')
+    fin = open(filepath,'rb')    
     
+    # Have to use this roundable method to get the first 3 points.
     location = ar.array('f')
     location.fromfile(fin, 3)
 
-    array = ar.array('f')
-    array.fromfile(fin, num_channel*points)    
-    data = np.reshape(array, (num_channel, -1))
+    # Read in the regular data.
+    data = np.reshape(np.fromfile(fin, dtype=np.float32), (num_channel, -1))
     
     fin.close()
     
     return (location, data)
+    
+    #return (location, data)
+    
+def read_reduced_hall_file(filepath):
+    """
+    Input: a filepath str to a binary file whose output was created by numpy.ndarray.tofile
+    """
+    
+    fin = open(filepath,'rb')
+    data = np.fromfile()
+    
+    
+    return data
+        
     
 def read_hall_position(filepath):
     """ 
@@ -105,6 +141,31 @@ def read_hall_data(filepath):
     
     """
     return read_hall_file(filepath)[1]
+    
+def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\reduced\\', ntrim=5):
+    """
+    Use trim_hall_data to smooth and trim the hall data files.  Remove the location numbers and output them as reduced files.
+    
+    Input: The folder containing the relevant hall data.
+    """
+    
+    all_paths = get_all_file_paths_in_folder_and_subfolder(folderpath)
+    
+    for path in all_paths:
+        filename = os.path.splitext(os.path.basename(path))[0]  # Extract the file name and remove the extension..
+        if filename[0:4] == 'shot':
+            
+            (location, data) = read_hall_file(path)
+            trimmed_data = trim_hall_data(data, ntrim=ntrim)
+            
+            new_filename = filename[0:-3] + 'n' + str(16-ntrim) # Generate new filename.            
+            fout = open(output_path + new_filename + '.dat', 'wb')
+            trimmed_data.tofile(fout)
+            fout.close()
+    
+        
+    
+    
     
 def trim_hall_data(data, ntrim=5):
     """
@@ -198,25 +259,31 @@ def correct_hall_location(shotnum, sensor, location, basepath=''):
 
 sensor = 'A'
 start = 303
-shot_range = range(start, start+3)
+shot_range = range(start, start+10)
 
 
 
+
+t = datetime.now()
 
 (location_list, data_list) = calc_hall_for_shots(shot_range, sensor)
-#save_hall_to_file(location_list, data_list)
+
+print datetime.now() - t
+
+
+save_hall_to_file(location_list, data_list)
 
 
 
-#path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
-#(location_list, data_list) = read_hall_from_file(path)
+path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
+(location_list, data_list) = read_hall_from_file(path)
 
-#plt.figure()
-#
-#for data in data_list:
-#    plt.plot(data[0], data[1], 'g')
-#    plt.plot(data[0], data[2], 'b')
-#    plt.plot(data[0], data[3], 'r')
+plt.figure()
+
+for data in data_list:
+    plt.plot(data[0], data[1], 'g')
+    plt.plot(data[0], data[2], 'b')
+    plt.plot(data[0], data[3], 'r')
 
 #shot_array = (np.array([shot_range])).T
 #print np.concatenate((shot_array, location_list), axis=1)
