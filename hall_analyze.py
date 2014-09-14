@@ -140,26 +140,32 @@ def get_polarity_matrix(x, y, z):
     """
     return [[x, 0, 0], [0, y, 0], [0, 0, z]]
     
+def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1]):
+    """
     
-    
-def save_hall_for_shots_to_file(shotnums, sensor):
-    """ A range of shotnumbers to save to file """
-    
-    path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
-    filename = 'location.pickle'
-    datafn = 'data.pickle'
-    
+    """
+
     location_list = list()
     data_list = list()
-    
+
+    # Perform the calculations and save to file.
     for shot in shotnums:
         location_list.append(read_hall_position(generate_hall_filepath(shot, sensor)))
         foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
         cal_matrix = get_calibration_matrix(sensor)
-        pol_matrix = get_polarity_matrix(-1, -1, -1)
+        pol_matrix = get_polarity_matrix(polarization[0], polarization[1], polarization[2])
         B = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
         data_list.append(np.concatenate((foo[0:1], B[0:3]), axis=0))
+        
+    return (location_list, data_list)
     
+    
+def save_hall_to_file(location_list, data_list, path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'):
+    """ Save the data to file temporariliy """
+    
+    filename = 'location.pickle'
+    datafn = 'data.pickle'
+       
     pickle_dump(location_list, filename, path)
     pickle_dump(data_list, datafn, path)
     
@@ -174,20 +180,28 @@ def read_hall_for_shots_from_file(path):
     
 
 sensor = 'A'
-shot_range = range(303, 308)
+start = 358
+shot_range = range(start, start+10)
 
 
 
-#save_hall_for_shots_to_file(shot_range, sensor)
+
+(location_list, data_list) = calc_hall_for_shots(shot_range, sensor)
+save_hall_to_file(location_list, data_list)
+
+
 
 path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
 (location_list, data_list) = read_hall_for_shots_from_file(path)
+
+plt.figure()
 
 for data in data_list:
     plt.plot(data[0], data[1], 'g')
     plt.plot(data[0], data[2], 'b')
     plt.plot(data[0], data[3], 'r')
 
+print np.array(location_list)
     
     
 #sensor_locations = list()
