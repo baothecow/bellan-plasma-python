@@ -68,14 +68,14 @@ def read_hall_file(filepath):
     
     fin = open(filepath,'rb')
     
-    #location = ar.array('f')
-    #location.fromfile(fin, 3)
-    
-    location = [1, 2, 3]
+    location = ar.array('f')
+    location.fromfile(fin, 3)
 
     array = ar.array('f')
     array.fromfile(fin, num_channel*points)    
     data = np.reshape(array, (num_channel, -1))
+    
+    fin.close()
     
     return (location, data)
     
@@ -170,7 +170,30 @@ def read_hall_from_file(path):
     data_list = pickle_read(path + 'data.pickle')
     
     return (location, data_list)
-        
+    
+    
+def correct_hall_location(shotnum, sensor, location, basepath=''):
+    """
+    Input: shotnum (integer), sensor (string), location (list of doubles)
+    Output: corrected location value.
+    
+    >>> correct_hall_location(311, 'A', [0., 4., 2.])
+    
+    """
+    
+    filepath = generate_hall_filepath(shotnum, sensor, basepath='')
+    
+    (old_loc, data) = read_hall_file(filepath)
+    
+    # Check to make sure the location is a list of 3 elements long.
+    if isinstance(location, list) and all([isinstance(x, (int, long, float)) for x in location]) and len(location) == 3:
+        print 'Shot ' + str(shotnum) + ': Modifying location from ' + str(old_loc) + ' to ' + str(location)
+        fout = open(filepath,'wb')
+        [fout.write(loc_element) for loc_element in location]
+        [fout.write(data_element) for data_element in data]
+        fout.close()
+    else:
+        print 'Error with location input.  No modification done'
     
 
 sensor = 'A'
