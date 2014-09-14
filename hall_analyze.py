@@ -132,6 +132,9 @@ def read_hall_data(filepath):
     """
     return read_hall_file(filepath)[1]
     
+    
+
+    
 def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\reduced\\', ntrim=5):
     """
     Use trim_hall_data to smooth and trim the hall data files.  Remove the location numbers and output them as reduced files.
@@ -226,6 +229,8 @@ def correct_hall_location(shotnum, sensor, location, basepath=''):
     
     >>> correct_hall_location(311, 'A', [0., 4., 2.])
     
+    NOTE!  Unfortunately, I won't use this.  Keep the metafiles inaccurate
+    
     """
     
     filepath = generate_hall_filepath(shotnum, sensor, basepath='')
@@ -243,91 +248,33 @@ def correct_hall_location(shotnum, sensor, location, basepath=''):
         print 'Error with location input.  No modification done'
     
 
-sensor = 'A'
-start = 303
-shot_range = range(start, start+10)
 
 
-
-
-t = datetime.now()
-
-(location_list, data_list) = calc_hall_for_shots(shot_range, sensor)
-
-print datetime.now() - t
-
-
-save_hall_to_file(location_list, data_list)
-
-
-
-path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'
-(location_list, data_list) = read_hall_from_file(path)
-
-plt.figure()
-
-for data in data_list:
-    plt.plot(data[0], data[1], 'g')
-    plt.plot(data[0], data[2], 'b')
-    plt.plot(data[0], data[3], 'r')
-
-#shot_array = (np.array([shot_range])).T
-#print np.concatenate((shot_array, location_list), axis=1)
-
-
+def get_shot_summary_string(shotnums):
+    """ 
+    Used to generate a summary string given a list of integer shotnumbers.   
     
+    >>> shotnums = range(100, 123)
+    >>> get_shot_summary_string(shotnums)
+    '100_101_102_19_shots_122'
     
-#sensor_locations = list()
-#    
-#shot_range = range(303, 463)  # Takes 14 seconds to run.  I should save output to fiele.
-##shot_range = range(303, 307)
-#sensor = 'A'
-#
-#shot = 320
-#
-#location = read_hall_position(generate_hall_filepath(shot, sensor))
-#foo = trim_hall_data(read_hall_data(generate_hall_filepath(shot, sensor)))
-#
-#cal_matrix = get_calibration_matrix(sensor)
-#pol_matrix = get_polarity_matrix(-1, -1, -1)
-#
-#bar = np.dot(cal_matrix, np.dot(pol_matrix, foo[1:4]))
-#
-#
-#print location
-
-
-
-
-
-
-#plt.plot(foo[0], foo[1], 'g')  #x 
-#plt.plot(foo[0], foo[2], 'b')  #y
-#plt.plot(foo[0], foo[3], 'r')  #z
-
-
-#plt.plot(foo[0], bar[0], 'g')  #x 
-#plt.plot(foo[0], bar[1], 'b')  #y
-#plt.plot(foo[0], bar[2], 'r')  #z
-
-
-
-#for shot in shot_range:
-#    sensor_locations.append(read_hall_position(generate_hall_filepath(shot, sensor)))
+    >>> shotnums = [123, 111, 165]
+    >>> get_shot_summary_string(shotnums)
+    '123_111_165'
     
-    
-    
+    """
 
-#print sensor_locations    
-
-#
-#path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\2014.07.24\\'
-#
-#filepath = path + 'shot547sensorB_t3ch_n16.dat'
-#
-#
-#
-#data = read_hall_data(filepath)
-#
-#plt.plot(data[0], data[1])
-#plt.plot(data[0], data[2])
+    numElements = len(shotnums)
+    num_pre_shots = 3
+    summary_string = ""
+    
+    if numElements <= num_pre_shots + 1:
+        for i in range(0, numElements - 1):
+            summary_string = summary_string + str(shotnums[i]) + "_"
+    else:
+        for i in range(0, num_pre_shots):
+            summary_string = summary_string + str(shotnums[i]) + "_"
+        summary_string = summary_string  + str(numElements - num_pre_shots - 1) + '_shots_'
+            
+    summary_string = summary_string + str(shotnums[numElements - 1])
+    return summary_string
