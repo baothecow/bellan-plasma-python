@@ -181,9 +181,9 @@ def get_polarity_matrix(x, y, z):
     """
     return [[x, 0, 0], [0, y, 0], [0, 0, z]]
     
-def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1], n=11):
+def calc_hall_for_shots(shotnums, sensor, polarization = [-1, 1, -1], n=11):
     """
-    
+    Function may be obsolete soon.
     """
 
     location_list = list()
@@ -199,6 +199,28 @@ def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1], n=11):
         data_list.append(np.concatenate((foo[0:1], B[0:3]), axis=0))
         
     return (location_list, data_list)
+    
+def get_b_at_ind_for_shot_sensor(t_ind, shotnum, sensor, polarization = [-1, 1, -1], basepath=exp_paths['hall.IDL_VME_PATH'], reduced=True, n=11):
+    if reduced:
+        filepath = generate_hall_filepath(shotnum, sensor, reduced=reduced, n=n)
+        v_hall = read_hall_data(filepath, n=n)
+        cal_matrix = get_hall_calibration_matrix(sensor)
+        pol_matrix = get_polarity_matrix(polarization[0], polarization[1], polarization[2])
+        B = np.dot(cal_matrix, np.dot(pol_matrix, v_hall[1: 4]))
+        return B[:, t_ind]
+    else:
+        print 'Only reduced paths have been implemented!  Returning [0, 0, 0]'
+        return [0, 0, 0]
+
+def get_loc_for_shot_sensor(shotnum, sensor, basepath=exp_paths['hall.IDL_VME_PATH'], reduced=True, n=11):
+    if reduced:
+        filepath = generate_hall_filepath(shotnum, sensor, reduced=reduced, n=n)
+        return read_hall_position(filepath, n=n)
+    else:
+        print 'Only reduced paths have been implemented!  Returning [0, 0, 0]'
+        return [0, 0, 0]
+    
+    
 
     
     
