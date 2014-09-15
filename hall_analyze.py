@@ -23,6 +23,7 @@ from file_io_lib import pickle_read, pickle_dump
 from cookb_signalsmooth import smooth
 from vme_analyze import get_hall_calibration_matrix
 from datetime import datetime
+from parameters import exp_paths
 
 
 def get_all_file_paths_in_folder_and_subfolder(folderpath):
@@ -59,19 +60,18 @@ def get_hall_date(shotnum):
         return '2014.01.14'
 
 
-def generate_hall_filepath(shotnum, sensor, basepath=''):
+def generate_hall_filepath(shotnum, sensor, basepath=exp_paths['hall.IDL_VME_PATH'], reduced=False, n=11):
     """
     >> generate_hall_filepath(222, 'A'):
-    'E:\\data\\singleloop\\singleloop_VME\\hall\\2014.01.14\\shot222A_t3ch_n16.dat'
+    'E:\\data\\singleloop\\singleloop_VME\\hall\\2014.01.14\\shot222sensorA_t3ch_n16.dat'
+    >> generate_hall_filepath(821, 'F', reduced=True, n=14)
+    'E:\\data\\singleloop\\singleloop_VME\\hall\\reduced\\shot821sensorF_t3ch_n14.dat'
     """
-    if basepath == '':  # Default basepath
-        if os.sep == '/':
-            basepath = '/E'
-        if os.sep == '\\':
-            basepath = 'E:'
-        basepath = basepath + os.sep + 'data' + os.sep + 'singleloop' + os.sep + 'singleloop_VME' + os.sep + 'hall' + os.sep
-    
-    return basepath +get_hall_date(shotnum) + os.sep + 'shot' + str(shotnum) + 'sensor' +  sensor + '_t3ch_n16.dat'
+
+    if reduced:
+        return basepath + 'reduced' + os.sep + 'shot' + str(shotnum) + 'sensor' +  sensor + '_t3ch_n' + str(n) + '.dat'
+    else:
+        return basepath +get_hall_date(shotnum) + os.sep + 'shot' + str(shotnum) + 'sensor' +  sensor + '_t3ch_n16.dat'
 
 
 def read_hall_file(filepath, n=16):
@@ -89,20 +89,17 @@ def read_hall_file(filepath, n=16):
     
     fin = open(filepath,'rb')    
     
-    if n==16:
+    #if n==16:
         # Have to use this roundable method to get the first 3 points.
-        location = ar.array('f')
-        location.fromfile(fin, 3)
+    location = ar.array('f')
+    location.fromfile(fin, 3)
 
     # Read in the regular data.
     data = np.reshape(np.fromfile(fin, dtype=np.float32), (num_channel, -1))
     
     fin.close()
     
-    if n==16:
-        return (location, data)
-    else:
-        return data
+    return (location, data)
         
     
 def read_hall_position(filepath):
@@ -147,12 +144,16 @@ def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop
     for path in all_paths:
         filename = os.path.splitext(os.path.basename(path))[0]  # Extract the file name and remove the extension..
         if filename[0:4] == 'shot':
-            
             (location, data) = read_hall_file(path)
             trimmed_data = np.array(trim_hall_data(data, ntrim=ntrim), dtype=np.float32)
-            
-            new_filename = filename[0:-3] + 'n' + str(16-ntrim) # Generate new filename.            
-            trimmed_data.tofile(output_path + new_filename + '.dat')
+            new_filename = filename[0:-3] + 'n' + str(16-ntrim) + '.dat' # Generate new filename.            
+            if os.path.exists(output_path + new_filename):
+                print 'Warning! ' + new_filename + ' already exists.  Delete first before reducing.'
+            else:
+#                fout = open(output_path + new_filename, 'wb')
+#                fout.write(location)
+#                trimmed_data.tofile(fout)
+                write_reduced_data(output_path + new_filename, location, trimmed_data)
     
     
     
@@ -202,79 +203,67 @@ def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1]):
         data_list.append(np.concatenate((foo[0:1], B[0:3]), axis=0))
         
     return (location_list, data_list)
+
     
     
-def save_hall_to_file(location_list, data_list, path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'):
-    """ Save the data to file temporariliy """
-    
-    filename = 'location.pickle'
-    datafn = 'data.pickle'
-       
-    pickle_dump(location_list, filename, path)
-    pickle_dump(data_list, datafn, path)
-    
-def read_hall_from_file(path):
-    
-    
-    location = pickle_read(path + 'location.pickle')
-    data_list = pickle_read(path + 'data.pickle')
-    
-    return (location, data_list)
-    
-    
-def correct_hall_location(shotnum, sensor, location, basepath=''):
+def correct_hall_location(shotnum, sensor, location, basepath=exp_paths['hall.IDL_VME_PATH']):
     """
     Input: shotnum (integer), sensor (string), location (list of doubles)
     Output: corrected location value.
     
     >>> correct_hall_location(311, 'A', [0., 4., 2.])
     
-    NOTE!  Unfortunately, I won't use this.  Keep the metafiles inaccurate
-    
     """
     
-    filepath = generate_hall_filepath(shotnum, sensor, basepath='')
+    filepath = generate_hall_filepath(shotnum, sensor, basepath, reduced=True)
     
     (old_loc, data) = read_hall_file(filepath)
+    
+    print type(old_loc)    
     
     # Check to make sure the location is a list of 3 elements long.
     if isinstance(location, list) and all([isinstance(x, (int, long, float)) for x in location]) and len(location) == 3:
         print 'Shot ' + str(shotnum) + ': Modifying location from ' + str(old_loc) + ' to ' + str(location)
-        fout = open(filepath,'wb')
-        [fout.write(loc_element) for loc_element in location]
-        [fout.write(data_element) for data_element in data]
-        fout.close()
+        write_reduced_data(filepath, ar.array('f', location), data)
+#        fout = open(filepath,'wb')
+#        [fout.write(loc_element) for loc_element in location]
+#        [fout.write(data_element) for data_element in data]
+#        fout.close()
     else:
         print 'Error with location input.  No modification done'
-    
-
-
-
-def get_shot_summary_string(shotnums):
-    """ 
-    Used to generate a summary string given a list of integer shotnumbers.   
-    
-    >>> shotnums = range(100, 123)
-    >>> get_shot_summary_string(shotnums)
-    '100_101_102_19_shots_122'
-    
-    >>> shotnums = [123, 111, 165]
-    >>> get_shot_summary_string(shotnums)
-    '123_111_165'
-    
+        
+        
+def write_reduced_data(filepath, location, data):
+    """
+    location -- array of 3 points, x, y, z.
+    data -- numpy float32 array.
     """
 
-    numElements = len(shotnums)
-    num_pre_shots = 3
-    summary_string = ""
+    fout = open(filepath, 'wb')
+    fout.write(location)
+    data.tofile(fout)
+    fout.close()
     
-    if numElements <= num_pre_shots + 1:
-        for i in range(0, numElements - 1):
-            summary_string = summary_string + str(shotnums[i]) + "_"
-    else:
-        for i in range(0, num_pre_shots):
-            summary_string = summary_string + str(shotnums[i]) + "_"
-        summary_string = summary_string  + str(numElements - num_pre_shots - 1) + '_shots_'
-            
-    summary_string = summary_string + str(shotnums[numElements - 1])
-    return summary_string
+
+
+
+
+    
+#    
+#def save_hall_to_file(location_list, data_list, path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\'):
+#    """ Save the data to file temporariliy """
+#    
+#    filename = 'location.pickle'
+#    datafn = 'data.pickle'
+#       
+#    pickle_dump(location_list, filename, path)
+#    pickle_dump(data_list, datafn, path)
+#    
+#def read_hall_from_file(path):
+#    
+#    
+#    location = pickle_read(path + 'location.pickle')
+#    data_list = pickle_read(path + 'data.pickle')
+#    
+#    return (location, data_list)
+
