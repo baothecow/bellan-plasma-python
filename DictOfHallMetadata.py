@@ -7,6 +7,8 @@ Created on Sun Sep  7 14:09:34 2014
 
 import os as os
 import cPickle as pickle
+from hall_analyze import read_hall_position
+from parameters import exp_paths
 
 
 ## Creating an object which contains breakdown time.
@@ -19,8 +21,15 @@ class DictOfHallMetadata:
     
     """
     
-    def __init__(self, root_path):
+    def __init__(self, shotnums, descript, root_path=exp_paths['hall.IDL_VME_PATH'], sensor_list = ['A', 'B', 'C', 'D', 'E', 'F'], n=11):
+        
+        
+        self.shotnums = shotnums
+        self.descript = descript
         self.root_path = root_path
+        self.sensor_list = sensor_list
+        self.n = n
+        
         self.update_file_path()
         self.initialize_obj()
         
@@ -28,8 +37,9 @@ class DictOfHallMetadata:
     
     def update_file_path(self):
         self.file_path = self.root_path + 'metadata' + os.sep + str(self.descript) + '_' + self.get_shot_summary_string() + '.pickle'
+        self.reduced_data_folder = self.root_path + 'reduced' + os.sep
 
-    def get_shot_summary_string(shotnums):
+    def get_shot_summary_string(self):
         """ 
         Used to generate a summary string given a list of integer shotnumbers.   
         
@@ -42,23 +52,23 @@ class DictOfHallMetadata:
         '123_111_165'
         
         """
-    
-        numElements = len(shotnums)
+        numElements = len(self.shotnums)
         num_pre_shots = 3
         summary_string = ""
         
         if numElements <= num_pre_shots + 1:
             for i in range(0, numElements - 1):
-                summary_string = summary_string + str(shotnums[i]) + "_"
+                summary_string = summary_string + str(self.shotnums[i]) + "_"
         else:
             for i in range(0, num_pre_shots):
-                summary_string = summary_string + str(shotnums[i]) + "_"
+                summary_string = summary_string + str(self.shotnums[i]) + "_"
             summary_string = summary_string  + str(numElements - num_pre_shots - 1) + '_shots_'
                 
-        summary_string = summary_string + str(shotnums[numElements - 1])
+        summary_string = summary_string + str(self.shotnums[numElements - 1])
+        
         return summary_string
-
     
+        
     def check_existence_pickle_file(self):
         return os.path.exists(self.file_path)
 
@@ -69,6 +79,18 @@ class DictOfHallMetadata:
             self.pickle_read()
             
     ### INTERACTIVE FUNCTIONS
+            
+    def update_location(self):
+        """
+        Checks to see if reduced data exists for the shot and populates the keys with the existing relationgs.
+        """
+        for shotnum in self.shotnums:
+            for sensor in self.sensor_list:
+                reduced_filepath = self.reduced_data_folder + os.sep + 'shot' + str(shotnum) + 'sensor' + sensor + '_t3ch_n' + str(self.n) + '.dat'
+                if os.path.exists(reduced_filepath):
+                    position = read_hall_position(reduced_filepath, n=self.n)
+                    self.metadata[str(shotnum)+'.'+str(sensor)+'.loc'] = [position[0], position[1], position[2]] 
+            
         
     def get_location(self, shotnum, sensor):
         if self.metadata.has_key(str(shotnum)+'.'+str(sensor)+'.loc'):
@@ -94,34 +116,7 @@ class DictOfHallMetadata:
     
     ######### IO FUNCTIONS ######################
 
-def get_shot_summary_string(shotnums):
-    """ 
-    Used to generate a summary string given a list of integer shotnumbers.   
-    
-    >>> shotnums = range(100, 123)
-    >>> get_shot_summary_string(shotnums)
-    '100_101_102_19_shots_122'
-    
-    >>> shotnums = [123, 111, 165]
-    >>> get_shot_summary_string(shotnums)
-    '123_111_165'
-    
-    """
 
-    numElements = len(shotnums)
-    num_pre_shots = 3
-    summary_string = ""
-    
-    if numElements <= num_pre_shots + 1:
-        for i in range(0, numElements - 1):
-            summary_string = summary_string + str(shotnums[i]) + "_"
-    else:
-        for i in range(0, num_pre_shots):
-            summary_string = summary_string + str(shotnums[i]) + "_"
-        summary_string = summary_string  + str(numElements - num_pre_shots - 1) + '_shots_'
-            
-    summary_string = summary_string + str(shotnums[numElements - 1])
-    return summary_string
 
     
     def get_output_folder_path(self):
@@ -129,7 +124,7 @@ def get_shot_summary_string(shotnums):
     
         
     def pickle_dump(self):
-        ## If the director 'folder' doesn't exist, create it!
+        ## If the output 'folder' doesn't exist, create it!
         if not (os.path.exists(self.get_output_folder_path())):
             os.makedirs(self.get_output_folder_path())
         

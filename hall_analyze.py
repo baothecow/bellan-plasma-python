@@ -22,7 +22,6 @@ import os
 from file_io_lib import pickle_read, pickle_dump
 from cookb_signalsmooth import smooth
 from vme_analyze import get_hall_calibration_matrix
-from datetime import datetime
 from parameters import exp_paths
 
 
@@ -102,7 +101,7 @@ def read_hall_file(filepath, n=16):
     return (location, data)
         
     
-def read_hall_position(filepath):
+def read_hall_position(filepath, n=16):
     """ 
     Returns the location of the hall sensor that is stored within the binary file as a 1x3 array.
     
@@ -112,9 +111,9 @@ def read_hall_position(filepath):
     array('f', [-1.0, -2.0, 3.0])
     
     """
-    return read_hall_file(filepath)[0]
+    return read_hall_file(filepath, n=n)[0]
 
-def read_hall_data(filepath):
+def read_hall_data(filepath, n=16):
     """ 
     Returns the data stored within the hall sensor file.  It will be a float array of dimensions 4 x 65536.
     The rows correspond to time, bx, by, bz respectively.
@@ -127,7 +126,7 @@ def read_hall_data(filepath):
     (65536,)
     
     """
-    return read_hall_file(filepath)[1]
+    return read_hall_file(filepath, n=n)[1]
     
     
 
@@ -150,9 +149,6 @@ def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop
             if os.path.exists(output_path + new_filename):
                 print 'Warning! ' + new_filename + ' already exists.  Delete first before reducing.'
             else:
-#                fout = open(output_path + new_filename, 'wb')
-#                fout.write(location)
-#                trimmed_data.tofile(fout)
                 write_reduced_data(output_path + new_filename, location, trimmed_data)
     
     
@@ -185,7 +181,7 @@ def get_polarity_matrix(x, y, z):
     """
     return [[x, 0, 0], [0, y, 0], [0, 0, z]]
     
-def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1]):
+def calc_hall_for_shots(shotnums, sensor, polarization = [-1, -1, -1], n=11):
     """
     
     """
@@ -225,10 +221,6 @@ def correct_hall_location(shotnum, sensor, location, basepath=exp_paths['hall.ID
     if isinstance(location, list) and all([isinstance(x, (int, long, float)) for x in location]) and len(location) == 3:
         print 'Shot ' + str(shotnum) + ': Modifying location from ' + str(old_loc) + ' to ' + str(location)
         write_reduced_data(filepath, ar.array('f', location), data)
-#        fout = open(filepath,'wb')
-#        [fout.write(loc_element) for loc_element in location]
-#        [fout.write(data_element) for data_element in data]
-#        fout.close()
     else:
         print 'Error with location input.  No modification done'
         
