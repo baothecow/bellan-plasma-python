@@ -131,7 +131,7 @@ def read_hall_data(filepath, n=16):
     
 
     
-def reduce_hall_data(folderpath, output_path = 'E:\\data\\singleloop\\singleloop_VME\\hall\\reduced\\', ntrim=5):
+def reduce_hall_data(folderpath, output_path = exp_paths['hall.IDL_VME_PATH'] + 'reduced' + os.sep, ntrim=5):
     """
     Use trim_hall_data to smooth and trim the hall data files.  Remove the location numbers and output them as reduced files.
     
