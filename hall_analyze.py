@@ -47,7 +47,6 @@ def get_index_of_pulse_start(signal):
     Locates the starting index of the pulse by using np.diff and seeing if it gets
     above a certain threshold.
     
-    Note!  This will give the wrong answer if 
     """
     THRESHOLD = .3
     IGNORE_PTS = int(len(signal)*.1)
@@ -67,6 +66,16 @@ def get_index_of_pulse_start(signal):
         return 0
     else:
         return index_arr[0] + IGNORE_PTS
+        
+def get_index_of_pulse_peak(signal):
+    """
+    
+    Smooths signal first to remove transients.
+    Returns the index of the peak element whether it is a max or a min.
+    """
+    SMOOTHING_PTS = 25
+    signal = smooth(signal, SMOOTHING_PTS)    
+    return np.where(np.abs(signal) == np.max(np.abs(signal)))[0][0]
     
 
 def get_hall_date(shotnum):
