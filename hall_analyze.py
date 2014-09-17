@@ -30,8 +30,8 @@ def get_all_file_paths_in_folder_and_subfolder(folderpath):
     Function will check a root folder and return a list containing paths to all the
     files in that folder 
     
-    >>> folderpath = 'E:\\'
-    >>> get_all_file_paths_in_folder_and_subfolder(folderpath)
+    >> folderpath = 'E:\\'
+    >> get_all_file_paths_in_folder_and_subfolder(folderpath)
     
     Output: a list of paths to every file in the folder and its subfolders.
     
@@ -41,7 +41,33 @@ def get_all_file_paths_in_folder_and_subfolder(folderpath):
         for name in files:
             path_list.append(os.path.join(path, name))
     return path_list
-
+    
+def get_index_of_pulse_start(signal):
+    """
+    Locates the starting index of the pulse by using np.diff and seeing if it gets
+    above a certain threshold.
+    
+    Note!  This will give the wrong answer if 
+    """
+    THRESHOLD = .3
+    IGNORE_PTS = int(len(signal)*.1)
+    SMOOTHING_PTS = 25
+    
+    signal = smooth(signal, SMOOTHING_PTS)
+    # Ignore the first few points points.  Helps to get rid of transients.
+    diff_array = np.diff(signal)[IGNORE_PTS:]
+    
+    index_arr = np.where(np.abs(diff_array) > THRESHOLD * np.max(np.abs(diff_array)))[0]
+    
+    if np.mean(signal) < np.abs(np.max(signal) * .1):
+        print 'Likely VME error, returning 0'
+        return 0
+    elif np.shape(index_arr) == (0,):
+        print 'Peak find failed, returning 0'
+        return 0
+    else:
+        return index_arr[0] + IGNORE_PTS
+    
 
 def get_hall_date(shotnum):
     """ Returns the data for a given shot number """
