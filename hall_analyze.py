@@ -58,7 +58,7 @@ def get_index_of_pulse_start(signal):
     
     index_arr = np.where(np.abs(diff_array) > THRESHOLD * np.max(np.abs(diff_array)))[0]
     
-    if np.mean(signal) < np.abs(np.max(signal) * .1):
+    if np.abs(np.mean(signal)) < np.max(np.abs(signal) * .1):
         print 'Likely VME error, returning 0'
         return 0
     elif np.shape(index_arr) == (0,):
