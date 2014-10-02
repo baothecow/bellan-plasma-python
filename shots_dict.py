@@ -21,8 +21,20 @@ list of strapping voltages associated with the A shots.
 shots_dict = {
 
 
-    'E.info' : [0, 15, 30, 40, 45, 50, 60, 70, 80, 90], 
-    ## 0V Max Ind on 5/25/14
+    'E.info' : ['neg90', 'neg75', 'neg60', 'neg45', 'neg30', 'neg15', 0, 15, 30, 40, 45, 50, 60, 70, 80, 90], 
+    ### -90V Max Ind on 8/21/14
+    'E.neg90' : range(2270, 2280), 
+    ### -75V Max Ind on 8/21/14
+    'E.neg75' : range(2290, 2295), 
+    ### -60V Max Ind on 8/21/14
+    'E.neg60' : range(2250, 2260), 
+    ### -30V Max Ind on 8/21/14
+    'E.neg45' : range(2285, 2290), 
+    ### -30V Max Ind on 8/21/14
+    'E.neg30' : range(2260, 2270), 
+    ### -15V Max Ind on 8/21/14
+    'E.neg15' : range(2280, 2285),
+    ## 0V Max Ind on 5/25/14    
     'E.0' : range(1554, 1574) + range(1581, 1585) + range(1592, 1604) + [1634, 1655, 1656] + range(1657, 1660)+range(1785, 1790),
     ### 15V Max Ind on 5/25/14
     'E.15' : [1635] + range(1780, 1785),

@@ -4,14 +4,26 @@ from vme_analyze import vme_unflatten_list, vme_get_breakdown_time
 from DictOfBreakdowns import DictOfBreakdowns
 
 
+## Correlation between sol_mpa and main bank charging voltage
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = True
+#diag = 'current'
+shotnums = [['1602'], ['1606']]
+#descript = ['3kV', '3.5kV', '4kV', '4.5kV', '5kV']
+plot_sol_mpa_for_shots(shotnums, num_probe=4)
 
-## Current trace while varying the amount of gas injected into chamber.
-diag = 'current'
-diag_params['gen.prefilter'] = True
-diag_params['gen.filter.application'] = 'current_light_low_pass'
-plot_diag_params['gen.shotnum_legend'] = True
-shotnums = vme_unflatten_list(map(str, range(1569, 1573)+range(1592, 1596)))
-vme_plot_diag_for_shots(shotnums, diag)
+#vme_plot_diag_for_shots(shotnums, diag, descript=descript, extra='indiv_signals')
+
+
+#
+### Current trace while varying the amount of gas injected into chamber.
+#diag = 'current'
+#diag_params['gen.prefilter'] = True
+#diag_params['gen.filter.application'] = 'current_light_low_pass'
+#plot_diag_params['gen.shotnum_legend'] = True
+#shotnums = vme_unflatten_list(map(str, range(1569, 1573)+range(1592, 1596)))
+#vme_plot_diag_for_shots(shotnums, diag)
 
 
 
