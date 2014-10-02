@@ -51,6 +51,10 @@ class DictOfBreakdowns:
         self.breakdowns[str(shotnum)] = (time, self.get_date(shotnum))
         
     def get_breakdown_time_date(self, shotnum):
+        """ Returns both the breakdown time and the shot was taken.
+        Used when dealing with shots with incorrect breakdown time.  The breakdown time is then
+        set to the average of all other breakdown times on that date.
+        """
         return self.breakdowns[str(shotnum)]
         
         
@@ -67,7 +71,8 @@ class DictOfBreakdowns:
     
     def get_date(self, shotnum):
         """ 
-        Check for existence of date file.
+        Check for existence of date file.  Used to associate a date with
+        a given shotnum's breakdown time.
         """
         date_path = self.root_path + 'date' + os.sep + str(shotnum) + '_date.pickle'
         if os.path.exists(date_path):
