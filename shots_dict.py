@@ -99,7 +99,7 @@ shots_dict = {
     ### 60V Small Ind on 6/08/14.  3.13kV
     'B.60' : range(1842, 1853),
     ### 90V Small Ind on 6/08/14.  3.13kV
-    'B.90' : range(1853, 1868),
+    'B.90' : range(1853, 1867),
     
     
     'A.info' : [0, 15, 30, 45, 60, 75, 90],
