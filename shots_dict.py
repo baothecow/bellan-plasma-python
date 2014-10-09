@@ -16,6 +16,9 @@ E - Maximum inductance
 In addition, there are keys of the form 'A.info' which contains the
 list of strapping voltages associated with the A shots.
 
+Updated: 10/09/14 - Updated to remove incorrect shotnumbers and shots where the
+strapping bank did not properly trigger.
+
 """
 
 shots_dict = {
@@ -43,9 +46,9 @@ shots_dict = {
     ### 40V Max Ind on 5/25/14
     'E.40' : [1654] + range(1703, 1709),
     ### 45V Max Ind on 5/25/14
-    'E.45' : [1636] + range(1698, 1703) + range(1776, 1780),
+    'E.45' : range(1698, 1702) + range(1776, 1780),
     ### 50V Max Ind on 5/25/14
-    'E.50' : [1646, 1653] + range(1660, 1665) + range(1691, 1698) + [1709] + range(1790, 1796),
+    'E.50' : [1646, 1653] + range(1661, 1665) + range(1691, 1698) + [1709] + range(1790, 1796),
     ### 60V Max Ind on 5/25/14
     'E.60' : range(1605, 1618) + [1637, 1644, 1645, 1652] + range(1665, 1669) + range(1763, 1769),
     #### 70V Max Ind on 5/25/14
@@ -113,7 +116,7 @@ shots_dict = {
     ## 75V No Extra Ind on 7/08 & 7/09.  2.7kV
     'A.75' : range(2023,2029) + range(2030, 2034),
     ## 90V No Extra Ind on 7/08 & 7/09.  2.7kV
-    'A.90' : range(1992, 2002) + range(2010, 2012)
+    'A.90' : range(1992, 2002) + [2011]
 
 
 }
