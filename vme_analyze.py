@@ -299,7 +299,7 @@ def vme_calculate_breakdown_time(shotnum):
 
     # Looks largest rising peak.  Can change the diagnostics to look at to be
     # the tek_hv, iso_hv, or the collimator, or can be generic.
-    breakdown_diag = 'iso_hv'
+    breakdown_diag = 'tek_hv'
     filepath = vme_get_filepath(shotnum, breakdown_diag)
     data = readVME(filepath, cols=diag_params[breakdown_diag+'.cols'], 
                    rows=diag_params[breakdown_diag+'.rows'])

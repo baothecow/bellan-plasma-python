@@ -259,8 +259,8 @@ if os.sep == '/':
     'hall.IDL_VME_PATH': '/E/data/singleloop/singleloop_VME/hall/',
     # Imacon parameters
     'singleloop.REDUCED_PATH': '/E/data/singleloop/singleloop_imacon/reduced/',
-    'singleloop.IMACON_PATH': '/F/data/singleloop_imacon/data/'
-    'singleloop.FIXED_FISHEYE_PATH': '/E/data/singleloop/singleloop_imacon/fisheye_output/',
+    'singleloop.IMACON_PATH': '/F/data/singleloop_imacon/data/',
+    'singleloop.FIXED_FISHEYE_PATH': '/E/data/singleloop/singleloop_imacon/fisheye_output/'
     }
 elif os.sep == '\\':
     exp_paths = {
@@ -281,8 +281,8 @@ elif os.sep == '\\':
     'hall.IDL_VME_PATH': 'E:\\data\\singleloop\\singleloop_VME\\hall\\',
     # Imacon parameters
     'singleloop.REDUCED_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\reduced\\',
-    'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\'
-    'singleloop.FIXED_FISHEYE_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\fisheye_output\\
+    'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\',
+    'singleloop.FIXED_FISHEYE_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\fisheye_output\\'
     }    
 
     

@@ -5,11 +5,11 @@ from DictOfBreakdowns import DictOfBreakdowns
 
 
 ## Correlation between sol_mpa and main bank charging voltage
-diag_params['gen.prefilter'] = False
-#diag_params['gen.filter.application'] = 'current_light_low_pass'
+diag_params['gen.prefilter'] = True
+diag_params['gen.filter.application'] = 'current_light_low_pass'
 #plot_diag_params['gen.shotnum_legend'] = True
-diag = 'sol_mpa'
-start=1868
+diag = 'current'
+start=923
 shotnums = [map(str, range(start, start+1))]
 #descript = ['3kV', '3.5kV', '4kV', '4.5kV', '5kV']
 #plot_sol_mpa_for_shots(shotnums, num_probe=4)
