@@ -40,7 +40,7 @@ def get_imacon_data(path, resize_factor=2, verbose=True):
     image = Image.open(path)
     if verbose:
         print "Reading from " + path
-    return resize_imacon_image(image, resize_factor=resize_factor, verbose=verbose)
+    return resize_imacon_image(image, resize_factor=resize_factor)
 
     
 def resize_imacon_image(image, resize_factor=2):
