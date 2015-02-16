@@ -7,6 +7,8 @@ Created on Fri Sep 19 09:04:59 2014
 A dictionary whose keys are constructed from a strapping field and  a letter which
 corresponds to configuration of the external inductor.
 
+N.E - Null strapping field configuration at max inductance.
+
 A - No inductance.
 B - Small inductance.
 C - Medium inductance.
@@ -19,34 +21,50 @@ list of strapping voltages associated with the A shots.
 Updated: 10/09/14 - Updated to remove incorrect shotnumbers and shots where the
 strapping bank did not properly trigger.
 
+Updated: 12/31/14 - Updated to include shots taken on 10/13/14 & 10/14/14
+
 """
 
 shots_dict = {
 
 
+    'N.E.info' : [0, 15, 30, 45, 60],
+    ### No strap configuration on 7/30/14 Probe @ center.
+    'N.E.0' : range(2129, 2140),
+    ### 15V Null Field Max Ind on 10/13/14
+    'N.E.15' : range(2413, 2419),
+    ### 30V Null Field Max Ind on 10/13/14
+    'N.E.30' : range(2407, 2413),
+    ### 45V Null Field Max Ind on 10/13/14
+    'N.E.45' : range(2419, 2425),
+    ### 60V Null Field Max Ind on 10/13/14
+    'N.E.60' : range(2425, 2431),
+
+
     'E.info' : ['neg90', 'neg75', 'neg60', 'neg45', 'neg30', 'neg15', 0, 15, 30, 40, 45, 50, 60, 70, 80, 90], 
-    ### -90V Max Ind on 8/21/14
+    ### -90V Max Ind on 8/21/14,
     'E.neg90' : range(2270, 2280), 
     ### -75V Max Ind on 8/21/14
     'E.neg75' : range(2290, 2295), 
     ### -60V Max Ind on 8/21/14
     'E.neg60' : range(2250, 2260), 
-    ### -30V Max Ind on 8/21/14
-    'E.neg45' : range(2285, 2290), 
+    ### -30V Max Ind on 8/21/14 & 10/13/14
+    'E.neg45' : range(2285, 2290) + range(2351, 2357),  
     ### -30V Max Ind on 8/21/14
     'E.neg30' : range(2260, 2270), 
-    ### -15V Max Ind on 8/21/14
-    'E.neg15' : range(2280, 2285),
-    ## 0V Max Ind on 5/25/14    
-    'E.0' : range(1554, 1574) + range(1581, 1585) + range(1592, 1604) + [1634, 1655, 1656] + range(1657, 1660)+range(1785, 1790) + range(2238, 2260),
-    ### 15V Max Ind on 5/25/14
-    'E.15' : [1635] + range(1780, 1785),
-    ### 30V Max Ind on 5/25/14
-    'E.30' : [1620, 1621, 1633] + range(1755, 1762),
+    ### -15V Max Ind on 8/21/14 & 10/13/14
+    'E.neg15' : range(2280, 2285) + range(2345, 2351),
+    ## 0V Max Ind on 5/25/14 and 10/14/14
+    'E.0' : range(1554, 1574) + range(1581, 1585) + range(1592, 1604) + [1634, 1655, 1656] + range(1657, 1660)+range(1785, 1790) + range(2238, 2260) +\
+            range(2449, 2455) + range(2473, 2479) + range(2498, 2504), 
+    ### 15V Max Ind on 5/25/14 and 10/14/14
+    'E.15' : [1635] + range(1780, 1785) + range(2479, 2485) + range(2431, 2437) + range(2455, 2461),
+    ### 30V Max Ind on 5/25/14 and 10/14/14
+    'E.30' : [1620, 1621, 1633] + range(1755, 1762) + range(2443, 2449) + range(2467, 2473) + range(2491, 2498),
     ### 40V Max Ind on 5/25/14
     'E.40' : [1654] + range(1703, 1709),
-    ### 45V Max Ind on 5/25/14
-    'E.45' : range(1698, 1702) + range(1776, 1780),
+    ### 45V Max Ind on 5/25/14 and 10/14/14
+    'E.45' : range(1698, 1702) + range(1776, 1780) + range(2437, 2443) + range(2461, 2467) + range(2485, 2491),
     ### 50V Max Ind on 5/25/14
     'E.50' : [1646, 1653] + range(1661, 1665) + range(1691, 1698) + [1709] + range(1790, 1796),
     ### 60V Max Ind on 5/25/14
@@ -72,7 +90,15 @@ shots_dict = {
     'D.90' : range(1922, 1927),
     
     
-    'C.info' : [0, 30, 45, 60, 75, 90, 105],
+    'C.info' : ['neg60', 'neg45', 'neg30', 'neg15', 0, 30, 45, 60, 75, 90, 105],
+    ### -60V Med Ind on 10/13/14
+    'C.neg60' : range(2377, 2383),
+    ### -45V Med Ind on 10/13/14
+    'C.neg45' : range(2363, 2371),
+    ### -45V Med Ind on 10/13/14
+    'C.neg30' : range(2371, 2377),
+    ### -15V Med Ind on 10/13/14
+    'C.neg15' : range(2357, 2363),
     # 0V Medium Ind on 7/10/14.  3.3kV
     'C.0' : range(2056, 2068),
     ## 30V Medium Ind on 7/10/14.  3.3kV
@@ -102,7 +128,15 @@ shots_dict = {
     'B.90' : range(1853, 1867),
     
     
-    'A.info' : [0, 15, 30, 45, 60, 75, 90],
+    'A.info' : ['neg60', 'neg45', 'neg30', 'neg15', 0, 15, 30, 45, 60, 75, 90],
+    ### -60V No Ind on 10/13/14.  2.69kV
+    'A.neg60' : range(2401, 2407),
+    ### -45V No Ind on 10/13/14.  2.69kV
+    'A.neg45' : range(2389, 2395),
+    ### -30V No Ind on 10/13/14.  2.69kV
+    'A.neg30' : range(2395, 2401),
+    ### -15V No Ind on 10/13/14.  2.69kV
+    'A.neg15' : range(2383, 2389),
     ## 0V No Extra Ind on 7/08 & 7/09.  2.7kV
     'A.0' : range(1969, 1978) + range(2044, 2054),
     ## 15V No Extra Ind on 7/08 & 7/09.  2.7kV
