@@ -28,9 +28,7 @@ Updated: 12/31/14 - Updated to include shots taken on 10/13/14 & 10/14/14
 shots_dict = {
 
 
-    'N.E.info' : [0, 15, 30, 45, 60],
-    ### No strap configuration on 7/30/14 Probe @ center.
-    'N.E.0' : range(2129, 2140),
+    'N.E.info' : [15, 30, 45, 60], 
     ### 15V Null Field Max Ind on 10/13/14
     'N.E.15' : range(2413, 2419),
     ### 30V Null Field Max Ind on 10/13/14
@@ -55,7 +53,7 @@ shots_dict = {
     ### -15V Max Ind on 8/21/14 & 10/13/14
     'E.neg15' : range(2280, 2285) + range(2345, 2351),
     ## 0V Max Ind on 5/25/14 and 10/14/14
-    'E.0' : range(1554, 1574) + range(1581, 1585) + range(1592, 1604) + [1634, 1655, 1656] + range(1657, 1660)+range(1785, 1790) + range(2238, 2250) +\
+    'E.0' : range(1554, 1574) + range(1581, 1585) + range(1592, 1604) + [1634, 1655, 1656] + range(1657, 1660)+range(1785, 1790) + range(2238, 2260) +\
             range(2449, 2455) + range(2473, 2479) + range(2498, 2504), 
     ### 15V Max Ind on 5/25/14 and 10/14/14
     'E.15' : [1635] + range(1780, 1785) + range(2479, 2485) + range(2431, 2437) + range(2455, 2461),
@@ -150,7 +148,40 @@ shots_dict = {
     ## 75V No Extra Ind on 7/08 & 7/09.  2.7kV
     'A.75' : range(2023,2029) + range(2030, 2034),
     ## 90V No Extra Ind on 7/08 & 7/09.  2.7kV
-    'A.90' : range(1992, 2002) + [2011]
+    'A.90' : range(1992, 2002) + [2011],
+
+
+    ## Bias field at 200/200  # 2/16/15 & 2/27/15
+    'Bias.200' : range(2590, 2594) + range(2525, 2532),
+    ## Bias field at 150/150  # 2/16/15
+    'Bias.150' : range(2556, 2562),
+    ## Bias field at 100/100  # 2/16/15 & 2/27/15
+    'Bias.100' : range(2594, 2598) + range(2550, 2557),
+    ## Bias field at 50/50  # 2/16/15 & 2/27/15
+    'Bias.50' : range(2598, 2601) + range(2544, 2550),
+    ## Bias field at 25/25  # 2/16/15
+    'Bias.25' : range(2538, 2544),
+    ## Bias field at 0/0   # 2/16/15 & 2/27/15
+    'Bias.0' : range(2601, 2605) + range(2532, 2538),
+
+    ## Bias field but with reversed polarity at 300/300  # 2/28/15
+    'Reversed.300' : range(2621, 2625),
+    ## Bias field but with reversed polarity at 200/200  # 2/28/15
+    'Reversed.200' : range(2605, 2609),
+    ## Bias field but with reversed polarity at 100/100  # 2/28/15
+    'Reversed.100' : range(2609, 2613),
+    ## Bias field but with reversed polarity at 50/50  # 2/28/15
+    'Reversed.50' : range(2613, 2617),
+    ## Bias field but with reversed polarity at 0/0  # 2/28/15
+    'Reversed.0' : range(2617, 2621),
+    
+    ## Bias field but with reversed polarity at 50/50 with no strapping field # 2/28/15
+    'Reversed.50.Strap.0' : range(2613, 2617),
+    'Reversed.50.Strap.15' : range(2633, 2637),
+    'Reversed.50.Strap.30' : range(2629, 2633),
+    'Reversed.50.Strap.45' : range(2637, 2641),
+    'Reversed.50.Strap.60' : range(2641, 2645)
+
 
 
 }

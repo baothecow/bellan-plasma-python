@@ -287,7 +287,7 @@ elif os.sep == '\\':
     'singleloop.IMACON_PATH': 'F:\\data\\singleloop_imacon\\data\\',
     'singleloop.FIXED_FISHEYE_PATH': 'E:\\data\\singleloop\\singleloop_imacon\\fisheye_output\\',
     # Additional paths
-    'singleloop.FIXED_METADATA': 'D:\\Dropbox\\Research Summaries Files\\201412\\meta_fixed\\',
+    'singleloop.FIXED_METADATA': 'D:\\Dropbox\\Research Summaries Files\\201503\\meta_fixed\\',
     'singleloop.REDUCED_FIXED_FISHEYE': 'E:\\data\\singleloop\\singleloop_imacon\\reduced_fisheye_output\\'
     }    
 
