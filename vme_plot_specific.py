@@ -75,7 +75,7 @@ def vme_plot_diag_for_shots(shots_array, diag, descript="", delay=None, extra=''
         plt.figlegend(handles, labels, loc=1, prop={'size':10})
     ## If an additional description is included, use it!
     if descript != "":
-        plt.legend(handles, descript, loc=4)#, prop={'size':10})    
+        plt.legend(handles, descript, loc=2)#, prop={'size':10})    
     plt.show()    
     
     

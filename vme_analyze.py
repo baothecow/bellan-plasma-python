@@ -447,12 +447,17 @@ def vme_remove_transients(signal):
     # as the last points in test_range, set them to the average of the next 50
     # points after the test range.
     # Relevance: Hall sensor Bx data for one of the VME ports.
+    # Xiang HV probe also has some insane transients.
     
     test_range = 50
     factor = 10
     
+    # Kill any 2-3 pixel spikes at the beginning.  Useful for xiang's HV probe.
+    kill_range = 3
+    signal[0:kill_range] = np.mean(signal[kill_range+1:kill_range+kill_range])
+    
     if (abs(np.mean(signal[0:test_range])) / abs(np.mean(signal[-1*test_range:-1])) > factor):
-            signal[0:test_range] = np.mean(signal[test_range+1:test_range+50])
+            signal[0:test_range] = np.mean(signal[test_range+1:test_range+test_range])
         
     return signal
     
@@ -528,7 +533,7 @@ def vme_get_IIR_poly_for_application(application):
     # may come from plasma reconneciton events.
     if application == 'tek_hv_low_pass':
         passband = 5e5
-        stopband = 3e6
+        stopband = 5e6
         max_loss = 0.1
         min_atten = 20
 
